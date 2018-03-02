@@ -1,0 +1,85 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">权限管理</span></h5>
+									<a class="btn btn-wide btn-primary" href="{:U('createGroup')}">新增</a>
+							        <a url="{:U('changestatus?method=resumeGroup')}" class="btn btn-wide btn-primary ajax-post" target-form="ids" >启 用</a>
+							        <a url="{:U('changestatus?method=forbidGroup')}" class="btn btn-wide btn-primary ajax-post" target-form="ids" >禁 用</a>
+							        <a url="{:U('changestatus?method=deleteGroup')}" class="btn btn-wide btn-primary ajax-post confirm" target-form="ids" >删 除</a>
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+												<th class="center"><input class="check-all" type="checkbox"/></th>
+												<th class="">用户组</th>
+												<th class="">描述</th>
+										
+												<th class="">授权</th>
+												<th class="">状态</th>
+												<th class="center">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<volist name="_list" id="vo">
+											<tr>
+												<td class="center"><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
+												<td><a href="{:U('AuthManager/editgroup?id='.$vo['id'])}">{$vo.title}</a> </td>
+												<td><span>{:mb_strimwidth($vo['description'],0,60,"...","utf-8")}</span></td>
+												<td><a href="{:U('AuthManager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}" >访问授权</a>
+												<a href="{:U('AuthManager/category?group_name='.$vo['title'].'&group_id='.$vo['id'])}" >分类授权</a>
+												<a href="{:U('AuthManager/user?group_name='.$vo['title'].'&group_id='.$vo['id'])}" >成员授权</a>
+												</td>
+												<td>{$vo.status_text}</td>
+												<td class="center">
+													<div class="visible-md visible-lg hidden-sm hidden-xs">
+														<eq name="vo.status" value="1">
+														<a href="{:U('AuthManager/changeStatus?method=forbidGroup&id='.$vo['id'])}" class="ajax-get">禁用</a>
+														<else/>
+														<a href="{:U('AuthManager/changeStatus?method=resumeGroup&id='.$vo['id'])}" class="ajax-get">启用</a>
+														</eq>
+														<a href="{:U('AuthManager/changeStatus?method=deleteGroup&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+													</div>
+												</td>
+											</tr>
+											</volist>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

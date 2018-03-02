@@ -1,0 +1,56 @@
+
+header .navbar-header .sidebar-toggler, header .navbar-header .sidebar-mobile-toggler {
+    color: #fff !important;
+}
+
+.navbar-default {
+    background-color: #29cf7f !important;
+}
+header .navbar-header {
+    background: #29cf7f !important;
+}
+header .navbar-collapse {
+    background: #29cf7f !important;
+}
+header .navbar-collapse .navbar-right > li > a {
+    color: #fff !important;
+    font-weight: 500;
+}
+header .navbar-collapse .navbar-right > li > a i {
+    color: #fff !important;
+}
+header .dropdown-off-sidebar {
+    color: #fff !important;
+}
+header .dropdown-off-sidebar {
+    background: #29cf7f !important;
+    border-left: 1px solid rgba(255,255,255, .5)!important;
+}
+header .navbar-collapse .navbar-right > li > a:hover, header .navbar-collapse .navbar-right > li > a:focus, header .navbar-collapse .navbar-right > li > a:active {
+    background: none !important;
+}
+header .navbar-collapse .navbar-right > li > a:hover, header .navbar-collapse .navbar-right > li > a:focus, header .navbar-collapse .navbar-right > li > a:active {
+    background: none !important;
+}
+
+@media (min-width: 992px) {
+  .navbar .navbar-header {
+    border-right:  1px solid rgba(255,255,255, .5)!important;
+  }
+}
+
+#sidebar nav > ul > li > a .item-media > i {
+    color: #29cf7f !important;
+}
+#sidebar nav > ul > li.active {
+    background: #29cf7f !important;
+}
+#sidebar nav > ul > li.active:hover {
+    background: #29cf7f !important;
+}
+#sidebar nav > ul > li.active > a:active:focus {
+    background: #29cf7f !important;
+}
+#sidebar nav > ul > li > a .item-media .fa-stack .fa-square {
+    color: #29cf7f !important;
+}

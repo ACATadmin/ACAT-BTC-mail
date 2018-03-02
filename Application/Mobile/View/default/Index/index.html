@@ -1,0 +1,325 @@
+<extend name="Base/commons"/>
+<block name="body">
+	<style type="text/css">
+	.tab1{
+		width: 100%;
+	padding: 12px 3% 15px 3%;
+	}
+	.fashion_content {
+    margin-top: 10px;
+}
+.index_new {
+    margin-top: 10px;
+    background: #fff;
+}
+.fashion_box_play {
+	margin: 0px;
+     margin-top: 10px; 
+    position: relative;
+}
+.top_a {
+    margin-top: 0px;
+    /*background: #fff;*/
+}
+.content1 .index_video,.top_a {
+    margin-top: 0px;
+    /*background: #fff;*/
+}
+.tab1 {
+    width: 100%;
+    padding: 10px 3% 0px 3%;
+}
+.index_video {
+    margin-top: 10px;
+   
+}
+.hides_a{
+	font-size: 13px;
+	 color: #777777; 
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.hides_s{
+	    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.page_con .am-tabs-bd .am-tab-panel {
+    margin-bottom: 10px;
+    padding: 0;
+}
+.index_list ul li {
+    background: #fff;
+    height: 91px;
+}
+.indec_list_img img {
+    width: 100%;
+    height: 90px;
+}
+
+
+	</style>
+	<div class="body_page body_page_f4" id="body_page">  
+	    <header data-am-widget="header" class="am-header am-header-default select_city_header">
+	      <h1 class="am-header-title">
+	          <a href="#title-link" class="">
+	             <img src="__IMG__/logo.png" width="40" height="25" />
+	          </a>
+	      </h1>
+	    
+	      <div class="am-header-right am-header-nav pr tr">
+	          <a class="select_header_info position">
+	            <img src="__IMG__/W_icon2.png" width="18" height="18" id="but" />
+	          </a>         
+	      </div>
+	    </header><!--header-->
+	    <div class="page_con page_con_bg">
+	      <div class="am-tabs" data-am-tabs="{noSwipe: 1}" id="doc-tab-demo-1">
+	  	    <ul class="am-tabs-nav am-nav am-nav-tabs index_ul collect-tab" >
+		      <li class="am-active" ><a href="javascript: void(0)" type='1' hasview='0' hasviews='0' class="tab1">发现</a></li>
+		      <li ><a href="javascript: void(0)" type='2' hasview='0' hasviews='0' class="tab2">排行</a></li>
+		      <li ><a href="javascript: void(0)" type='3' hasview='0' hasviews='0' class="tab3">专题</a></li>
+		      <li ><a href="javascript: void(0)" type='4' hasview='0' hasviews='0' class="tab4">时尚</a></li>
+		    </ul>
+		    <div class="am-tabs-bd">
+		      <div class="am-tab-panel am-active type1">
+                <div class="am-slider am-slider-default index_banner" data-am-flexslider="{playAfterPaused: 8000}">
+        		    <ul class="am-slides">
+        			  
+        			  <volist name='SlideList' id='vo'>
+        			  		<empty name="vo['slide_url']">
+        			  			<li><img src="{$vo.imgPath}" /></li>
+        			  		<else/>
+	        			  		
+	        			  			<li><a href="{$vo['slide_url']}"><img src="{$vo.imgPath}" /></a></li>
+	        			  		
+        			  		</empty>
+        			         
+        			  </volist>
+        		    </ul>
+        		</div>
+        	     
+        	      <!-- <div class="index_rolling">
+        	      	<marquee  direction="left" behavior="scroll" scrollamount="10" scrolldelay="30" onmouseover="stop()" onmouseout="start()" class="gundong">
+                        
+        	      	</marquee>
+        	      </div> -->
+				<div class="index_gundong" id="div1" onmouseover="clearInterval(timer)" onmouseout="timer=setInterval(mar,30)">
+				   <div class="gundong" id="gundong">
+				     <div class="div2" id="div2">
+				          <volist name='gun' id='vo'>
+				          <a class="fame" href="#">
+				          
+					          {$vo.musician_name}
+					          <if condition='$vo.score_status gt 0'><img src="__IMG__/redTop.png" width="6" height="10" /><span class="index_span_red"><else/><img src="__IMG__/huiBottom.png" width="6" height="10" /><span class="index_span_grey"></if>
+					          <!-- <img src="images/huiBottom.png" width="6" height="10" />  -->
+					          <span class="index_span_grey">{$vo.score_status}</span>
+				          </a>
+				         
+				          </volist>
+						    
+				            
+				      </div>
+				  <div id="div3" class="div3"></div>
+				 </div>
+				</div>
+			     
+			  	<div class="content1">
+			  		<include file="Index/newList"/>
+			  	</div>
+		      </div><!--发现-->
+		      <div class="am-tab-panel type2">
+			      <div class="listNew_title">
+			      	<h1 class="listNew_title_h1">本周主推</h1>
+			      	<ul class="listNew_title_ul">
+			      		<volist name='zhutui' id='vo'>
+			                <a href="{:U('Artist/artistDetail',array('musician_id'=>$vo['id']))}">
+			                  <li class="listNew_title_li <eq name='key' value='1'> listNew_title_liL</eq>">
+			                  
+			                   <div class="listNew_title_img ">
+			                    <img src="{$vo.head_pic_path}" />
+			                    </div>
+			                   <p class="listNew_title_text">top{$i}:{$vo.musician_name}</p>
+			                  </li>
+			                </a>
+			      		</volist>
+			      	</ul>
+			      </div>
+				<div class="list_boxs" >
+					<div class="search_list">
+						<ul class="mt10">
+							<a href="{:U('Sort/ranking')}">                        
+								<li class="mt12">
+								<div class="search_list_img"><img src="__IMG__/listNew_5.png"></div>
+								<div class="search_list_right">
+								<div class="search_list_text">
+								<p class="search_list_text_p">实时排行榜</p>
+								</div>
+								<div class="search_list_text1">
+								<p class="search_list_text_p2">实时更新网络热点，为您一站式解读最新最热的人事物信息。</p>
+								<!-- <p class="search_list_text_p2">本期收录明星{$ranking.number}名</p> -->
+								</div>
+								<div class="search_text_look">查看排行<img src="/Public/Mobile/images/index_list4.png" width="14" height="14"></div>
+								</div>
+
+								</li>
+							</a>          
+						</ul>
+					</div><!--search_list--> 
+				</div>
+		
+				<div class="content2">
+			
+				</div>
+			    
+		      </div><!--排行-->
+		      <div class="am-tab-panel type3" >
+
+		        <div class="content3">
+		        
+		        </div>
+
+		      </div><!--专题-->
+		      <div class="am-tab-panel type4">
+
+		       <div class="content4">
+		       	
+		       </div>
+
+		      </div><!--时尚-->
+		    </div>
+		  </div><!--am-tabs-->
+	   
+	    </div><!--page_con-->
+	</div><!--body_page-->
+	<include file="Index/tip"/>
+
+
+
+	 <form id='changeType'>
+
+	  <input type='hidden' name='group_type' value='{$group_type}'>
+
+	  <input type='hidden' name='load_more' value='1'>
+	  <input type='hidden' name='parentClass' value='type{$group_type}'>
+	  <!-- <input type='hidden' name='format' value=''> -->
+	</form>
+ 	
+</block>
+<block name="script">
+	 <include file="Public/tip"/>
+	 	<script type="text/javascript" src="__JS__/extendsfour.js"></script>
+		  <script type="text/javascript">
+		
+		
+		  $(function(){
+
+
+		  	function checktabs(id){
+		  		if (id==1) {
+		  			$('.collect-tab').tabs('open',0)
+		  		};
+		  		if (id==2) {
+		  		$('.collect-tab').tabs('open',1)
+		  		};
+		  		if (id==3) {
+		  		$('.collect-tab').tabs('open',2)
+		  		};
+		  		if (id==4) {
+		  		
+		  			$('.collect-tab').tabs('open',3)
+		  			
+		  		};
+		  			
+		  		
+		  	}
+
+		   var id="{$_GET['group_type']?$_GET['group_type']:1}";
+		   checktabs(id);
+
+		   //切换table 加载当前页面内容
+		   $('.collect-tab').find('a').on('opened.tabs.amui',function(e) {
+
+		     var This = $(this);
+		     var hasview = This.attr('hasview');
+		     var hasviews = This.attr('hasviews');
+		     var type= This.attr('type');
+		     console.log(type);
+		     $("input[name='group_type']").val(type);
+		     var parentClass="type"+type;
+		     $("input[name='parentClass']").val(parentClass);
+		     // $("input[name='parentClass']").val('type'+type);
+		     if(hasview==0||hasviews==0){
+
+		       toastload('加载中');
+		       self = $('#changeType');
+		       //请求数据
+		       $.post(self.attr("action"), self.serialize(), function(data){
+		         
+		         delload();
+		         console.log(3333)
+		         console.log( $('.type'+type).find('.content'+type))
+		         //赋值
+		         $('.type'+type).find('.content'+type).html("");
+		         $('.type'+type).find('.content'+type).append(data);
+		         This.attr('hasview',1);
+		         This.attr('hasviews',1);
+
+		         //可下拉加载
+		         $('.load-more').attr('canload',1);
+
+		         //格式化li
+		         // formatLi('delete_js');
+		       });
+		       
+		     }else{
+		       $('.load-more').attr('canload',1);
+		       /*$('.load-more').remove();
+		       dropDownLoad('type'+type);*/
+		       /*var id = 'loadId_' + parseInt( Math.random()*1000000 );
+		       var html = '<div class="load-more" id="'+id+'" style="display:none;" canload="1"><span>加载更多</span></div>';
+		       $('.type'+type).find('ul').append(html);*/
+
+		     }
+		   })
+		    //下拉
+		    var url = location.href;
+		    var pageNum = "{:C('LIST_ROWS')}";
+		    $(".load-more").dropDownLoad( {boxClass:'list_box',more_condition_id:'changeType',url:url,pageNum:pageNum},function(){
+		      
+		    } );
+
+		       var s,s2,s3,s4,timer;
+		    		function init(){
+		    		s=getid("div1");
+		    		s2=getid("div2");
+		    		s3=getid("div3");
+		    		s4=getid("gundong");
+		    		s4.style.width=(s2.offsetWidth*2+100)+"px";
+		    		s3.innerHTML=s2.innerHTML;
+		    		timer=setInterval(mar,30)
+		    		}
+		    		function mar(){
+		    		if(s2.offsetWidth<=s.scrollLeft){
+		    		s.scrollLeft-=s2.offsetWidth;
+		    		}else{s.scrollLeft++;}
+		    		}
+		    		function getid(id){
+		    		return document.getElementById(id);
+		    		}
+		    		window.onload=init;
+		  })
+		  </script>
+
+	        <script type="text/javascript">
+	            // $(function(){
+	      
+	            //   var url = location.href;
+	            //   var pageNum = "{:C('LIST_ROWS')}";
+	            //   $(".load-more").dropDownLoad( {boxClass:'list_box',url:url,pageNum:pageNum},function(){
+
+	            //   } );
+	            // })
+	        </script>
+</block>

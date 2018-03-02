@@ -1,0 +1,95 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">查看行为日志</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																行为名称
+															</label>
+															<div class="padding-bottom-10 padding-top-10 padding-left-20 text-dark">
+																<span>{:get_action($info['action_id'], "title")}</span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																执行者
+															</label>
+															<div class="padding-bottom-10 padding-top-10 padding-left-20 text-dark">
+																<span>{:get_nickname($info['user_id'])}</span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																执行IP
+															</label>
+															<div class="padding-bottom-10 padding-top-10 padding-left-20 text-dark">
+																<span>{:long2ip($info['action_ip'])}</span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																执行时间
+															</label>
+															<div class="padding-bottom-10 padding-top-10 padding-left-20 text-dark">
+																<span>{:date('Y-m-d H:i:s',$info['create_time'])}</span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																备注
+															</label>
+															<div class="padding-bottom-10 padding-top-10 padding-left-20 text-dark">
+																<span>{$info.remark}</span>
+															</div>
+														</div>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

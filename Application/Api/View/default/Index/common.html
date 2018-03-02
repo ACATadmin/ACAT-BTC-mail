@@ -1,0 +1,65 @@
+<script type="text/javascript" src="__STATIC__/jquery.cookie.js"></script>
+<link href="__STATIC__/treeview/jquery.treeview.css" rel="stylesheet">
+
+
+
+<style>
+body {background-color: #F4F6F8;}
+.bs-docs-sidebar{background-color:#fff;padding: 10px;margin-top:30px;}
+#contents{background-color:#fff;}
+
+.tree_block .tree_title {padding: 5px 10px;font-size: 18px;border-bottom: dashed #939393 1px;}
+.tree_block .tree_title img {cursor: pointer;width: 24px;height: 24px;}
+.tree_block .tree_title a {padding: 5px 0px;font-size: 16px;}
+.tree_block ul a:link {text-decoration: none;color: #333333;}
+.tree_block ul a:visited {text-decoration: none;color: #333333;}
+.tree_block ul a:hover {text-decoration: none;color: #398DE2;}
+.tree_block ul a:active {text-decoration: none;color: #333333;}
+
+#book-content{background-color:#fff;margin-top:30px;min-height:500px;padding:20px 20px 60px 20px;margin-bottom:80px;}
+#book-content .top h1 {margin-top: 4px;float: left;font-size: 26px;}
+#book-content .line {width: 100%;border-top: 6px solid #CAD7E7;}
+.tree_block .file{cursor: pointer;}
+
+.parameter_table{border-collapse:collapse;min-width: 100%;;}
+.parameter_table .table_header{padding:3px 8px;text-align:center;background-color: rgb(250, 250, 250);}
+.parameter_table .table_header td{min-width:45px;}
+.parameter_table td{padding:10px;}
+.parameter_table td{text-align:center;height:28px;line-height:28px;}
+.parameter_table td input{width:100%;}
+.parameter_table td textarea{width:100%;border:0;}
+.parameter_table .descript_td{width:470px;}
+.parameter_table td.descript_td_contents{text-align:left;padding:0 10px;}
+
+.control-group input{margin-bottom:0px;}
+.control-group{margin-bottom:15px;}
+</style>
+
+
+<!-- 左侧 nav
+================================================== -->
+    <div class="span3 bs-docs-sidebar tree_block">
+		<div class="tree_title">
+			<img src="__IMG__/book-icon.png" class="book-icon"> 
+			<a href="javascript:;">《Restful Api文档》</a>
+		</div>
+		<ul id="browser" class="filetree">
+        	
+        	<li><a href="{:U('Index/index',array('id'=>$v['id']) )}"><span class="file">概览</span></a></li>
+        	
+        	<volist name="interfaceList" id="vo">
+        		<li><span class="folder">{$vo.group_name}</span>
+					<ul>
+						<volist name="vo['child']" id="v">
+						<li>
+						<a href="{:U('Index/index',array('id'=>$v['id']) )}"><span class="file">{$v.api_name}</span></a>
+						<a href="{:U('Index/demo',array('id'=>$v['id']) )}">→</a>
+						</li>
+						</volist>
+					</ul>
+				</li>
+        	</volist>
+
+		</ul>
+
+    </div>

@@ -1,0 +1,181 @@
+<extend name="Public/base" />
+<block name='style'>
+    <style>
+        video{
+            max-height:400px !important;
+            width:100%;
+        }
+    </style>
+</block>
+<block name="body">
+		<link rel="stylesheet" href="__CSS__/addl.css">		
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-lg-12 col-md-12">
+											<div class="panel panel-white">
+												<table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+												    <thead>
+												      <tr>
+												        <th colspan="20">用户基本信息</th>
+												      </tr>
+												    </thead>
+												    <tbody>
+												       <tr style="background: rgb(255, 255, 255);">
+												        <th>头像：<br>
+														</th>
+												        <td colspan="20"><img src="{$uinfo.head_pic_url}" alt=""></td>
+												      </tr>
+                                                                                                      <tr style="background: rgb(255, 255, 255);">
+												        <th>姓名：</th>
+												        <td>{$uinfo.realname}</td>
+												        <th>电话：</th>
+												        <td>{$uinfo.mobile}</td>
+<!--												        <th>电子邮箱：</th>
+												        <td>{$uinfo.email}</td>-->
+												      </tr>
+                                                                                                      <tr style="background: rgb(255, 255, 255);">
+												        <th>学历：</th>
+												        <td>{$uinfo.education}</td>
+												        <th>职称：</th>
+												        <td>{$uinfo.job_title}</td>
+<!--												        <th>电子邮箱：</th>
+												        <td>{$uinfo.email}</td>-->
+												      </tr>
+												      <tr style="background: rgb(255, 255, 255);">
+												        <th>所在地：</th>
+												        <td colspan="20">{$uinfo.province_id|getAreaname}&nbsp;{$uinfo.city_id|getAreaname}</td>
+												      </tr>
+                                                                                                      <tr style="background: rgb(255, 255, 255);">
+                                                                                                        <th class="w150">专业类型：</th>
+												        <td colspan="20">{$uinfo.profession_type_exp}</td>
+												      </tr>
+                                                                                                      <tr style="background: rgb(255, 255, 255);">
+                                                                                                        <th class="w150">昵称：</th>
+												        <td colspan="20">{$uinfo.nickname}</td>
+												      </tr>
+                                                                                                      
+												    </tbody>
+												  </table>
+												  <table border="0" cellpadding="0" cellspacing="0" class="store-joinin">
+												    <thead>
+												      <tr>
+												        <th colspan="20">实名认证信息</th>
+												      </tr>
+												    </thead>
+												    <tbody>
+                                                                                                       <include file="User/realname_info"/>
+												    </tbody>
+												  </table>
+                                                                                                  <if condition="$uinfo.realname_status eq 1">
+                                                                                                        <a style="line-height: 23px;" href="{:U('User/changerealnameStatus?method=pass&id='.$uinfo['uid'])}" type="submit" class="btn btn-o btn-primary confirm ajax-get">
+														审核通过
+													</a>
+													<a style="line-height: 23px;" href="javascript:;" class="btn btn-o btn-default nopass" url="{:U('User/changerealnameStatus?method=nopass&id='.$uinfo['uid'])}" data-toggle="modal" data-target="#myModal">
+														审核不通过
+													</a>
+                                                                                                  <elseif condition="$uinfo.realname_status eq 2"/>
+                                                                                                        <a style="line-height: 23px;" href="javascript:;" class="btn btn-o btn-default nopass" url="{:U('User/changerealnameStatus?method=nopass&id='.$uinfo['uid'])}" data-toggle="modal" data-target="#myModal">
+														审核不通过
+													</a>
+                                                                                                  <elseif condition="$uinfo.realname_status eq 3"/>
+                                                                                                        <a style="line-height: 23px;" href="{:U('User/changerealnameStatus?method=pass&id='.$uinfo['uid'])}" type="submit" class="btn btn-o btn-primary confirm ajax-get">
+														审核通过
+													</a>
+                                                                                                   </if>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		<!-- Default Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="margin: 16% auto;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">审核不通过</h4>
+						</div>
+						<div class="modal-body">
+							<form action="" method="post" id="nopassform">
+							<textarea placeholder="不通过理由" id="form-field-22" name="fail_reason" class="form-control"></textarea>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+								取消
+							</button>
+							<button type="button" class="btn btn-primary nopasssub">
+								确定
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+                <link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+                <php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+                <link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+                <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+                <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+                <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		$('.nopass').click(function(){
+			 var url = $(this).attr('url'); 
+			 $('#nopassform').attr('action',url);
+		})
+		$('.nopasssub').click(function(){
+			var failreason=$('textarea[name="fail_reason"]').val();
+			if(!failreason){updateAlert('请输入不通过理由','error');return false;}
+			var target=$('#nopassform');
+                        if ( target.attr('action')) {
+                            $.post(target.attr('action'), target.serialize()).success(function(data){
+                                if (data.status==1) {
+                                    updateAlert(data.info,'success');
+                                     if (data.url) {
+                                         location.href=data.url;
+                                     }else{
+                                         location.reload();
+                                     }
+                                }else{
+                                    updateAlert(data.info,'error');
+                                    setTimeout(function(){
+                                    },1500);
+                                }
+                            });
+
+                        }
+		})
+		</script>
+		<script>
+		
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

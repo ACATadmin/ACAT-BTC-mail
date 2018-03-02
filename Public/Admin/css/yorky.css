@@ -1,0 +1,65 @@
+
+
+.btn-primary {
+    background-color: #29cf7f !important;
+    border-color: #29cf7f !important;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #74D4A6 !important;
+    border-color: #74D4A6 !important;
+    color: #ffffff;
+}
+
+.btn-primary.btn-o {
+    border: 1px solid #29cf7f ;
+    color: #ffffff;
+}
+
+.btn-primary.btn-o:hover {
+  color: #29cf7f;
+  border-color: #3395ff;
+  background: none !important;
+}
+
+.input-group-addon {
+    background-color: #29cf7f;
+    border: 1px solid #29cf7f;
+    color: #ffffff;
+}
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #29cf7f;
+    border-color: #29cf7f;
+}
+
+.pagination > li > a, .pagination > li > span {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #19AB65;
+}
+
+.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus {
+    color: #117947;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+a {
+    color: #117947;
+}
+
+a:hover, a:focus, a:active {
+    color: #29cf7f;
+}
+
+.uploadify-button {
+    background-color: #29cf7f !important;
+    border-color: #29cf7f !important;
+    color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}

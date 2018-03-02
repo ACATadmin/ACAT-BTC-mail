@@ -1,0 +1,14 @@
+<div class="controls">
+							<span class="item-title">采集人</span>
+							<select name="gather_uid">
+								<option value="0">----未指定----</option>
+								<volist name="gather_user_list" id="vo">
+								<option value="{$vo.uid}">{$vo.nickname}</option>
+								</volist>
+							</select>
+						</div>
+						<script>
+						$(function(){
+							Think.setValue("gather_uid",{$gather_uid|default=((is_login()==1)?0:is_login())});							
+						})
+						</script>

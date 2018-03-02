@@ -1,0 +1,149 @@
+<extend name="Public/base" />
+
+<block name="body">
+		<link rel="stylesheet" href="__MODULE__/vendor/jquery-file-upload/css/jquery.fileupload-ui.css">
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">编辑专业用户</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+                                                                                                                {:W('Pic/init',array('head_pic_id','头像',$info['head_pic_id'],'500*500'))}
+                                                                                                            
+                                                                                                                <div class="form-group">
+															<label>
+																姓名：<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="realname" value="{$info.realname}">
+														</div>
+                                                                                                                
+                                                                                                                
+                                                                                                                
+														<div class="form-group">
+															<label>
+																昵称：<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="nickname" value="{$info.nickname}">
+														</div>
+                                                                                                                
+                                                                                                                
+                                                                                                                
+                                                                                                                <div class="form-group">
+															<label>
+																所在地区：<span class="check-tips"></span>
+															</label>
+                                                                                                                        <div>
+															<select name="country_id" id="selCountries" style="display:none"></select>
+                                                                                                                        <select name="province_id" id="selProvinces"></select>
+                                                                                                                        <select name="city_id" id="selCities"></select>
+                                                                                                                        <!--<select name="area_id" id="selArea"></select>-->
+                                                                                                                        </div>
+														</div>
+<!--                                                                                                                <div class="form-group">
+															<label>
+																详细地址：<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="address" value="{$info.address}">
+														</div>-->
+
+                                                                                                                <div class="form-group">
+															<label>
+																学历：<span class="check-tips"></span>
+															</label>
+                                                                                                                        <div>
+                                                                                                                            <select name="education">
+                                                                                                                                <volist name="education_list" id="vo" key="key">
+                                                                                                                                    <option value="{$key}" <eq name="info.education" value="$key">selected</eq>>{$vo}</option>
+                                                                                                                                </volist>
+                                                                                                                            </select>
+                                                                                                                        </div>
+														</div>
+
+                                                                                                                <div class="form-group">
+															<label>
+																职称：<span class="check-tips"></span>
+															</label>
+                                                                                                                        <div>
+                                                                                                                            <select name="job_title">
+                                                                                                                                <volist name="job_title_list" id="vo" key="key">
+                                                                                                                                    <option value="{$key}" <eq name="info.job_title" value="$key">selected</eq>>{$vo}</option>
+                                                                                                                                </volist>
+                                                                                                                            </select>
+                                                                                                                        </div>
+														</div>
+
+                                                                                                                <div class="form-group">
+															<label>
+																擅长：<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="skill" value="{$info.skill}">
+														</div>
+                                                                                                                <div class="form-group">
+                                                                                                                        <label>
+                                                                                                                                个人简介：<span class="check-tips"></span>
+                                                                                                                        </label>
+                                                                                                                        <textarea class="form-control" name="self_description" >{$info.self_description}</textarea>
+                                                                                                                </div>
+														
+                                                                                                                <div style="clear:both;margin-bottom:40px;"></div>
+                                                                                                                
+														
+                                                                                                                <input type="hidden" name="uid" value="{$info.uid|default=''}">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+                <script type="text/javascript" src="__STATIC__/cityselect/cityselect.js" charset="UTF-8"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+                selRegionInit("1","{$info['province_id']}","{$info['city_id']}","{$info['area_id']}");
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	    <script type="text/javascript">
+	    $(function(){
+	    	initPicUpload('head_pic_id',1);
+	        Think.setValue("pid", {$info.pid|default = 0});
+	        Think.setValue("hide", {$info.hide|default = 0});
+	        Think.setValue("is_dev", {$info.is_dev|default = 0});
+	    })
+	    </script>
+</block>

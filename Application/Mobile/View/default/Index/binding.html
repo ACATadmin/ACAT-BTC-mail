@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>星值_登录</title>
+<meta content="" name="keywords">
+<meta content="" name="description">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="__CSS__/amazeui.min.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/W_style.css">
+	<link rel="stylesheet" type="text/css" href="__CSS__/jacob_style.css">
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1462325985_4954245.css" />
+
+</head>
+<body>
+	
+<div class="body_page ">  
+    <header data-am-widget="header" class="am-header am-header-default select_city_header">
+      <div class="am-header-left am-header-nav">
+          <a  onclick="javascript:window.history.back(-1);">
+                <i class="iconfont icon-back1 "></i>
+          </a>
+      </div>
+    
+      <h1 class="am-header-title">
+          <a href="#title-link" class="">
+           绑定手机号
+          </a>
+      </h1>
+    
+      
+    </header><!--header-->
+    <div class="page_con">
+      <div class="login_logo">
+      	<img src="__IMG__/logo1.png" />
+      </div><!--login_logo-->
+      <p class="login_p">绑定手机号</p>
+      <div class="login_form">
+      	<form action="{:U('')}" method="post" class='operateForm'>
+      	  <input type="text" name='mobile' placeholder="手机号" class="text hight_42 mt20" />
+      	  <!-- <input type="password" name='password' placeholder="密码" class="pws hight_42 mt15" /> -->
+      	  <div class="get_comform_mima">
+	      	  	<input type="text" name="verify" placeholder="验证码" class="pws hight_42 mt15" />
+                        <a class='sendVerifyCode'>获取验证码</a>
+	      	  	<!--<a>获取验证码</a>-->
+      	  </div>
+          <input type='hidden' name='type' value='2'>
+          <input type="hidden" name="types" value="{$_GET['type']}" />
+          <input type="hidden" name="openid"  value="{$_GET['openid']}"/>
+      	  <div class="login_sub">            
+              <button type="button" class="sub_38 mt30 doForm" >确定绑定</button>
+              <p class="forgot_pwd">
+              	<!-- <label class="radio_label on"><input type="checkbox" class="radio_input"   name="agree">我同意用户服务协议</label> -->
+              	<!-- <span class="login_float1">已有账号？<a href="{:U('login')}" class="font_red" >去登录>></a></span> -->
+              </p>
+          </div>
+          
+        </form>
+       
+       <!--  <p class="login_p mt75">使用第三方账号登录</p>
+        <div class="login_account">
+        	<a href="#"><img src="__IMG__/login_weibo.png" width="16%"/></a>
+        	<a href="#"><img src="__IMG__/login_qq.png" width="16%" class="login_qq"/></a>
+        	<a href="#"><img src="__IMG__/logon_weixin.png" width="16%" /></a>
+        </div> -->
+      </div><!--page_con-->
+      
+    </div><!--page_con-->
+    
+<include file="Public/tip" />
+</div><!--body_page--> 
+
+<script src="__JS__/jquery-1.9.1.min.js"></script>
+<script src="__JS__/amazeui.min.js"></script>
+<script src="__JS__/common.js"></script>
+<script type="text/javascript" src="__JS__/sendVerifyCode.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(".doForm").click(function(){
+  var self = $('.operateForm');
+  var url = "{$back_url}";/*
+  console.log(url);
+  return ;*/
+  var checked=$(".radio_label").attr("class");
+  console.log(checked)
+  if (checked=="radio_label") {
+    toastshow("请同意用户服务协议");
+    return false;
+  };
+  $.post(self.attr("action"), self.serialize(), success, "json");
+  toastload('注册中');
+  return false;
+
+  function success(data){
+    delload();
+    // data = jQuery.parseJSON(data);
+    console.log(data);
+
+
+  
+    if(data.status){
+      if(url!=''){
+        window.location.href=url;
+      }else{
+        window.location.href = data.url;
+      }
+    } else {
+      toastshow(data.info);
+    }
+    
+
+  }
+});
+
+$(".radio_input ").click(function(){
+  /*alert("1");*/
+  var temp = false;
+  var classContent = $(this).parent().attr("class");
+  if(classContent.indexOf('on')>-1){
+  temp = true;
+    };
+  if(temp)
+  {
+    
+    $(this).parent().removeClass("on");
+    
+  }
+  else{
+    $(this).parent().addClass("on");
+  }
+  
+  
+})
+</script>
+</body>
+</html>

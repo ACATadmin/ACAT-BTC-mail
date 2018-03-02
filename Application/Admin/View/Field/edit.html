@@ -1,0 +1,139 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+		<link rel="stylesheet" href="__MODULE__/vendor/jquery-file-upload/css/jquery.fileupload-ui.css">
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">{:isset($info['id'])?'编辑':'添加新'}视野</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label>
+																标题：<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="title" value="{$info.title}">
+														</div>
+														{:W('Pic/init',array('pic_id','封面图片',$info['pic_id'],'523*306'))}
+														<div class="form-group">
+															<label>
+																小编：<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="author" value="{$info.author}">
+														</div>
+														<div class="form-group">
+																<label>
+																	简介：<span class="check-tips"></span>
+																</label>
+																<textarea name="describe" class="form-control">{$info.describe}</textarea>
+														</div>
+														{:W('Pic/init',array('pic_ids','详情图片',$info['pic_ids'],'588*734'))}
+														<div class="form-group">
+															<label>
+																排序<span class="check-tips"></span>
+															</label>
+															<input style="width:100px;" type="text" class="form-control" name="order_sort" value="{$info.order_sort|default=''}">
+														</div>
+            											<input type="hidden" name="id" value="{$info.id|default=''}">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+                <script src="__MODULE__/vendor/select2/select2.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	    <script type="text/javascript">
+	    $(function(){
+	    	initPicUpload( 'pic_id',1);
+	    	initPicUpload( 'pic_ids');
+	        Think.setValue("pid", {$info.pid|default = 0});
+	        Think.setValue("hide", {$info.hide|default = 0});
+	        Think.setValue("is_dev", {$info.is_dev|default = 0});
+	    })
+	    </script>
+            <script>
+                $(function(){
+                        $(".js-example-basic-single").select2();
+                        show_target_select();
+                        $('[name="target_type"]').change(function(){
+                            show_target_select();
+                            $('[name="target_id"]').val(0);
+                        });
+                        $('[name="target_id_in"]').change(function(){
+                            var target_id=$(this).val();
+                            $('[name="target_id"]').val(target_id);
+                        });
+		})
+                function show_target_select(){
+                    var target_type=$('[name="target_type"]').val();
+                    if(target_type==1){
+                        $('.market').css('display','block');
+                        $('.shop,.designer,.market_goods,.store_goods,.link').css('display','none');
+                    }
+                    if(target_type==2){
+                        $('.shop').css('display','block');
+                        $('.market,.designer,.market_goods,.store_goods,.link').css('display','none');
+                    }
+                    if(target_type==3){
+                        $('.designer').css('display','block');
+                        $('.shop,.market,.market_goods,.store_goods,.link').css('display','none');
+                    }
+                    if(target_type==4){
+                        $('.market_goods').css('display','block');
+                        $('.shop,.designer,.market,.store_goods,.link').css('display','none');
+                    }
+                    if(target_type==5){
+                        $('.store_goods').css('display','block');
+                        $('.shop,.designer,.market_goods,.market,.link').css('display','none');
+                    }
+                    if(target_type==6){
+                        $('.link').css('display','block');
+                        $('.shop,.designer,.market_goods,.store_goods,.market').css('display','none');
+                    }
+                    $(".js-example-basic-single").select2();
+                }
+            </script>
+</block>

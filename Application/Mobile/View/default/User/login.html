@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>星值_登录</title>
+<meta content="" name="keywords">
+<meta content="" name="description">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="__CSS__/amazeui.min.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/W_style.css">
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1462325985_4954245.css" />
+<style type="text/css">
+  .qq_block img{
+width: 50%
+  }
+  .sina_block img{
+width: 50%
+  }
+    .weixin_block img{
+  width: 50%
+    }
+  li{
+        width: 31%;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+	
+<div class="body_page ">  
+    <header data-am-widget="header" class="am-header am-header-default select_city_header">
+      <div class="am-header-left am-header-nav">
+          <!-- <a href="" onclick="javascript:window.history.back(-1);"> -->
+          <a href="{:U('Index/index')}" >
+                <i class="iconfont icon-back1 "></i>
+          </a>
+      </div>
+    
+      <h1 class="am-header-title">
+          <a class="">
+            登录
+          </a>
+      </h1>
+    
+      
+    </header><!--header-->
+    <div class="page_con">
+      <div class="login_logo">
+      	<img src="__IMG__/logo1.png" />
+      </div><!--login_logo-->
+      <p class="login_p">使用手机号登录</p>
+      <div class="login_form">
+      	<form action="{:U('')}" method="post" id='FormLogin'>
+      	  <input type="text" name='username' placeholder="星值手机号注册" class="text hight_42 mt20" />
+      	  <input type="password" name='password' placeholder="密码" class="pws hight_42 mt15" />
+      	  <div class="login_sub">            
+              <button type="button"  value="登录" class="sub_38 mt30 FormLogin" >登录</button>
+              <p class="forgot_pwd"><a href="{:U('forget_password')}" class="login_float font_red">忘记密码？</a><span class="login_float1">还没有星值账号？<a href="{:U('register')}" class="font_red" >去注册>></a></span></p>
+          </div>
+        </form>
+        <p class="login_p mt75">使用第三方账号登录</p>
+        <div class="login_account">
+          <ul>
+            {:hook('SyncLogin')}
+            <a class="weixin_block"><li><img src="__IMG__/logon_weixin.png" width="16%" /></li></a>
+          </ul>
+        	
+        </div>
+      </div><!--page_con-->
+      
+    </div><!--page_con-->
+    
+<include file="Public/tip" />
+</div><!--body_page--> 
+
+<script src="__JS__/jquery-1.9.1.min.js"></script>
+<script src="__JS__/amazeui.min.js"></script>
+<script src="__JS__/common.js"></script>
+<script type="text/javascript">
+
+var referrer = document.referrer;
+
+$(".FormLogin").click(function(){
+
+  var username=$("input[name='username']").val();
+  var password=$("input[name='password']").val();
+  if (!username) {toastshow('登录名不能为空');return false;};
+  if (!password) {toastshow('登录密码不能为空');return false;};
+	var self = $('#FormLogin');
+	var url = "{$back_url}";
+	$.post(self.attr("action"), self.serialize(), success, "json");
+	toastload('登陆中');
+	return false;
+
+	function success(data){
+		delload();
+		if(data.status){
+			if(url!=''){
+              window.location.href = url;
+            }else{
+              window.location.href = 'http://'+window.location.host+'/Mobile/Index/index';
+            }
+		} else {
+			toastshow(data.info);
+		}
+	}
+});
+
+
+</script>
+
+</body>
+</html>

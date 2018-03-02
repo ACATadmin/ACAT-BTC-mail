@@ -1,0 +1,89 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+		<link rel="stylesheet" href="__MODULE__/vendor/jquery-file-upload/css/jquery.fileupload-ui.css">
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row ">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">处理设计师提高分成比例申请</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label>
+																处理结果：<span class="check-tips"></span>
+															</label>
+															<div class="clip-radio radio-primary">
+																<input type="radio" value="2" name="want_more_percentage" id="yes">
+																<label for="yes">
+																	已提高
+																</label>
+																<input type="radio" value="3" name="want_more_percentage" id="no">
+																<label for="no">
+																	不提高
+																</label>
+                                                                                                                        </div>
+														</div>
+														
+            											<input type="hidden" name="uid" value="{$uid}">
+            											<div class="form-group">
+            											<div class="col-md-8 col-sm-6 margin-top-20">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+														</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	    <script type="text/javascript">
+	    $(function(){
+	    	initPicUpload( 'pic_id');
+	        Think.setValue("pid", {$info.pid|default = 0});
+	        Think.setValue("hide", {$info.hide|default = 0});
+	        Think.setValue("is_dev", {$info.is_dev|default = 0});
+	    })
+	    </script>
+</block>

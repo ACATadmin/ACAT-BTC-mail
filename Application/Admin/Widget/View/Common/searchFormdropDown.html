@@ -1,0 +1,23 @@
+<div id="{$searchKeyName}_drop_down_box" class="drop-down">
+	<span id="{$searchKeyName}_box" class="sort-txt filter_span" dataName="{$searchKeyName}" data="{$currentVal|default=''}">
+		<if condition="$currentVal eq ''">
+			不限 
+		<else /> 
+			<volist name="dataList" id="vo"> 
+				<if condition="$currentVal eq $vo[$idName]"> {$vo[$nameName]} </if> 
+			</volist> 
+		</if>
+	</span> <i class="arrow arrow-down"></i>
+	
+	
+	<empty name="ulWidth">
+	<ul class="sub-sch-menu nav-list hidden">
+	<else/>
+	<ul class="sub-sch-menu nav-list hidden" style="width:{$ulWidth}px;">	   
+	</empty>
+		<li><a href="javascript:;" value="">不限</a></li>
+		<volist name="dataList" id="vo">
+			<li><a href="javascript:;" value="{$vo[$idName]}">{$vo[$nameName]}</a></li>
+		</volist>
+	</ul>
+</div>

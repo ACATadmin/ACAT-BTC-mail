@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>星值</title>
+<meta content="" name="keywords">
+<meta content="" name="description">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="__CSS__/amazeui.min.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/W_style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/jacob_style.css" />
+<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1462325985_4954245.css" />
+<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1462331973_0941706.css" />
+</head>
+<body>
+<style type="text/css">
+	
+
+</style>
+	
+<div class="body_page body_page_f4" id="body_page">  
+
+   <include file="Index/header"/>
+
+    <div class="page_con page_con_bg">
+      <!--<div class="am-tabs" data-am-tabs="{noSwipe: 1}" id="doc-tab-demo-1">-->
+      <div class="am-tabs">
+  	    <ul class="am-tabs-nav am-nav am-nav-tabs index_ul">
+
+                <li class="am-active"><a href="{:U('Index/index')}">发现</a></li>
+                <li><a href="{:U('Sort/index')}">排行</a></li>
+                <li><a href="{:U('Project/index')}">专题</a></li>
+                <li><a href="{:U('Fashion/index')}">时尚</a></li>
+	    </ul>
+
+	    <div class="am-tabs-bd">
+	      <div class="am-tab-panel am-active">
+	        <div class="am-slider am-slider-default index_banner" data-am-flexslider="{playAfterPaused: 8000}">
+			    <ul class="am-slides">
+				  
+				  <volist name='SlideList' id='vo'>
+				      <li><img src="{$vo.imgPath}" /></li>
+				  </volist>
+			    </ul>
+			</div>
+		     
+		      <div class="index_rolling">
+		      	<marquee  direction="left" behavior="scroll" scrollamount="10" scrolldelay="30" onmouseover="stop()" onmouseout="start()" class="gundong">
+	                <volist name='gun' id='vo'>
+	                    <a class="fame" href="#">{$vo.musician_name}<if condition='$vo.score_status gt 0'><img src="__IMG__/redTop.png" width="6" height="10" /><span class="index_span_red"><else/><img src="__IMG__/huiBottom.png" width="6" height="10" /><span class="index_span_grey"></if>{$vo.score_status}</span></a>
+	                </volist>
+		      	</marquee>
+		      </div>
+		      <include file="Index/showshowshow" /><!--index_img1-->
+	      </div><!--发现-->
+
+	    </div>
+	  </div><!--am-tabs-->
+   
+    </div><!--page_con-->
+</div><!--body_page-->
+<include file="Index/tip"/>
+	<script src="__JS__/jquery-1.9.1.min.js"></script>
+	<script src="__JS__/amazeui.min.js"></script>
+	<script src="__JS__/common.js"></script>
+	<script type="text/javascript">
+
+		$(function() {
+			
+			
+		});
+	</script>
+        <script type="text/javascript" src="__JS__/extends.js"></script>
+        <script type="text/javascript">
+            $(function(){
+              //下拉
+              var url = location.href;
+              var pageNum = "{:C('LIST_ROWS')}";
+              $(".load-more").dropDownLoad( {boxClass:'list_box',url:url,pageNum:pageNum},function(){
+
+              } );
+            })
+        </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+
+<style type="text/css">
+	.C_center {
+	    float: left;
+	    border: 1px solid #666;
+	    width: 48%;
+	    height: 184px;
+	    position: relative;
+	}
+</style>
+<div class="body_page_hei" id="body_page_hei" style="display:none;">
+	<header data-am-widget="header" class="am-header am-header-default select_city_header">
+		<div class="positin_cuwus">
+			<!--<a href="" onclick="javascript:window.history.back(-1);">-->
+			<i class="iconfont1 icon-cuowu positin_cuwu"></i>
+		</div>
+	</header>
+	<!--header-->
+	<div class="page_con" >
+		<div class="Corner_logo">
+			<img src="__IMG__/logo3.png" />
+		</div>
+		<div class="CornerCenter clearfix " style=" padding-bottom:60px">
+			<div class="C_center">
+				
+				<volist name="mobileMenu" id="vo">
+					<eq name="vo.mobile_menu" value="1">
+					<img src="{$vo.picture_id|get_cover='path'}"  class="height_181" height="181" width="181"/> 
+					</eq>
+				</volist>
+
+				<a href="{:U('Index/index',array('group_type'=>1))}">
+					<p
+						class="C_center_text">
+						发现<img src="__IMG__/C_jiantou.png" height="20" width="20" />
+					</p>
+				</a>
+			</div>
+			<div class="C_center ml4">
+				<volist name="mobileMenu" id="vo">
+					<eq name="vo.mobile_menu" value="2">
+					<img src="{$vo.picture_id|get_cover='path'}"  class="height_181" height="181" width="181"/> 
+					</eq>
+				</volist>
+					<a href="{:U('Index/index',array('group_type'=>2))}"><p
+						class="C_center_text">
+						排行<img src="__IMG__/C_jiantou.png" height="20" width="20" />
+					</p></a>
+			</div>
+			<div class="C_center mt15">
+				<volist name="mobileMenu" id="vo">
+					<eq name="vo.mobile_menu" value="3">
+					<img src="{$vo.picture_id|get_cover='path'}"  class="height_181" height="181" width="181"/> 
+					</eq>
+				</volist> 
+				<a href="{:U('Index/index',array('group_type'=>3))}"><p class="C_center_text">
+						专题<img src="__IMG__/C_jiantou.png" height="20" width="20" />
+					</p></a>
+			</div>
+			<div class="C_center ml4 mt15">
+				<volist name="mobileMenu" id="vo">
+					<eq name="vo.mobile_menu" value="4">
+					<img src="{$vo.picture_id|get_cover='path'}"  class="height_181" height="181" width="181"/> 
+					</eq>
+				</volist>
+				<a href="{:U('Index/index',array('group_type'=>4))}"><p class="C_center_text">
+						时尚<img src="__IMG__/C_jiantou.png" height="20" width="20" />
+					</p>
+				</a>
+			</div>
+		</div>
+	</div>
+	<!--page_con-->
+	<div class="login_sub">
+		<empty name="uid">
+			<button type="button" value="登录" class="sub_43">
+				<a href="{:U('User/login')}">登录</a>
+			</button>
+		<else />
+			<button type="button" class="sub_43">
+				<a href="{:U('UserCenter/index')}">{$umember.nickname}</a>
+			</button>
+		</empty>
+
+	</div>
+
+</div>
+<!--body_page-->

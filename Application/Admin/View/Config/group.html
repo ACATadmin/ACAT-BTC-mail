@@ -1,0 +1,96 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>			
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: USER PROFILE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="tabbable">
+										<ul class="nav nav-tabs tab-padding tab-space-3 tab-blue" id="myTab4">
+											<volist name="Think.config.CONFIG_GROUP_LIST" id="group">
+											<li <eq name="id" value="$key">class="active"</eq>>
+												<a href="{:U('?id='.$key)}">{$group}配置</a>
+											</li>
+											</volist>
+										</ul>
+										<div class="tab-content">
+											<div id="panel_overview" class="tab-pane fade in active">
+												<div class="row">
+													<div class="col-sm-12 col-md-12">
+														<form action="{:U('save')}" method="POST" class="auth-form">
+															<volist name="list" id="config">
+															
+															<div class="form-group">
+																<label for="exampleInputEmail1">
+																	{$config.title}<span class="check-tips">（{$config.remark}）</span>
+																</label>
+																<switch name="config.type">
+																<case value="0">
+																	<input type="text" class="form-control" name="config[{$config.name}]" value="{$config.value}">
+																</case>
+																<case value="1">
+																	<input type="text" class="form-control" name="config[{$config.name}]" value="{$config.value}">
+																</case>
+																<case value="2">
+																	<textarea class="form-control autosize area-animated" maxlength="500" name="config[{$config.name}]">{$config.value}</textarea>
+																</case>
+																<case value="3">
+																	<textarea class="form-control autosize area-animated" maxlength="500" name="config[{$config.name}]">{$config.value}</textarea>
+																</case>
+																<case value="4">
+																<select id="" class="form-control" name="config[{$config.name}]">
+										                    		<volist name=":parse_config_attr($config['extra'])" id="vo">
+										                    			<option value="{$key}" <eq name="config.value" value="$key">selected</eq>>{$vo}</option>
+										                    		</volist>
+																</select>
+																</case>
+																</switch>
+															</div>
+															
+															</volist>
+										
+													        <input type="hidden" name="id" value="{$this_group.id}" />
+										                    <button type="submit" class="btn btn-o btn-primary ajax-post" target-form="auth-form">
+																确 定
+															</button>
+															<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+																返 回
+															</button>
+													    </form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: USER PROFILE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

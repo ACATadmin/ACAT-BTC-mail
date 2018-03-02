@@ -1,0 +1,200 @@
+<extend name="Public/base" />
+<block name='style'>
+    <style>
+        .cancel_video,.sample_cancel_video{
+            color:#666666;
+            cursor:pointer;
+            text-align:center;
+            background:#bbbbbb;
+        }
+        .cancel_video:hover,.sample_cancel_video:hover{
+            background:#cccccc;
+        }
+        video{
+            width:100%;
+        }
+        #upload-file,#sample-upload-file{
+            margin-top:10px;
+            margin-bottom: 10px;
+            display:block !important;
+        }
+        .video_box,.sample_video_box{
+            display:block;
+        }
+    </style>
+</block>
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">七牛测试</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+                                                                                                            
+                                                                                                                
+                                                                                                            
+														
+                                                                                                                
+														
+                                                                                                                
+                                                                                                                <div class="form-group qiniu_box">
+                                                                                                                    <input type="file" name="file" id="upload-file">
+                                                                                                                    <label id='qiniu_video'>
+                                                                                                                        <notempty name="info.qiniu_file_key">
+                                                                                                                            <div class="video_box">
+                                                                                                                                <video src="{:$qiniu->downLink($info['qiniu_file_key'])}" controls="controls"></video>
+                                                                                                                                <div class="cancel_video">删除</div>
+                                                                                                                            </div>
+                                                                                                                        </notempty>
+                                                                                                                    </label>
+                                                                                                                    <input type='hidden' name='qiniu_file_key' value='{$info.qiniu_file_key}'>
+                                                                                                                </div>
+                                                                                                                
+
+                                                                                                                
+
+                                                                                                                
+                                                                                                                
+<!--                                                                                                                <div class="form-group">
+															<label for="exampleInputEmail1">
+																排序：<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="sort" value='{$info.sort}'>
+														</div>
+
+                                                                                                                <input type="hidden" name="id" value="{$info.id}">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>-->
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+                <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+                
+                <script>
+                    function showHidePrice(){
+                        var lesson_type=$('[name="lesson_type"]').val();
+                        if(lesson_type==1){
+                            $('[name="pay_price"]').parent().css('display','none');
+                        }else if(lesson_type==2){
+                            $('[name="pay_price"]').parent().css('display','block');
+                        }
+                    }
+                    
+                    $(function(){
+                        showHidePrice();
+                        $('[name="lesson_type"]').change(function(){
+                            showHidePrice();
+                        });
+                    });
+                    
+                </script>
+                <script type="text/javascript">
+                    $(function(){
+                        initPicUpload( 'cover_id',1);
+                    })
+                </script>
+                <script>
+                    $("#upload-file").uploadify({
+				"height"          : 30,
+				"swf"             : "__STATIC__/uploadify/uploadify.swf",
+				"fileObjName"     : "qiniu_file",
+				"buttonText"      : "上传视频",
+				"uploader"        : "{:U('uploadOne',array('session_id'=>session_id(),'ajax'=>1))}",
+				"width"           : 120,
+				'removeTimeout'   : 1,
+				'onInit'		  : init,
+				'multi'			  : false,
+				"onUploadSuccess" : uploadSuccess,
+				'onFallback' : function() {
+		            alert('未检测到兼容版本的Flash.');
+		        }
+			});
+			function init(){
+				$('#upload-file, #upload-file-queue').css('display','inline-block');
+			}
+
+			/* 文件上传成功回调函数 */
+			function uploadSuccess(file, data){
+				console.log(data);
+				var data = $.parseJSON(data);
+				if(data.error==0){
+                                    $('[name="qiniu_file_key"]').val(data.key);
+                                    $('.video_box').remove();
+                                    $.get("{:U('getFileUrl')}",{key:data.key},function(path){
+                                        var string = '<div class="video_box"><video src="'+path+'" controls="controls"></video><div class="cancel_video">删除</div></div>';
+                                        $('#qiniu_video').append(string);
+                                    });
+                                    
+				} else {
+                                    console.log(data.data);
+                                    updateAlert('上传失败','error');
+				}
+			}
+                        
+                        /*删除*/
+                        $('div').delegate(".cancel_video","click",function(){
+                            $('[name="qiniu_file_key"]').val('');
+                            $('.video_box').remove();
+                        });
+                </script>
+                <script>
+                    function showHideVideo(){
+                        var is_series=$('[name="is_series"]').val();
+                        if(is_series==1){
+                            $('.qiniu_box').css('display','none');
+                        }else{
+                            $('.qiniu_box').css('display','block');
+                        }
+                    }
+                    
+                    $(function(){
+                        showHideVideo();
+                        $('[name="is_series"]').change(function(){
+                            showHideVideo();
+                        });
+                    });
+                </script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

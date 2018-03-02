@@ -1,0 +1,92 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">菜单列表</span></h5>
+									<a class="btn btn-wide btn-primary" href="{:U('add',array('pid'=>I('get.pid',0)))}">新 增</a>
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+						                        <th>ID</th>
+						                        <th>名称</th>
+						                        <th>上级菜单</th>
+						                        <th>分组</th>
+						                        <th>URL</th>
+						                        <th>排序</th>
+						                        <th>icon_class</th>
+						                        <th>仅开发者模式显示</th>
+						                        <th>隐藏</th>
+						                        <th class="center">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<volist name="list" id="menu">
+											<tr>
+						                        <td>{$menu.id}</td>
+						                        <td>
+						                            <a href="{:U('index?pid='.$menu['id'])}">{$menu.title}</a>
+						                        </td>
+						                        <td>{$menu.up_title|default='无'}</td>
+						                        <td>{$menu.group}</td>
+						                        <td>{$menu.url}</td>
+						                        <td>{$menu.sort}</td>
+						                        <td>{$menu.icon_class}</td>
+						                        <td>
+						                            <a href="{:U('toogleDev',array('id'=>$menu['id'],'value'=>abs($menu['is_dev']-1)))}" class="ajax-get">
+						                            {$menu.is_dev_text}
+						                            </a>
+						                        </td>
+						                        <td>
+						                            <a href="{:U('toogleHide',array('id'=>$menu['id'],'value'=>abs($menu['hide']-1)))}" class="ajax-get">
+						                            {$menu.hide_text}
+						                            </a>
+						                        </td>
+												<td class="center">
+													<div class="visible-md visible-lg hidden-sm hidden-xs">
+						                            <a title="编辑" href="{:U('edit?id='.$menu['id'])}">编辑</a>
+						                            <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$menu['id'])}">删除</a>
+													</div>
+												</td>
+											</tr>
+											</volist>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

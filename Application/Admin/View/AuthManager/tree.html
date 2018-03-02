@@ -1,0 +1,13 @@
+<volist name="tree" id="list">
+<div class="panel-body">
+    <div class="checkbox clip-check check-primary checkbox-inline">
+		<input type="checkbox" class="cate_id" id="checkbox4{$list.id}" name="cid[]" value="{$list.id}">
+		<label for="checkbox4{$list.id}">
+			{$list.title}
+		</label>
+	</div>
+	<notempty name="list['_']">
+    {:R('AuthManager/tree', array($list['_']))}
+    </notempty>
+</div>
+</volist>

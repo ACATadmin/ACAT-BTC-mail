@@ -1,0 +1,193 @@
+<extend name="Public/base"/>
+<block name="style">
+	<style>
+		.dragsort {
+		    width:400px;
+		}
+		/* 拖动排序列表 */
+.dragsort {
+
+}
+.edit_sort {
+    display: inline-block;
+    border:1px solid #cdcdcd;
+    color: #404040;
+    line-height: 35px;
+    width: 20%;
+    height: 376px;
+
+}
+.edit_sort span {
+    background: #EEEEEE;
+    width: 100%;
+    display: inline-block;
+    font-weight: bold;
+    text-indent: 10px;
+    border-bottom: 1px solid #cdcdcd;
+    margin-bottom:5px;
+}
+.edit_sort ul {
+    padding: 0 5px;
+    overflow-y:scroll;
+    height: 334px;
+}
+.edit_sort_l {
+    float: left;
+    margin-right: 20px;
+}
+.tab2 p {
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-indent: 15px;
+}
+.dragsort li {
+    margin-bottom: 5px;
+    padding: 0 6px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #eee;
+    background-color: #fff;
+	overflow: hidden;
+}
+.dragsort li em {
+    font-style: normal;
+}
+.dragsort li b {
+    display: none;
+    float: right;
+    padding: 0 6px;
+    font-weight: bold;
+    color: #000;
+}
+.dragsort li:hover b {
+    display: block;
+}
+.dragsort .draging-place {
+    border-style: dashed;
+    border-color: #ccc;
+}
+		
+	</style>
+</block>
+<block name="body">
+<link href="__MODULE__/vendor/nestable/jquery.nestable.css" rel="stylesheet" media="screen">
+<div class="main-content" >
+	<div class="wrap-content container" id="container">
+	<!-- start: FORM VALIDATION EXAMPLE 2 -->
+		<div class="container-fluid container-fullw">
+			<div class="row">
+				<div class="col-md-12">
+					<h2><present name="data">编辑<else />新增</present>钩子</h2>
+					<hr>
+					<form action="{:U('updateHook')}" method="post" class="form-horizontal">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="control-label">
+										钩子名称 <span class="symbol required">（需要在程序中先添加钩子，否则无效）</span>
+									</label>
+									<input type="text"  class="form-control" value="{$data.name}" name="name">
+								</div>
+								<div class="form-group">
+									<label class="control-label">
+										钩子描述 <span class="symbol required">（钩子的描述信息）</span>
+									</label>
+									<textarea class="ckeditor form-control" id="editor2"  cols="10" rows="10" name="description" >{$data.description}</textarea>
+								</div>
+								<div class="form-group">
+									<label class="control-label">
+										钩子类型 <span class="symbol required">（区分钩子的主要用途）</span>
+									</label>
+									<select class="form-control" id="dropdown" name="type">
+										<volist name=":C('HOOKS_TYPE')" id="vo">
+											<option value="{$key}" <eq name="data.type" value="$key"> selected</eq>>{$vo}</option>
+										</volist>
+									</select>
+								</div>
+								<present name="data">
+									<div class="form-group">
+										<label class="control-label">钩子挂载的插件排序<span class="symbol required">（拖动后保存顺序，影响同一个钩子挂载的插件执行先后顺序）</span></label>
+										<div class="dd" id="nestable">
+											<input type="hidden" name="addons" value="{$data.addons}" readonly>
+											<empty name="data.addons">
+												暂无插件，无法排序
+											<else />
+											<ol class="dd-list" id="sortUl">
+												<volist name=":explode(',',$data['addons'])" id="addons_vo">
+												<li class="dd-item getSort">
+													<div class="dd-handle">
+														<em>{$addons_vo}</em>
+													</div>
+													<b style="float:right;margin-right:10px;margin-top:-35px;cursor:pointer;">&times;</b>
+												</li>
+												</volist>
+											</ol>
+											<script type="text/javascript">
+												$(function(){
+													$('#sortUl li b').click(function(){
+						                            	$(this).parent().remove();
+						                            	updateVal();
+						                            });
+						
+													// 更新排序后的隐藏域的值
+							                        function updateVal() {
+							                        	var sortVal = [];
+						                            	$('#sortUl li').each(function(){
+						                            		sortVal.push($('em',this).text());
+						                            	});
+						                                $("input[name='addons']").val(sortVal.join(','));
+							                        }
+												})
+											</script>
+											</empty>
+										</div>
+									</div>
+								</present>
+							<div class="row">
+							<div class="col-md-12">
+								<input type="hidden" name="id" value="{$data.id}">
+								<button class="btn btn-primary btn-wide submit-btn ajax-post" target-form="form-horizontal" id="submit">
+									确 定 <i class="fa fa-arrow-circle-right"></i>
+								</button>
+								<button class="btn btn-wide btn-green active" onclick="javascript:history.back(-1);return false;">
+									返 回 <i class="fa fa-arrow-circle-left"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- end: FORM VALIDATION EXAMPLE 2 -->
+	</div>
+</div>
+</block>
+
+<block name="script">
+		
+	<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<present name="data">
+			<script type="text/javascript" src="__STATIC__/jquery.dragsort-0.5.1.min.js"></script>
+		</present>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/nestable/jquery.nestable.js"></script>
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<script src="__MODULE__/assets/js/ui-nestable.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+			UINestable.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>
+

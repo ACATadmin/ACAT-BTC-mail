@@ -1,0 +1,71 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">{$auth_group['id']?'编辑':'新增'}用户组</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U('AuthManager/writeGroup')}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																用户组<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="title" value="{$auth_group.title}">
+														</div>
+														<div class="form-group">
+															<label for="">
+																描述<span class="check-tips"></span>
+															</label>
+															<textarea class="form-control autosize area-animated" maxlength="500" name="description">{$auth_group.description}</textarea>
+														</div>
+            											<input type="hidden" name="id" value="{$auth_group.id}" />
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

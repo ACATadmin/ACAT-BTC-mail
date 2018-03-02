@@ -1,0 +1,92 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">新增邮件</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																姓名<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="name" value="{$info.name}">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">
+																邮箱 <span class="symbol required"></span><span class="check-tips"></span>
+															</label>
+															<input type="email" class="form-control" name="email" value="{$info.email}">
+														</div>
+														<div class="form-group">
+															<label class="control-label">
+																类型 <span class="symbol required"></span>
+															</label>
+															<select class="form-control" id="dropdown" name="group">
+																<volist name="Think.config.EMAIL_GROUP" id="type">
+																	<option value="{$key}">{$type}</option>
+																</volist>
+															</select>
+														</div>
+														<div class="form-group">
+															<label class="control-label">
+																备注<span class="symbol"></span>
+															</label>
+															<textarea class="ckeditor form-control" id="editor2"  cols="10" rows="10" name="remark">{$info.remark|default=''}</textarea>
+														</div>
+														<input type="hidden" name="id" value="{$info.id}" />
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+		<script type="text/javascript">
+			Think.setValue("group", {$info.group|default=1});
+			//导航高亮
+			highlight_subnav('{:U('index')}');
+		</script>
+</block>

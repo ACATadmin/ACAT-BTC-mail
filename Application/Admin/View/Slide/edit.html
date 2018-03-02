@@ -1,0 +1,195 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+		<link rel="stylesheet" href="__MODULE__/vendor/jquery-file-upload/css/jquery.fileupload-ui.css">
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">{:isset($info['goods_id'])?'编辑':'添加新'}图片</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label>
+																标题：<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="slide_title" value="{$info.slide_title}">
+														</div>
+                                                                                                                <div class="form-group">
+                                                                                                                        <label>
+																位置：<span class="check-tips"></span>
+															</label>
+                                                                                                                        <select class="js-states form-control" name="plate_type">
+                                                                                                                            <volist name=':C("PLATE_TYPE")' id="vo">
+                                                                                                                                <option value='{$vo.id}' <eq name='info.plate_type' value="$vo['id']">selected</eq>>{$vo.name}</option>
+                                                                                                                            </volist>
+                                                                                                                        </select>
+                                                                                                                </div>
+                                                                                                                <div class="form-group">
+                                                                                                                        <label>
+																跳转类型：<span class="check-tips"></span>
+															</label>
+                                                                                                                        <select class="js-states form-control" name="target_type">
+                                                                                                                            <volist name=':C("SLIDE_TARGET_TYPE")' id="vo">
+                                                                                                                                <option value='{$vo.id}' <eq name='info.target_type' value="$vo['id']">selected</eq>>{$vo.name}</option>
+                                                                                                                            </volist>
+                                                                                                                        </select>
+                                                                                                                </div>
+                                                                                                                <div class="form-group notice_live_select" style='display:none;'>
+                                                                                                                        <label>
+																跳转目标：<span class="check-tips"></span>
+															</label>
+                                                                                                                        <select class="js-example-basic-single js-states form-control" name="target_id_in">
+                                                                                                                            <option value='0'>请选择</option>
+                                                                                                                            <volist name="notice_live_list" id="vo">
+                                                                                                                                <option value='{$vo.id}' <eq name='info.target_id' value="$vo['id']">selected</eq>>{$vo.title}</option>
+                                                                                                                            </volist>
+                                                                                                                        </select>
+                                                                                                                </div>
+                                                                                                                <div class="form-group video_select" style='display:none;'>
+                                                                                                                        <label>
+																跳转目标：<span class="check-tips"></span>
+															</label>
+                                                                                                                        <select class="js-example-basic-single js-states form-control" name="target_id_in">
+                                                                                                                            <option value='0'>请选择</option>
+                                                                                                                            <volist name="video_list" id="vo">
+                                                                                                                                <option value='{$vo.id}' <eq name='info.target_id' value="$vo['id']">selected</eq>>{$vo.title}</option>
+                                                                                                                            </volist>
+                                                                                                                        </select>
+                                                                                                                </div>
+                                                                                                                <div class="form-group article_select" style='display:none;'>
+                                                                                                                        <label>
+																跳转目标：<span class="check-tips"></span>
+															</label>
+                                                                                                                        <select class="js-example-basic-single js-states form-control" name="target_id_in">
+                                                                                                                            <option value='0'>请选择</option>
+                                                                                                                            <volist name="article_list" id="vo">
+                                                                                                                                <option value='{$vo.id}' <eq name='info.target_id' value="$vo['id']">selected</eq>>{$vo.title}</option>
+                                                                                                                            </volist>
+                                                                                                                        </select>
+                                                                                                                </div>
+                                                                                                                <div class="form-group link" style='display:none;'>
+															<label class="control-label">
+																链接：
+															</label>
+															<input type="text" class="form-control" name="slide_url" value="{$info.slide_url}">
+														</div>
+														{:W('Pic/init',array('picture_id','图片',$info['picture_id'],'750*350'))}
+														<div class="form-group">
+															<label>
+																排序<span class="check-tips"></span>
+															</label>
+															<input style="width:100px;" type="text" class="form-control" name="order_sort" value="{$info.order_sort|default=''}">
+														</div>
+            											<input type="hidden" name="slide_id" value="{$info.slide_id|default=''}">
+                                                                                                <input type='hidden' name='target_id' value='{$info.target_id}'>
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+                <script src="__MODULE__/vendor/select2/select2.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	    <script type="text/javascript">
+	    $(function(){
+	    	initPicUpload( 'picture_id');
+	        Think.setValue("pid", {$info.pid|default = 0});
+	        Think.setValue("hide", {$info.hide|default = 0});
+	        Think.setValue("is_dev", {$info.is_dev|default = 0});
+	    })
+	    </script>
+            <script>
+                $(function(){
+                        $(".js-example-basic-single").select2();
+                        show_target_select();
+                        $('[name="target_type"]').change(function(){
+                            show_target_select();
+                            $('[name="target_id"]').val(0);
+                        });
+                        $('[name="target_id_in"]').change(function(){
+                            var target_id=$(this).val();
+                            $('[name="target_id"]').val(target_id);
+                        });
+		})
+                function show_target_select(){
+                    var target_type=$('[name="target_type"]').val();
+                    if(target_type==1){
+                        $('.notice_live_select').css('display','block');
+                        $('.video_select,.article_select,.link').css('display','none');
+                    }
+                    if(target_type==2){
+                        $('.video_select').css('display','block');
+                        $('.notice_live_select,.article_select,.link').css('display','none');
+                    }
+                    if(target_type==3){
+                        $('.article_select').css('display','block');
+                        $('.notice_live_select,.video_select,.link').css('display','none');
+                    }
+                    if(target_type==4){
+                        $('.link').css('display','block');
+                        $('.notice_live_select,.video_select,.article_select').css('display','none');
+                    }
+                    $(".js-example-basic-single").select2();
+                }
+            </script>
+            <script>
+                    function change_pic_size(){
+                        var plate_type = $('[name="plate_type"]').val();
+                        if(plate_type==7){
+                            $('#picture_id_box').find('.check-tips').html('（建议图片尺寸：750*1334）');
+                        }else{
+                            $('#picture_id_box').find('.check-tips').html('（建议图片尺寸：750*350）');
+                        }
+                    }        
+                    
+                    $(function(){
+                        change_pic_size();
+                    });
+    
+                    $('[name="plate_type"]').change(function(){
+                        change_pic_size();
+                    });
+            </script>
+</block>

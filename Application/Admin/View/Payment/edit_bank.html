@@ -1,0 +1,102 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	
+	<div class="main-title">
+		<h2>{:isset($info['pay_id'])?'编辑':'添加新'}银行</h2>
+	</div>
+	<div class="tab-wrap">
+		<ul class="tab-nav nav">	
+			<li data-tab="tab1" class="current"><a href="javascript:void(0);">基础</a></li>
+			
+		</ul>
+		<div class="tab-content">
+			<form action="{:U('edit_bank')}" method="post" class="form-horizontal">
+
+				<!-- 基础 -->
+				<div id="tab1" class="tab-pane in tab1">
+					<div class="form-item">
+	                    <label class="item-label">银行名称<span class="check-tips"></span></label>
+	                    <div class="controls">
+	                    	<input type="text" class="text input-large" name="bank_name" value="{$info.bank_name}">
+	                    </div>
+					</div>
+					
+					<div class="form-item">
+	                    <label class="item-label">银行英文简称<span class="check-tips"></span></label>
+	                    <div class="controls">
+	                    	<input type="text" class="text input-large" name="bank_en_name" value="{$info.bank_en_name}">
+	                    </div>
+					</div>
+
+					<div class="form-item">
+	                    <label class="item-label">启用<span class="check-tips"></span></label>
+	                    <div class="controls">
+	                    	<label class="radio"><input type="radio" name="enabled" value="1">是</label>
+                			<label class="radio"><input type="radio" name="enabled" value="0">否</label>
+	                    </div>
+					</div>
+
+					<div class="form-item">
+						<label class="item-label">银行描述<span class="check-tips"></span></label>
+	                    <div class="controls">
+	                    	<label class="textarea input-large">
+	                    		<textarea name="bank_desc">{$info.bank_desc}</textarea>
+	                    	</label>
+	                    </div>
+					</div>
+
+				</div>
+
+				
+				
+				<div class="form-item">
+					<label class="item-label"></label>
+					<div class="controls">
+						<input type="hidden" name="bank_id" value="{$info.bank_id}">
+						<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		//-----------------------------------------------------------------------------------------
+		
+        Think.setValue("enabled", {$info.enabled|default = 0});
+        
+   		//-----------------------------------------------------------------------------------------
+	
+		/*$(function(){
+			showTab();
+			
+			//-------------------------------------------------------------------
+			//支付手续费切换
+			pay_fee_type_change();
+			$("select[name='pay_fee_type']").change(function(){
+				pay_fee_type_change();
+			})
+			function pay_fee_type_change(){
+				var pay_fee_type = $("select[name='pay_fee_type']").val();
+				if( pay_fee_type==0 ){	//无
+					$("input[name='pay_fee_content']").attr("disabled","disabled");
+				}else{
+					$("input[name='pay_fee_content']").attr("disabled",false);
+				}
+			}
+			//-------------------------------------------------------------------
+			
+		});*/
+   		
+   		
+   		
+		//导航高亮
+		highlight_subnav('{:U('Payment/bank')}');
+	</script>
+</block>

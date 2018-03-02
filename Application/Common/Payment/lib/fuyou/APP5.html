@@ -1,0 +1,32 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+.error {color: #FF0000;}
+</style>
+</head>
+<body> 
+<h2>5要素签约</h2>
+<p><span class="error">* 必需的字段</span></p>
+<form method="post" action="https://fht-test.fuiou.com/fuMer/api_contractAPP.do"> 
+  签约来源：<input type="text" value="APP"                 name="srcChnl"      style="width:300px;"><br/>
+  业务类型：<input type="text" value="AC01"                name="busiCd"       style="width:300px;"><br/>
+  行别：    <input type="text" value="0105"                name="bankCd"       style="width:300px;"><br/>
+  户名：    <input type="text" value="张三"                name="userNm"       style="width:300px;"><br/>
+  手机号：  <input type="text" value="15846526414"         name="mobileNo"     style="width:300px;"><br/>
+  证件类型：<input type="text" value="0"                   name="credtTp"      style="width:300px;"><br/>
+  证件号码：<input type="text" value="320321199008231211"  name="credtNo"      style="width:300px;"><br/>
+  账户类型：<input type="text" value="01"                  name="acntTp"       style="width:300px;"><br/>
+  银行卡号：<input type="text" value="6217001140025626059" name="acntNo"       style="width:300px;"><br/><br/>
+  商户号：  <input type="text" value="0002900F0345142"     name="mchntCd"      style="width:300px;"><br/>
+  回拨号码：<input type="text" value="0"                   name="isCallback"   style="width:300px;"><br/>
+  保留字段1 <input type="text" value="代收签约"                    name="reserved1"    style="width:300px;"><br/>
+  前台地址：<input type="text" value="http://demo.rongzhiheng.com/modules/payment/fuyou_qianyue_Return.php"                    name="pageFrontUrl" style="width:300px;"><br/>
+  签名：    <input type="text" value="9a6f61045aa870f03d3d8699c261391fb366a9b5" name="signature" style="width:500px;"><br/>
+   <input type="submit" name="submit" value="提交"> 
+</form>
+
+</body>
+</html>
+

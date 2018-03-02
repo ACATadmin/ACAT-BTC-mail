@@ -1,0 +1,31 @@
+<include file="Public/tip"/>
+<include file="Index/tip"/>
+<include file="Public/var"/>
+
+
+	<include file="Public/share" />
+	<script src="__JS__/jquery-1.9.1.min.js"></script>
+	<script src="__JS__/amazeui.min.js"></script>
+	<script src="__JS__/common.js"></script>
+
+    <!-- 底部
+    ================================================== -->
+    <footer class="footer">
+
+    </footer>
+    <script type="text/javascript">
+    $(".tag").click(function(){
+        toastload();
+        var tag=$( this).html();
+        window.location.href = "/Mobile/Fashion/content?tag="+ tag ;
+      })
+    </script>
+
+<block name="script">
+	
+</block> <!-- 用于加载js代码 -->
+<!-- 页面footer钩子，一般用于加载插件JS文件和JS代码 -->
+{:hook('pageFooter', 'widget')}
+<div class="hidden"><!-- 用于加载统计代码等隐藏元素 -->
+	<block name="hidden"></block>
+</div>

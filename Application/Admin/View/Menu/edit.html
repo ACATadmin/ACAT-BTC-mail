@@ -1,0 +1,142 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">{:isset($info['id'])?'编辑':'新增'}后台菜单</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label>
+																标题<span class="check-tips">（用于后台显示的配置标题）</span>
+															</label>
+															<input type="text" class="form-control" name="title" value="{$info.title|default=''}">
+														</div>
+														<div class="form-group">
+															<label>
+																排序<span class="check-tips">（用于分组显示的顺序）</span>
+															</label>
+															<input type="text" class="form-control" name="sort" value="{$info.sort|default=''}">
+														</div>
+														<div class="form-group">
+															<label>
+																链接<span class="check-tips">（U函数解析的URL或者外链）</span>
+															</label>
+															<input type="text" class="form-control" name="url" value="{$info.url|default=''}">
+														</div>
+														<div class="form-group">
+															<label for="form-field-select-1">
+																上级菜单<span class="check-tips">（所属的上级菜单）</span>
+															</label>
+															<select id="form-field-select-1" class="form-control" name="pid">
+											                    <volist name="Menus" id="menu">
+											                        <option value="{$menu.id}">{$menu.title_show}</option>
+											                    </volist>
+															</select>
+														</div>
+														<div class="form-group">
+															<label>
+																分组<span class="check-tips">（用于左侧分组二级菜单）</span>
+															</label>
+															<input type="text" class="form-control" name="group" value="{$info.group|default=''}">
+														</div>
+														<div class="form-group">
+															<label>
+																icon_class<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="icon_class" value="{$info.icon_class|default=''}">
+														</div>
+														<div class="form-group">
+															<label class="block">
+																是否隐藏<span class="check-tips"></span>
+															</label>
+															<div class="clip-radio radio-primary">
+																<input id="hidden_true" type="radio" name="hide" value="1">
+																<label for="hidden_true">
+																	是
+																</label>
+																<input id="hidden_false" type="radio" name="hide" value="0">
+																<label for="hidden_false">
+																	否
+																</label>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="block">
+																仅开发者模式可见<span class="check-tips"></span>
+															</label>
+															<div class="clip-radio radio-primary">
+																<input id="is_dev_true" type="radio" name="is_dev" value="1">
+																<label for="is_dev_true">
+																	是
+																</label>
+																<input id="is_dev_false" type="radio" name="is_dev" value="0">
+																<label for="is_dev_false">
+																	否
+																</label>
+															</div>
+														</div>
+														<div class="form-group">
+															<label>
+																说明<span class="check-tips">（菜单详细说明）</span>
+															</label>
+															<input type="text" class="form-control" name="tip" value="{$info.tip|default=''}">
+														</div>
+            											<input type="hidden" name="id" value="{$info.id|default=''}">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	    <script type="text/javascript">
+	    $(function(){
+	        Think.setValue("pid", {$info.pid|default = 0});
+	        Think.setValue("hide", {$info.hide|default = 0});
+	        Think.setValue("is_dev", {$info.is_dev|default = 0});
+	    })
+	    </script>
+</block>

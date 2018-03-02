@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><notempty name="meta_title">{$meta_title}|</notempty>管理后台</title>
+    <link href="__ROOT__/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
+	<!-- start: META -->
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<!-- end: META -->
+	<!-- start: GOOGLE FONTS -->
+	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+	<!-- end: GOOGLE FONTS -->
+	<!-- start: MAIN CSS -->
+	<link rel="stylesheet" href="__MODULE__/vendor/bootstrap/css/bootstrap.min.css">
+        <link href="__MODULE__/vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="__MODULE__/vendor/fontawesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__MODULE__/vendor/themify-icons/themify-icons.min.css">
+	<link href="__MODULE__/vendor/animate.css/animate.min.css" rel="stylesheet" media="screen">
+	<link href="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet" media="screen">
+	<link href="__MODULE__/vendor/switchery/switchery.min.css" rel="stylesheet" media="screen">
+	<!-- end: MAIN CSS -->
+	<!-- start: CLIP-TWO CSS -->
+	<link rel="stylesheet" href="__MODULE__/assets/css/styles.css">
+	<link rel="stylesheet" href="__MODULE__/assets/css/plugins.css">
+	<link rel="stylesheet" href="__MODULE__/assets/css/themes/theme-1.css" id="skin_color" />
+	<link href="__MODULE__/vendor/toastr/toastr.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="__CSS__/file.css" />
+<!--        <link rel="stylesheet" href="__CSS__/black_color.css" />
+        <link rel="stylesheet" href="__CSS__/common.css" />-->
+        <script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+        <link rel="stylesheet" href="__CSS__/jacob_style.css" />
+        <link rel="stylesheet" href="__CSS__/yorky.css" />
+	<!-- end: CLIP-TWO CSS -->
+	<!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
+	<!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
+    <block name="style"></block>
+    <style>
+        .table tbody > tr > td{
+            max-width:340px;
+            word-wrap: break-word;
+        }
+        
+        .message_notice{
+            margin-right:40px;
+        }
+        .dropdown-menu.dropdown-light li a{
+            color:#29cf7f;
+        }
+        .dot-badge2{
+            border-radius: 100%;
+            border-style: solid;
+            border-width: 2px;
+            height: 10px;
+            margin: 2px;
+            position: absolute !important;
+            border-color: #ffffff;
+            width: 10px;
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            right: auto;
+            margin-left: 10px;
+        }
+        .dropdown-menu > li > a:hover{
+            color:#29cf7f !important;
+            background:none !important;
+            background-color: #f5f5f5 !important;
+        }
+    </style>
+</head>
+<body>
+	<div id="app">
+		<!-- sidebar -->
+		<div class="sidebar app-aside" id="sidebar">
+			<div class="sidebar-container perfect-scrollbar">
+				<nav>
+					<!-- start: MAIN NAVIGATION MENU -->
+					<ul class="main-navigation-menu">
+						<volist name="__MENU__" id="main">
+							<empty name="main.child">
+								<li <if condition="$main.class eq 'current'">class="active open"</if>>
+									<a href="{$main.url|U}">
+										<div class="item-content">
+											<div class="item-media">
+												<i class="{$main.icon_class}"></i>
+											</div>
+											<div class="item-inner">
+												<span class="title"> {$main.title} </span>
+											</div>
+										</div>
+									</a>
+								</li>
+							<else />
+								<li <if condition="$main.class eq 'current'">class="active open"</if>>
+									<a href="javascript:void(0)">
+										<div class="item-content">
+											<div class="item-media">
+												<i class="{$main.icon_class}"></i>
+											</div>
+											<div class="item-inner">
+												<span class="title"> {$main.title} </span><i class="icon-arrow"></i>
+											</div>
+										</div>
+									</a>
+									<ul class="sub-menu">
+										<volist name='main.child' id='group' >
+										<volist name="group" id="child">
+										<li <if condition="$child.class eq 'current'">class="active"</if>>
+											<a href="{$child.url|U}">
+												<span class="title"> {$child.title} </span>
+											</a>
+										</li>
+										</volist>
+										</volist>
+									</ul>
+								</li>
+							</empty>
+						</volist>
+					</ul>
+					<!-- end: MAIN NAVIGATION MENU -->
+				</nav>
+			</div>
+		</div>
+		<div class="app-content">
+			<!-- start: TOP NAVBAR -->
+			<header class="navbar navbar-default navbar-static-top">
+				<!-- start: NAVBAR HEADER -->
+				<div class="navbar-header">
+					<a href="#" class="sidebar-mobile-toggler pull-left hidden-md hidden-lg" class="btn btn-navbar sidebar-toggle" data-toggle-class="app-slide-off" data-toggle-target="#app" data-toggle-click-outside="#sidebar">
+						<i class="ti-align-justify"></i>
+					</a>
+					<a class="navbar-brand" href="{:U('Index/index')}">
+						<!--<img src="__MODULE__/assets/images/logo.png" alt="logo" style="height:45px;width:45px;"/>-->
+                                                <!--<img src="/favicon.ico" alt="logo" style="height:45px;width:45px;"/>-->
+					</a>
+					<a href="#" class="sidebar-toggler pull-right visible-md visible-lg" data-toggle-class="app-sidebar-closed" data-toggle-target="#app">
+						<i class="ti-align-justify"></i>
+					</a>
+					<a class="pull-right menu-toggler visible-xs-block" id="menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<i class="ti-view-grid"></i>
+					</a>
+				</div>
+				<!-- end: NAVBAR HEADER -->
+				<!-- start: NAVBAR COLLAPSE -->
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-right">
+                                                
+                                                
+						<!-- start: USER OPTIONS DROPDOWN -->
+						<li class="dropdown current-user">
+							<a href class="dropdown-toggle" data-toggle="dropdown">
+								<img src="__MODULE__/assets/images/avatar-1.jpg" alt="{:session('user_auth.username')}" style="display:none;"> <span class="username">{:session('user_auth.username')} <i class="ti-angle-down"></i></i></span>
+							</a>
+							<ul class="dropdown-menu dropdown-dark">
+				                <li><a href="{:U('User/updatePassword')}">修改密码</a></li>
+				                <li><a href="{:U('User/updateNickname')}">修改昵称</a></li>
+				                <li><a href="{:U('Public/logout')}">退出</a></li>
+							</ul>
+						</li>
+						<!-- end: USER OPTIONS DROPDOWN -->
+					</ul>
+				</div>
+				<!-- end: NAVBAR COLLAPSE -->
+			</header>
+			<!-- end: TOP NAVBAR -->
+			<block name="body"> </block>
+		</div>
+		<!-- start: FOOTER -->
+		<footer>
+			<div class="footer-inner">
+				<div class="pull-left">
+					&copy; <span class="current-year"></span><span class="text-bold text-uppercase">保理</span>. <span>All rights reserved</span>
+				</div>
+				<div class="pull-right">
+					<span class="go-top"><i class="ti-angle-up"></i></span>
+				</div>
+			</div>
+		</footer>
+		<!-- end: FOOTER -->
+		</div>
+	<!-- /内容区 -->
+        
+    <include file="Public/message_notice"/>    
+        
+    <script type="text/javascript">
+    (function(){
+        var ThinkPHP = window.Think = {
+            "ROOT"   : "__ROOT__", //当前网站地址
+            "APP"    : "__APP__", //当前项目地址
+            "PUBLIC" : "__PUBLIC__", //项目公共目录地址
+            "DEEP"   : "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+            "MODEL"  : ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+            "VAR"    : ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"],
+            "SESSION_ID" : '{:session_id()}'
+        }
+    })();
+    </script>
+   <script type="text/javascript" src="__STATIC__/think.js"></script>
+    <script type="text/javascript" src="__JS__/common.js"></script>
+    <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>	
+	<script src="__MODULE__/vendor/toastr/toastr.min.js"></script>
+	<script src="__MODULE__/assets/js/ui-notifications.js"></script>
+	<script>
+		jQuery(document).ready(function() {
+			UINotifications.init();
+		});
+	</script>
+	 <block name="script"></block>
+</body>
+</html>

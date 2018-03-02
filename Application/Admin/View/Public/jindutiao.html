@@ -1,0 +1,64 @@
+<style>
+    .progress { position:relative; width:600px;height:30px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+    .bar { background-color: #B4F5B4; width:100%; height:26px; border-radius: 3px; }
+    .percent { position:absolute; display:inline-block; top:3px; left:48%; }
+    
+    
+    .weui_mask_transparent2 {
+        position: fixed;
+        z-index: 99999999;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(40, 40, 40, 0.75);
+    }
+    .weui_toast2 {
+        position: fixed;
+        z-index: 999999999;
+        width: 10em;
+        min-height: 7.6em;
+        top: 40%;
+        left: 36%;
+        margin-left: -3.8em;
+        /*background: rgba(40, 40, 40, 0.75);*/
+        text-align: center;
+        border-radius: 5px;
+/*        color: #FFFFFF;*/
+    }
+    .weui_loading2 {
+        position: absolute;
+        width: 0px;
+        z-index: 2000000000;
+        left: 50%;
+        top: 38%;
+    }
+    .weui_loading_toast2{
+        margin-top: 64%;
+        font-size: 14px;
+        font-weight:bold;
+    }
+</style>
+
+<div id="loadingToast2" class="weui_loading_toast2" style="display:none;">
+    <div class="weui_mask_transparent2"></div>
+    <div class="weui_toast2">
+            <div class="weui_loading2">
+                <div class="progress">
+                    <div class="bar"></div >
+                    <div class="percent">0%</div >
+                </div>
+                <div id="status"></div>
+            </div>
+    </div>
+</div>
+
+<script>
+    function show_jindutiao(){
+        $('#loadingToast2').show();
+    }
+    
+    function hide_jindutiao(){
+        $('#loadingToast2').hide();
+    }
+</script>

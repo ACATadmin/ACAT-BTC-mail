@@ -1,0 +1,128 @@
+<style>
+.uploadify{
+	   background:none;
+}
+.uploadify-button{
+	background-color: #5cb85c;
+    border-color: #5cb85c;
+    color: #ffffff;
+	border: 1px solid transparent;
+    border-radius: 4px;
+}
+.uploadify-queue {
+	margin-bottom: 1em;
+}
+.uploadify-queue-item {
+	background-color: #F5F5F5;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font: 11px Verdana, Geneva, sans-serif;
+	margin-top: 5px;
+	max-width: 350px;
+	padding: 10px;
+}
+.uploadify-error {
+	background-color: #FDE5DD !important;
+}
+.uploadify-queue-item .cancel a {
+	background: url('../uploadify/uploadify-cancel.png') 0 0 no-repeat;
+	float: right;
+	height:	16px;
+	text-indent: -9999px;
+	width: 16px;
+}
+.uploadify-queue-item.completed {
+	background-color: #E5E5E5;
+}
+.uploadify-progress {
+	background-color: #E5E5E5;
+	margin-top: 10px;
+	width: 100%;
+}
+.uploadify-progress-bar {
+	background-color: #0099FF;
+	height: 3px;
+	width: 1px;
+}
+</style>
+<div class="form-group" id="{$picKey}_box">
+	<label>
+		{$picName}：<span class="check-tips">（建议图片尺寸：{$suggestSize}）</span>
+	</label>
+	<div class="row fileupload-buttonbar">
+		<div class="col-lg-6">
+			<!-- The fileinput-button span is used to style the file input field as button -->
+				<input type="file" id="{$picKey}_upload_picture" multiple="">
+				<eq name="picId" value="0">
+				<input type="hidden" id="{$picKey}" class="input_img" name="{$picKey}" value=""/>
+				<else/>
+				<input type="hidden" id="{$picKey}" class="input_img" name="{$picKey}" value="{$picId|default=''}"/>
+				</eq>
+			<!-- The loading indicator is shown during file processing -->
+			<span class="fileupload-loading"></span>
+			<table role="presentation" class="table table-striped">
+				<tbody class="files upload-img-box">
+				<if condition="$do eq $picKey">
+					<volist name="picIds" id="vo">
+					<tr class="template-upload fade in upload-pre-item">
+						<td>
+						<span class="preview"><img style="width:80px;height:80px;" src="__ROOT__{$vo|get_cover='path'}"/></span>
+						</td>
+						<td >
+						<button class="btn btn-warning cancel pic_del" pic_id="{$vo}">
+						<i class="glyphicon glyphicon-ban-circle"></i>
+						<span>删除</span>
+						</button>
+						
+						</td>
+					</tr>
+					</volist>
+					<else/>
+					<notempty name="picId">
+						<tr class="template-upload fade in upload-pre-item">
+							<td>
+							<span class="preview"><img style="width:80px;height:80px;" src="__ROOT__{$picId|get_cover='path'}"/></span>
+							</td>
+							<td>
+							<button class="btn btn-warning cancel pic_del" pic_id="{$picId}">
+							<i class="glyphicon glyphicon-ban-circle"></i>
+							<span>删除</span>
+							</button>
+							
+							</td>
+						</tr>
+					</notempty>	
+				</if>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- <div class="controls" id="{$picKey}_box">
+	<label class="item-label">{$picName}<span class="check-tips">（建议图片尺寸：{$suggestSize}）</span></label>
+	<input type="file" id="{$picKey}_upload_picture">
+	
+        
+	<eq name="picId" value="0">
+	<input type="hidden" id="{$picKey}" class="input_img" name="{$picKey}" value=""/>
+	<else/>
+	<input type="hidden" id="{$picKey}" class="input_img" name="{$picKey}" value="{$picId|default=''}"/>
+	</eq>
+	
+	
+	
+	
+	<div class="upload-img-box">
+	
+	<if condition="$do eq $picKey">
+                <volist name="picIds" id="vo">
+                <div class="upload-pre-item"><div class="pic_del" pic_id="{$vo}" >删除</div><img src="__ROOT__{$vo|get_cover='path'}"/>  </div>
+		</volist>
+	<else />
+		<notempty name="picId">
+			<div class="upload-pre-item"><div class="pic_del" pic_id="{$picId}" >删除</div><img src="__ROOT__{$picId|get_cover='path'}"/>  </div>
+		</notempty>	
+	</if>
+	</div>
+</div> -->

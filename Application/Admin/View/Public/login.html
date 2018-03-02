@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--[if lt IE 9]>
+        <p class="browsehappy" style=" position:absolute;  width: 80%; left: 10%; height: 30px; top: 50%; margin-top: -15px; line-height: 30px; text-align: center; font-size: 18px;">您的浏览器版本过低，请<a href="http://browsehappy.com/">升级 </a>您的浏览器</p>
+    <![endif]-->
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<title>邮件</title>
+<meta name="description" content="overview &amp; stats" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<link rel="stylesheet" href="__SJ__/css/bootstrap.min.css" />
+<link href="__SJ__/css/base.css" rel="stylesheet" />
+<link href="__SJ__/css/jacob_style.css" rel="stylesheet" />
+
+<link href="__MODULE__/vendor/toastr/toastr.min.css" rel="stylesheet" media="screen">
+<style>
+/*    .toast-top-right{
+        top: 12%;
+        right: 13%;
+    }*/
+    #toast-container>div{
+        opacity: 1;
+    }
+</style>
+</head>
+
+<body>
+    <div class="page_con">
+    <div class="wraper">
+       <div class="log_systeam_form">
+           <section class="log_circus"></section>
+           <section class="log_circus_logo">
+               <!--<img src="__SJ__/images/logo.png" alt="">-->
+               <img src="/favicon.ico" alt="">
+           </section>
+           <section class="log_circus_plus"><img src="__SJ__/images/plus.png" alt=""></section>
+           <div class="log_systeam_left">
+               <div class="log_systeam_left_tit">
+                   <span>邮件</span>
+                   <h2>后台管理系统</h2>
+               </div>
+               <div class="log_systeam_left_pic">
+                   <img class="p2" src="__SJ__/images/yi_icon.png" alt="">
+               </div>
+           </div>
+           <div class="log_systeam_right_wrap">
+               <div class="log_systeam_right">
+                   <h2>后台管理系统登录</h2>
+                   <form action="{:U('login')}" method="post" id='login_form'>
+                       <ul class="clearfix log_systeam_right_ul">
+                           <li><input type="text" name="username"  placeholder="输入您的账号"></li>
+                           <li class="first"><input type="password" name="password" placeholder="输入您的密码"><img src="__SJ__/images/eyes.png" alt=""></li>
+                       </ul>
+                       <div class="log_systeam_right_btn"><a class='login_form_submit' style="cursor:pointer;">登录</a></div>
+                   </form>
+                   
+               </div>
+           </div>
+           <section class="log_systeam_circus">
+              <img src="__SJ__/images/plus.png" alt="">
+           </section>
+           <section class="alert_kuan">
+             <h1></h1>
+             <img src="__SJ__/images/close.png" alt="">
+           </section>
+       </div>
+    </div>
+    <div class="copy_right">© 2018 邮件. All rights reserved</div>
+    </div><!-- page_con -->
+    <script src="__SJ__/js/bootstrap.min.js"></script>
+    <script src="__SJ__/js/jquery-1.9.1.min.js"></script>
+    <script src="__SJ__/js/common.js"></script>
+    
+    <script src="__MODULE__/vendor/toastr/toastr.min.js"></script>
+    
+    <script>
+        $(function() { //页面加载
+                var windowWidth = $(window).width()
+                var windowHeight = $(window).height();
+                var documentHeight = $(document).height();
+                if($(".page_con").length > 0) {
+                    $(".page_con").css("min-height", windowHeight);
+                }
+                $(".wraper").css("min-height", windowHeight);
+                $(".log_systeam_form").hover(function(){
+                    $(".log_systeam_people").addClass("active");
+                })
+
+                $(".log_systeam_right_ul li input").focus(function(){
+                        $(this).parent().addClass("active");
+                        $(".log_systeam_people").addClass("on");
+                })
+                $(".log_systeam_right_ul li input").blur(function(){
+                        $(this).parent().removeClass("active");
+                })
+//                $(".log_systeam_right_btn a").click(function() {
+//                    $(".alert_kuan").addClass("active");
+//
+//                });
+                $(".alert_kuan img").click(function() {
+                    $(this).parent().removeClass("active");
+                });
+            })
+    </script>
+    <script>
+        $('.login_form_submit').click(function(){
+            var target=$('#login_form');
+            if ( target.attr('action')) {
+                $.post(target.attr('action'), target.serialize()).success(function(data){
+                    if (data.status==1) {
+                         $(".alert_kuan h1").html(data.info);
+                         $(".alert_kuan").addClass("active");
+//                         parent.updateAlert(data.info,'success');
+                          if (data.url) {
+                             location.href=data.url;
+                         }else{
+                             location.reload();
+                         }
+                    }else{
+//                        updateAlert(data.info,'error');
+//                        setTimeout(function(){
+//                        },1500);
+                          $(".alert_kuan h1").html(data.info);
+                          $(".alert_kuan").addClass("active");
+                          
+                          setTimeout(function(){
+                              $(".alert_kuan img").trigger('click');
+                          },3000);
+                    }
+                });
+            }
+	})
+    </script>
+    <script>
+        $(function(){
+            /**顶部警告栏*/
+            window.updateAlert = function (text,c) {
+                    text = text||'default';
+
+                    toastr.options = {
+                                      "closeButton": true,
+                                      "positionClass": "toast-top-right",
+                                      "onclick": null,
+                                      "showDuration": "1000",
+                                      "hideDuration": "1000",
+                                      "timeOut": "5000",
+                                      "extendedTimeOut": "1000",
+                                      "showEasing": "swing",
+                                      "hideEasing": "linear",
+                                      "showMethod": "fadeIn",
+                                      "hideMethod": "fadeOut"
+                                    }
+
+                    toastr[c](text, "系统提示")
+                    return
+            };
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- Template Name: Clip-Two - Responsive Admin Template build with Twitter Bootstrap 3.x | Author: ClipTheme -->
+<!--[if IE 8]><html class="ie8" lang="en"><![endif]-->
+<!--[if IE 9]><html class="ie9" lang="en"><![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+	<!--<![endif]-->
+	<!-- start: HEAD -->
+	<!-- start: HEAD -->
+	<head>
+		<title>Clip-Two - Responsive Admin Template</title>
+		<!-- start: META -->
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta content="" name="description" />
+		<meta content="" name="author" />
+		<!-- end: META -->
+		<!-- start: GOOGLE FONTS -->
+		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+		<!-- end: GOOGLE FONTS -->
+		<!-- start: MAIN CSS -->
+		<link rel="stylesheet" href="__MODULE__vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__MODULE__vendor/fontawesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="__MODULE__vendor/themify-icons/themify-icons.min.css">
+		<link href="__MODULE__vendor/animate.css/animate.min.css" rel="stylesheet" media="screen">
+		<link href="__MODULE__vendor/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet" media="screen">
+		<link href="__MODULE__vendor/switchery/switchery.min.css" rel="stylesheet" media="screen">
+		<!-- end: MAIN CSS -->
+		<!-- start: CLIP-TWO CSS -->
+		<link rel="stylesheet" href="__MODULE__assets/css/styles.css">
+		<link rel="stylesheet" href="__MODULE__assets/css/plugins.css">
+		<link rel="stylesheet" href="__MODULE__assets/css/themes/theme-1.css" id="skin_color" />
+		<!-- end: CLIP-TWO CSS -->
+		<!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
+		<style>
+.page-error .error-number {
+    display: block;
+    font-size: 80px;
+    font-weight: 300;
+    letter-spacing: -10px;
+    line-height: 128px;
+    margin-top: 0;
+    text-align: center;
+}
+</style>
+	</head>
+	<!-- end: HEAD -->
+	<!-- start: BODY -->
+	<body>
+		<!-- start: 404 -->
+		<div class="error-full-page">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 page-error">
+						<div class="error-number text-azure">
+							抱歉,出错啦!
+						</div>
+						<div class="error-details col-sm-6 col-sm-offset-3">
+							<h3><?php echo($error); ?></h3>
+							<p>
+								<b id="wait"><?php echo($waitSecond); ?></b> 秒后页面将自动跳转
+								<br>
+								<a id="href" href="<?php echo($jumpUrl); ?>" class="btn btn-red btn-return">
+									立即跳转
+								</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end: 404 -->
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script type="text/javascript">
+		(function(){
+		 var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+		 var interval = setInterval(function(){
+		     	var time = --wait.innerHTML;
+		     	if(time <= 0) {
+		     		location.href = href;
+		     		clearInterval(interval);
+		     	};
+		     }, 1000);
+		  window.stop = function (){
+		         //console.log(111);
+		            clearInterval(interval);
+		 }
+		 })();
+		</script>
+		<script>
+			jQuery(document).ready(function() {
+				Main.init();
+			});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	</body>
+	<!-- end: BODY -->
+</html>

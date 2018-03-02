@@ -1,0 +1,67 @@
+
+<link href="/Addons/VideoJs/Static/video-js.css" rel="stylesheet" type="text/css">
+<script src="/Addons/VideoJs/Static/video.js"></script>
+<script>
+videojs.options.flash.swf = "/Addons/VideoJs/Static/video-js.swf";
+</script>
+
+<style>
+<!--
+.vjs-default-skin .vjs-big-play-button{
+	left: {$config.left}px;
+	top: {$config.top}px;
+	width:94px;				/*按钮宽度*/
+	height:94px;			/*按钮高度*/	
+	border-radius:50px;
+}
+#my_video{
+	width:auto !important;
+}
+-->
+</style>
+
+
+
+<video id="my_video" class="video-js vjs-default-skin" controls preload="none" height="{$config.height}" poster="{$config.cover}" data-setup="{}">
+
+	<source src="{$data.video_path}" type='video/mp4' />	
+	<!--  
+	<source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+	<source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+	<source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+	
+	<track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track>
+	<track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track>
+	-->
+</video>
+
+<script src="__JS__/jquery-1.9.1.min.js"></script>
+<script>
+/*if("undefined" == typeof onload_do){
+	my_video_rewith();
+}else{
+	window.onload=my_video_rewith;
+}*/
+
+$(function(){
+	window.onload=my_video_rewith;
+})
+jQuery(window).resize(function(){
+	my_video_rewith();
+})
+function my_video_rewith(){
+	var my_video_width = $("#my_video").width();
+	//var left = 0;
+	//$(".vjs-default-skin .vjs-big-play-button").css('left',left);
+}
+</script>
+
+
+
+
+
+
+
+
+
+

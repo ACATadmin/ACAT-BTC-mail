@@ -1,0 +1,96 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">新增<if condition='I("user_type") eq 1'>普通用户<elseif condition="I('user_type') eq 2"/>专业用户</if></h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																用户名<span class="check-tips">（手机号）</span>
+															</label>
+															<input type="text" class="form-control" name="username">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">
+																密码<span class="check-tips">（用户密码不能少于6位）</span>
+															</label>
+															<input type="password" class="form-control" name="password">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">
+																确认密码
+															</label>
+															<input type="password" class="form-control" name="repassword">
+														</div>
+                                                                                                            
+                                                                                                                <if condition='I("user_type") eq 2'>
+                                                                                                                    <div class="form-group">
+                                                                                                                            <label>
+                                                                                                                                    专业类型：<span class="check-tips"></span>
+                                                                                                                            </label>
+                                                                                                                            <select class="js-states form-control" name="profession_type">
+                                                                                                                                <volist name=':C("PROFESSION_TYPE")' id="vo">
+                                                                                                                                    <option value='{$vo.id}' <eq name='info.profession_type' value="$vo['id']">selected</eq>>{$vo.name}</option>
+                                                                                                                                </volist>
+                                                                                                                            </select>
+                                                                                                                    </div>
+                                                                                                                </if>
+<!--														<div class="form-group">
+															<label for="exampleInputPassword1">
+																邮箱<span class="check-tips">（用户邮箱，用于找回密码等安全操作）</span>
+															</label>
+															<input type="email" class="form-control" name="email">
+														</div>-->
+                                                                                                                <input type="hidden" name="user_type" value="{:I('user_type')}">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

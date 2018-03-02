@@ -1,0 +1,165 @@
+<extend name="Public/base" />
+
+<block name="body">
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">账目变动明细</span></h5>
+									<p>
+                                                                                <a class="btn btn-wide btn-primary" onclick="javascript:history.back(-1);return false;">返回</a>
+										&nbsp;&nbsp;<span style="color:#444444;"><b>资金：</b>￥{$accountSum.user_money|default=0}元</span>
+									</p>
+<!--									<a class="btn btn-wide btn-primary" href="{:U('add')}">新增</a>-->
+                                                                        
+                                                                        <!--<b>积分：</b>{$accountSum.pay_points}-->
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+												<th>变动类型</th>
+                                                                                                <th>变动原因</th>
+                                                                                                <th>资金</th>
+                                                                                                <!--<th>冻结金额</th>-->
+                                                                                                <!--<th>积分</th>-->
+                                                                                                <!--<th>等级积分</th>-->
+                                                                                                <th>状态</th>
+                                                                                                <th>操作时间</th>
+											</tr>
+										</thead>
+										<tbody>
+											<volist name="list" id="vo">
+											<tr>
+												<td>{$vo.change_type_name}</td>
+                                                                                                <td>
+                                                                                                        {$vo.change_desc}
+                                                                                                </td>
+                                                                                                <td>{$vo.user_money}</td>
+                                                        <!--					<td>
+                                                                                                        {$vo.frozen_money}
+                                                                                                        <if condition="($vo['change_type'] eq 10) AND ($vo['frozen_money'] gt 0)">
+                                                                                                        <a href="{:U('unFreezeMoney',array('id'=>$vo['id']) )}" class="confirm ajax-get">解冻</a>
+                                                                                                        </if>
+                                                                                                </td>-->
+                                                                                                <!--<td>{$vo.pay_points}</td>-->
+                                                                                                <!--<td>{$vo.rank_points}</td>-->
+                                                                                                <td>{$vo.change_status_name}</td>
+                                                                                                <td>{$vo.change_time}</td>
+                                                                                        </tr>
+											</volist>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		<!-- Default Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="margin: 16% auto;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">可参加的订货会列表</h4>
+						</div>
+						<div class="modal-body">
+							<form action="{:U('joinmarket')}" method="post" id="joinmarketform">
+							<select name="market_id" class="form-control" id="dropdown">
+								<volist name="marketlist" id="vo">
+									<option value="{$vo.id}">{$vo.market_name}</option>
+								</volist>
+							</select>
+							<input name="uid" type="hidden" value="" />
+							<input name="goods_id" type="hidden" value="" />
+							<input name="goods_platform_id" type="hidden" value="" />
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+								取消
+							</button>
+							<button type="button" class="btn btn-primary tojoinmarket">
+								确定
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		$(function(){
+			//搜索功能
+			$("#search").click(function(){
+				var url = $(this).attr('url');
+		        var query  = $('.search-form').find('input').serialize();
+		        query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+		        query = query.replace(/^&/g,'');
+		        if( url.indexOf('?')>0 ){
+		            url += '&' + query;
+		        }else{
+		            url += '?' + query;
+		        }
+				window.location.href = url;
+			});
+			//回车搜索
+			$(".search-input").keyup(function(e){
+				if(e.keyCode === 13){
+					$("#search").click();
+					return false;
+				}
+			});
+		});
+		$('.joinmarket').click(function(){
+			 var data_str = ''; 
+			 eval('data_str =' + $(this).attr('data-param'));
+			 $('input[name="uid"]').val(data_str.uid);
+			 $('input[name="goods_id"]').val(data_str.goods_id);
+			 $('input[name="goods_platform_id"]').val(data_str.goods_platform_id);
+		})
+		$('.tojoinmarket').click(function(){
+			var target=$('#joinmarketform');
+            if ( target.attr('action')) {
+                $.post(target.attr('action'), target.serialize()).success(function(data){
+                    if (data.status==1) {
+                    	parent.updateAlert(data.info,'success');
+                    	 if (data.url) {
+                             location.href=data.url;
+                         }else{
+                             location.reload();
+                         }
+                    }else{
+                        updateAlert(data.info,'error');
+                        setTimeout(function(){
+                        },1500);
+                    }
+                });
+
+            }
+		})
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

@@ -1,0 +1,142 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: USER PROFILE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="tabbable">
+										<ul class="nav nav-tabs tab-padding tab-space-3 tab-blue" id="myTab4">
+											<li>
+												<a href="{:U('AuthManager/access',array('group_name'=>I('group_name') ,'group_id'=> I('group_id')))}">访问授权</a>
+											</li>
+											<li>
+												<a href="{:U('AuthManager/category',array('group_name'=>I('group_name') ,'group_id'=> I('group_id')))}">分类授权</a>
+											</li>
+											<li class="active">
+												<a data-toggle="tab" href="#panel_projects">
+													成员授权
+												</a>
+											</li>
+											<li style="float:right;">
+												<select class="form-control"  name="group" style="height:45px;">
+													<volist name="auth_group" id="vo">
+														<option value="{:U('AuthManager/user',array('group_id'=>$vo['id'],'group_name'=>$vo['title']))}" <eq name="vo['id']" value="$this_group['id']">selected</eq> >{$vo.title}</option>
+													</volist>
+												</select>
+											</li>
+										</ul>
+										<div class="tab-content">
+											<div id="panel_overview" class="tab-pane fade">
+											</div>
+											<div id="panel_edit_account" class="tab-pane fade">
+											</div>
+											<div id="panel_projects" class="tab-pane fade in active">
+												<div class="row">
+													<div class="col-md-12">
+														<h5 class="over-title margin-bottom-15"><span class="text-bold">授权用户</span></h5>
+														<table class="table table-hover" id="sample-table-1">
+															<thead>
+																<tr>
+																	<th class="">UID</th>
+																	<th class="">昵称</th>
+																	<th class="">最后登录时间</th>
+																	<th class="">最后登录IP</th>
+																	<th class="">状态</th>
+																	<th class="center">操作</th>
+																</tr>
+															</thead>
+															<tbody>
+																<volist name="_list" id="vo">
+																<tr>
+																	<td>{$vo.uid} </td>
+																	<td>{$vo.nickname}</td>
+																	<td><span>{$vo.last_login_time|time_format}</span></td>
+																	<td><span>{$vo.last_login_ip|long2ip}</span></td>
+																	<td>{$vo.status_text}</td>
+																	<td class="center">
+																		<div class="visible-md visible-lg hidden-sm hidden-xs">
+																			<a href="{:U('AuthManager/removeFromGroup?uid='.$vo['uid'].'&group_id='.I('group_id'))}" class="ajax-get">解除授权</a>
+																		</div>
+																	</td>
+																</tr>
+																</volist>
+															</tbody>
+														</table>
+													</div>
+													<div class="col-md-12" style="text-align:center;">
+														{$_page}
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">新增用户</h5>
+												</div>
+												<div class="panel-body">
+													<form class="add-user" action="{:U('addToGroup')}" method="post" enctype="application/x-www-form-urlencoded" >
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																请输入uid<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="uid">
+														</div>
+														<input type="hidden" name="group_id" value="{:I('group_id')}">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="add-user">
+															新 增
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: USER PROFILE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+		<script type="text/javascript" src="__STATIC__/qtip/jquery.qtip.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/qtip/jquery.qtip.min.css" media="all">
+		<script>
+		+function($){
+		    $('select[name=group]').change(function(){
+			    location.href = this.value;
+		    });
+	    }(jQuery);
+		</script>
+</block>

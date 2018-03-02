@@ -1,0 +1,206 @@
+<volist name="list" id="vo" key="ks">
+  <div class='list_box'>
+  <if condition="$vo['show_type'] eq 1" >
+      <if condition="$vo['showType']['single_type'] eq 1">
+        <volist name="vo['showType']['contentList']" id="v">
+        <!-- 单个展示满屏 -->
+              <div class="index_new <eq name='ks' value="1">top_a</eq>">
+                <div class="index_new_img">
+
+                    <if condition="$v['type'] eq 1">
+                      <a href='{:U("Content/contentDetail",array("content_id"=>$v["id"]))}'>
+                      <img src="{$v['pic_big_path']}"  width="100%"/>
+                      <div class="index_newCen">
+                        <p class="index_new_h1">{$v["title"]}</p>
+                          <p class="index_new_p">{$v["simp_describe"]}</p>
+                      </div>
+                    <else/>
+                      <a href='{:U("Video/videoDetail",array("content_id"=>$v["id"]))}'>
+                      <img src="{$v['pic_big_path']}"  width="100%"/>
+                      <img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/>
+                      <div class="index_newCen">
+                        <p class="index_new_h1">{$v["title"]}</p>
+                          <p class="index_new_p">{$v["simp_describe"]}</p>
+                      </div>
+
+                    </if> 
+                    </a>
+                  
+                </div>
+              </div><!--index_video-->
+          <!-- 单个展示满屏 -->
+          </volist>
+      <elseif condition="$vo['showType']['single_type'] eq 2" />
+          <volist name="vo['showType']['contentList']" id="v">
+<!--             <div class="index_img mt10">
+                <if condition="$v['type'] eq 1">
+                  <img src="{$v['pic_middle_path']}"  width="100%"/>
+                <else/>
+                  <img src="{$v['pic_middle_path']}"  width="100%"/>
+                  <img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/>
+                </if>
+              
+                <if condition="$v['type'] eq 1">
+                  <a href='{:U("Content/contentDetail",array("content_id"=>$v["id"]))}'>
+                <else/>
+                  <a href='{:U("Video/videoDetail",array("content_id"=>$v["id"]))}'>
+                </if>
+                <div class="index_img_text">
+                  <h1>{$v["title"]}</h1>
+
+                  <div class="index_img_pbox mt5">
+                    <p class="index_img_p">{$v["simp_describe"]}2</p>
+                  </div>
+                </div>
+                </a>
+            </div> -->
+
+            <!-- 单个展示底部阴影 -->
+            <if condition="$v['type'] eq 1">
+              <a href='{:U("Content/contentDetail",array("content_id"=>$v["id"]))}'>
+              <div class="fashion_box_play">
+                    <img src="{$v['pic_big_path']}"  width="100%"/>
+                <h2>{$v["title"]}
+                <span>{$v["simp_describe"]}</span>
+                </h2>
+              </div>
+
+            <else/>
+
+              <a href='{:U("Video/videoDetail",array("content_id"=>$v["id"]))}'>
+              <div class="project_box02">
+                <img src="{$v['pic_big_path']}"  width="100%"/>
+                <h2>{$v["title"]}
+                <!-- <span>{$v["simp_describe"]}</span> -->
+                </h2>
+                <span><img src="__IMG__/project03.png"></span>
+              </div>
+
+            </if>
+              
+            </a>
+            <!-- 单个展示底部阴影 -->
+             <!--      <div class="fashion_box_play">
+                  <if condition="$v['type'] eq 1">
+                    <a href='{:U("Content/contentDetail",array("content_id"=>$v["id"]))}'>
+                  <else/>
+                    <a href='{:U("Video/videoDetail",array("content_id"=>$v["id"]))}'>
+                  </if>
+                    <div class="fashion_banner">
+                      <if condition="$v['type'] eq 1">
+                        <img src="{$v['pic_middle_path']}"  width="100%"/>
+                      <else/>
+                        <img src="{$v['pic_middle_path']}"  width="100%"/>
+                        <img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/>
+                      </if>
+                
+                      <h2>{$v["title"]}
+                      <span>激活我们的全球新闻编辑室的全部功能,数据驱动的见解和获...</span>
+                      </h2>
+  
+                    </div>
+                  </a>
+                    
+                  </div> -->
+          </volist>
+      <elseif condition="$vo['showType']['single_type'] eq 3" />
+       <volist name="vo['showType']['contentList']" id="v">
+       <!-- 单个展示箭头 -->
+            <div class="index_list tab1">
+              <ul>
+                <if condition="$v['type'] eq 1">
+                  <a href='{:U("Content/contentDetail",array("content_id"=>$v["id"]))}'>
+                <else/>
+                  <a href='{:U("Video/videoDetail",array("content_id"=>$v["id"]))}'>
+                </if>
+                  <li>
+                    <div class="indec_list_img">
+                      <if condition="$v['type'] eq 1">
+                        <img src="{$v['pic_middle_path']}"  width="100%"/>
+                      <else/>
+                        <img src="{$v['pic_middle_path']}"  width="100%"/>
+                        <img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/>
+                      </if>
+                    <!-- <img src="__IMG__/index_list1.png" /> -->
+                    </div>
+
+                    
+                      <div class="index_list_right">
+                        <div class="index_list_text">
+                           <p  class="index_list_text_p hides_s">{$v["title"]}</p>
+                           <p  class="index_list_text_p hides_a">{$v["simp_describe"]}</p>
+                          </div>
+                          <div class="index_text_look">查看详情<img src="__IMG__/index_list4.png" width="14" height="14" /></div>
+                      </div>
+                  
+                  </li>
+                </a>
+              </ul>
+            </div><!--index_list-->
+        <!-- 单个展示箭头 -->
+          </volist>
+      </if>
+   
+  <elseif condition="$vo['show_type'] eq 4" />
+
+      <volist name="vo['showType']['contentList']" id="v">
+         <div class="index_new">
+           <div class="index_new_img">
+              <if condition="$v['type'] eq 1">
+                <img src="{$v['pic_middle_path']}"  width="100%"/>
+              <else/>
+                <img src="{$v['pic_middle_path']}"  width="100%"/>
+                <img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/>
+              </if>
+             <!-- <img src="__IMG__/index_4.png"  width="100%"/> -->
+
+             <if condition="$v['type'] eq 1">
+               <a href='{:U("Content/contentDetail",array("content_id"=>$v["id"]))}'>
+             <else/>
+               <a href='{:U("Video/videoDetail",array("content_id"=>$v["id"]))}'>
+             </if>
+
+               <div class="index_newCen">
+                 <p class="index_new_h1">{$v["title"]}</p>
+                   <p class="index_new_p">{$v["simp_describe"]}</p>
+               </div>
+             </a>
+             
+           </div>
+         </div><!--index_video-->
+       </volist>
+     
+  <elseif condition="$vo['show_type'] eq 3"/>
+  <!-- 三个展示 -->
+        <div class="index_video <eq name='ks' value="1">top_a</eq> ">
+            <ul>
+             
+             <volist name="vo['showType']['contentList']" id="v" >
+             <if condition="$v['type'] eq 1">
+               <a href='{:U("Content/contentDetail",array("content_id"=>$v["id"]))}'>
+             <else/>
+               <a href='{:U("Video/videoDetail",array("content_id"=>$v["id"]))}'>
+             </if>
+                  <li <eq name="key" value="1">class='index_video_margin'</eq>>
+
+                    <div class="index_video_box">
+                      <if condition="$v['type'] eq 1">
+                        <img src="{$v['pic_small_path']}"  width="100%" style="    height: 100%;"/>
+                      <else/>
+                        <img src="{$v['pic_small_path']}"  width="100%" style="    height: 100%;"/>
+                        <img src="__IMG__/video_but.png" width="30" height="30" class="video_but" />
+                      </if>
+                    </div>
+                    <div class="index_video_text">
+                      <p class="index_p_text">{$v["title"]}</p>
+                    </div>
+                  
+                  </li>
+              </a>
+              </volist>
+            </ul>
+      </div><!--index_video-->
+    <!-- 三个展示 -->
+  </if>
+</div>  
+</volist>

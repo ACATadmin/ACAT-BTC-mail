@@ -1,0 +1,170 @@
+<extend name="Base/common"/>
+
+<block name="side">
+	<include file="Index/common" />
+</block>
+
+<block name="body">
+    <div class="span8">
+
+		<div id="book-content">
+			
+			<div class="content-top">
+				<div class="top clearfix">
+					<h1>{$info.api_name}</h1>
+				</div>
+				<div class="line"></div>
+			</div>
+			<div class="content-content">
+				<div class="content" style="margin-top: 15px;">
+					<div class="popup-gallery">
+						
+						<p>
+							请求接口：{$info['api_url']} 
+							<samll><a href="{:U($info['api_url'])}" target="_blank">访问</a></samll>
+							<samll><a href="{:U('Index/index',array('id'=>$_GET['id']) )}">详情</a></samll>
+						</p>
+						<p>
+							开发状态：[{$info['development_status']}]{$info['development_status']|getCN="DEVELOPMENT_STATUS"} 
+						</p>
+						
+						<form class="login-form" action="{:U($info['api_url'])}"  method="post" enctype="multipart/form-data">
+							<volist name="info.request_field" id="vo">
+							<div class="control-group" is_group="{$vo['is_group']}">
+								<label class="control-label" for="inputEmail">{$vo.request_field_desc} &lt;{$vo.request_field_name}&gt; </label>
+								<div class="controls">
+									
+									
+									
+									<if condition="($vo['is_file'] eq 1)">
+										<eq name="vo['is_group']" value="1">
+										<input type="file" class="span3" placeholder=""  value="" name="{$vo.request_field_name}[]">
+										<else/>
+										<input type="file" class="span3" placeholder=""  value="" name="{$vo.request_field_name}">
+										</eq>
+									<else/>
+										<eq name="vo['is_group']" value="1">
+										<input type="text" class="span3" placeholder=""  value="" name="{$vo.request_field_name}[]">
+										<else/>
+										<input type="text" class="span3" placeholder=""  value="" name="{$vo.request_field_name}">
+										</eq>									
+									</if>
+									
+									
+									
+									
+									
+									<eq name="vo['must_field']" value="1">
+										<span>*</span>
+									</eq>
+									<eq name="vo['is_group']" value="1">
+										<span>组</span>
+									</eq>
+								</div>
+							</div>
+							</volist>
+							
+							<div class="control-group">
+								<div class="controls">
+									<button type="submit" class="btn">提交</button>
+									
+									<button style="display:none;" type="button" class="btn add_one_group">组字段+</button>
+									<!--  
+									<button type="button" class="btn del_one_group">组字段-</button>
+									-->
+								</div>
+							</div>
+						</form>
+						
+						<div id="api_return">
+							<pre style="display:none;">
+							
+							</pre>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	
+	</div>
+</block>
+
+
+<block name="script">
+	<include file="Index/commonScript" />
+	<script src="__STATIC__/jquery.form.js"></script>
+	<script type="text/javascript">
+
+    	$(document)
+	    	.ajaxStart(function(){
+	    		$("#api_return pre").html('').hide();
+	    		$("button:submit").addClass("log-in").attr("disabled", true);
+	    	})
+	    	.ajaxStop(function(){
+	    		$("button:submit").removeClass("log-in").attr("disabled", false);
+	    	});
+    	
+    	var is_first_add_group = 1;
+		$(function(){		
+			
+			
+			if( $(".control-group[is_group='1']").length>0 ){
+				$(".add_one_group").show();
+			}
+			
+			//
+			$(".add_one_group").click(function(event){
+				
+				
+				
+				if( is_first_add_group==1 ){
+					$(".control-group[is_group='1']").each(function(i){
+						var that = $(this);
+						that.after( that.prop("outerHTML") );
+						that.attr('first_group',1);						
+					})
+				}else{
+					$(".control-group[first_group='1']").each(function(){
+						var that = $(this);
+						that.attr('first_group',0);						
+						that.after( that.prop("outerHTML") );
+						that.attr('first_group',1);
+					})
+				}
+				is_first_add_group = 0;
+				event.stopPropagation();
+			})
+			//
+			$(".del_one_group").click(function(){
+				
+			})
+		})
+		
+
+		$("form").submit(function() {
+			var self = $(this);
+			/*$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
+
+			function success(data) {
+				//$("#api_return pre").html(JSON.stringify(data)).show();
+				
+				console.log(data)
+				$("#api_return pre").html( JSON.stringify(data, null, 4) ).show();
+				
+			}*/
+			self.ajaxSubmit({
+				dataType:'json',
+		        success : function(data){
+		        	console.log(data)
+		        	$("#api_return pre").html( JSON.stringify(data, null, 4) ).show();
+		        	// $("#api_return pre").html( JSON.stringify(data, null, 4) ).show();
+		        }
+		      })
+			return false;
+		});
+	</script>
+</block>

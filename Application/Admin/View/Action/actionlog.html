@@ -1,0 +1,75 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">行为日志</span></h5>
+							        <a url="{:U('clear')}" class="btn btn-wide btn-primary ajax-get" >清 空</a>
+							        <a url="{:U('remove')}" class="btn btn-wide btn-primary ajax-post confirm" target-form="ids" >删 除</a>
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+												<th class="center"><input class="check-all" type="checkbox"/></th>
+												<th class="">编号</th>
+												<th class="">行为名称</th>
+												<th class="">执行者</th>
+												<th class="">执行时间</th>
+												<th class="center">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<volist name="_list" id="vo">
+											<tr>
+									            <td class="center"><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>
+												<td>{$vo.id} </td>
+												<td>{:get_action($vo['action_id'],'title')}</td>
+												<td>{:get_nickname($vo['user_id'])}</td>
+												<td><span>{$vo.create_time|time_format}</span></td>
+												<td class="center">
+													<div class="visible-md visible-lg hidden-sm hidden-xs">
+														<a href="{:U('Action/edit?id='.$vo['id'])}">详细</a>
+														<a class="confirm ajax-get" href="{:U('Action/remove?ids='.$vo['id'])}">删除</a>
+													</div>
+												</td>
+											</tr>
+											</volist>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

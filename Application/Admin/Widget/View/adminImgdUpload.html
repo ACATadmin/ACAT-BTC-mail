@@ -1,0 +1,137 @@
+
+<style type="text/css">
+.tips{padding:10px;color:red;margin-top:20px;}
+.del_pic{
+    z-index: 999;
+    width: 40px;
+    text-align: center;
+    height: 25px;
+    float: right;
+    position: relative;
+    line-height: 25px;
+    margin-bottom: -25px;
+    background-color: #E03627 !important;
+    color: #ddd !important;
+	cursor: pointer;
+}
+</style>
+<div>
+    
+    <label class="item-label">{$picName}<span class="check-tips cgd">（建议图片尺寸：{$suggestSize}）</span></label>
+    <span class="wd{$picKey} check-tips" style="font-size:15px;    display: none;">{$suggestSizes[0]}</span>
+    <span class="hd{$picKey} check-tips" style="font-size:15px;    display: none;">{$suggestSizes[1]}</span>
+    
+    
+    <button type="button"  class="btn btn-return file_button click{$picKey}" picKey="{$picKey}" file_id="head_photo{$picKey}">上传图片</button>
+    <input type="file" style="display:none;" name="head_photo{$picKey}" id="head_photo{$picKey}" value="" class="btn " onchange=show{$picKey}() style="    width: 110px;">
+
+	<empty name="picId" value="0"> 
+		<input type="hidden" name="{$picKey}" id="photo_pic{$picKey}" value="">
+		<div class="controls cc box_img" id="{$picKey}_box" style="width: 200px;">
+			<div input_name="{$picKey}" style="display:none;" class="del_pic">删除</div>
+			<img id="head_photo_src{$picKey}" src="__STATIC__/Imgd/images/default.gif">
+		</div>
+	<else />
+		<input type="hidden" name="{$picKey}" id="photo_pic{$picKey}" value="{$picId|default=''}">
+		<div class="controls box_img" id="{$picKey}_box" style="width: 200px;">
+			<div input_name="{$picKey}" class="del_pic">删除</div>
+			<img src="__ROOT__{$picId|get_cover='path'}" id="head_photo_src{$picKey}" />
+		</div>
+	</empty>
+
+</div>
+<script>
+$(function(){
+
+  var clicks=".click"+"{$picKey}";
+  var head_photo="#head_photo"+"{$picKey}";
+  $(clicks).click(function(){
+    $(head_photo).trigger("click")
+  }) 
+
+
+	$("body").delegate(".del_pic","click",function(event){
+		var input_name = $(this).attr('input_name');
+		$("input[name='"+input_name+"']").val('');
+		$("#head_photo_src"+input_name).attr('src','');
+		$(this).hide();
+		event.stopPropagation();
+	})
+	//$("body").delegate(".file_button","click",function(event){
+	$(".file_button").click(function(event){
+		event.stopPropagation();
+	})
+})
+function show_head{$picKey}(head_file){
+    var head_photo_src="#head_photo_src"+"{$picKey}";
+    $(head_photo_src).attr('src',head_file);     
+    $(head_photo_src).parent().find(".del_pic").show();
+}
+function   show{$picKey}()   
+{   
+  var photo_pic='photo_pic'+"{$picKey}";
+  var url="{:U('File/uploadPices')}";
+  var head_photo='head_photo'+"{$picKey}";
+  var head_photo_src="{$picKey}";
+
+
+  var wdd=".wd"+"{$picKey}";
+  var hdd=".hd"+"{$picKey}";
+  var suggestSize=$(wdd).html()+"*"+$(hdd).html();
+  ajaxFileUploadview{$picKey}(head_photo,photo_pic,url,head_photo_src,suggestSize);
+}  
+
+//文件上传带预览
+function ajaxFileUploadview{$picKey}(imgid,hiddenid,url,head_photo_src,suggestSize){
+    
+    console.log(imgid)
+    console.log(hiddenid)
+    console.log(url)
+    $.ajaxFileUpload
+    ({
+      url:url,
+      secureuri:false,
+      fileElementId:imgid,
+      dataType: 'json',
+      data:{name:'logan', id:'id',suggestSize:suggestSize},
+      success: function (data, status)
+      {
+
+        console.log(imgid)
+        if(data.status==1){
+          
+          $('#'+hiddenid).val(data.id);  
+
+          var picKeys="{$picKey}";
+          var wds=".wd"+picKeys; 
+          var wd=$(wds).html();  
+          var hds=".hd"+picKeys; 
+          var hd=$(hds).html();  
+          console.log(picKeys) 
+          var urls= "http://"+window.location.host+"/Admin/Public/imgd/img/"+data.id+"/imgname/"+head_photo_src+"/wd/"+wd+"/hd/"+hd;
+          console.log(urls)
+          art.dialog.open(urls,{
+            title: '裁剪头像',
+            width:'1400px',
+            height:'600px'
+          });           
+        }else{
+          // var dialog = art.dialog({title:false,fixed: true,padding:0});
+          // dialog.time(2).content("<div class='tips'>"+data.error+"</div>");
+          alert(data.info)
+          return false;
+        
+        }
+      },
+      error: function (data, status, e)
+      {
+        //  console.log('eeeee');
+        // console.log(data);
+        // dialog.time(3).content("<div class='tips'>"+e+"</div>");
+      }
+    })
+
+    return false;
+  }
+
+</script>

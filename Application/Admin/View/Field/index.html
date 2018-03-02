@@ -1,0 +1,77 @@
+<extend name="Public/base" />
+
+<block name="body">
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">{$meta_title}</span></h5>
+									<a class="btn btn-wide btn-primary" href="{:U('edit')}">新增</a>
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+												<th>编号</th>
+												<th>标题</th>
+												<th>图片</th>
+												<th>小编</th>
+												<th>创建时间</th>
+												<th>排序</th>
+												<th width="94px">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<notempty name="list">
+											<volist name="list" id="vo">
+											<tr>
+												<td>{$vo.id}</td>
+												<td>{$vo.title}</td>
+												<td><img src="__ROOT__{$vo.pic_id|get_cover='path'}" height="75px"/></td>
+												<td>{$vo.author}</td>
+												<td>{$vo.create_time}</td>
+												<td>{$vo.order_sort}</td>
+												<td>
+													<a href="{:U('edit',array('id'=>$vo['id']))}">编辑</a>
+													<a href="{:U('del',array('id'=>$vo['id']))}" class="confirm ajax-get">删除</a>
+												</td>
+											</tr>
+											</volist>
+											<else/>
+											<td colspan="7" class="text-center"> aOh! 暂时还没有{$meta_title}! </td>
+											</notempty>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>
+

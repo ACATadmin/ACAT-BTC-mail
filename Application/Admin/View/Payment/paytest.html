@@ -1,0 +1,108 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	
+	<div class="main-title">
+		<h2>支付测试</h2>
+	</div>
+	<div class="tab-wrap">
+
+		<div class="tab-content">
+			<form action="{:U('')}" method="post" class="form-horizontal">
+
+
+				<div class="form-item">
+	                  <label class="item-label">商户订单号<span class="check-tips"></span></label>
+	                  <div class="controls">
+	                  	<input type="text" class="text input-large" name="order_sn" value="{$info.order_sn}">
+	                  </div>
+				</div>
+				
+				<div class="form-item">
+	                  <label class="item-label">订单名称<span class="check-tips"></span></label>
+	                  <div class="controls">
+	                  	<input type="text" class="text input-large" name="subject" value="{$info.subject}">
+	                  </div>
+				</div>
+				
+				<div class="form-item">
+	                  <label class="item-label">付款金额<span class="check-tips">单位：元</span></label>
+	                  <div class="controls">
+	                  	<input type="text" class="text input-large" name="order_amount" value="{$info.order_amount}">
+	                  </div>
+				</div>
+				
+				<div class="form-item">
+	                  <label class="item-label">订单描述<span class="check-tips"></span></label>
+	                  <div class="controls">
+	                  	<input type="text" class="text input-large" name="body" value="{$info.body}">
+	                  </div>
+				</div>
+				
+				<div class="form-item">
+	                  <label class="item-label">商品展示地址<span class="check-tips"></span></label>
+	                  <div class="controls">
+	                  	<input type="text" class="text input-large" name="show_url" value="{$info.show_url}">
+	                  </div>
+				</div>
+				
+				<div class="form-item">
+					<label class="item-label"></label>
+					<div class="controls">
+						<input type="hidden" name="pay_code" 	value="{$Think.get.pay_code}">
+					<!--  
+						<input type="hidden" name="pay_code" 	value="{$info.pay_code}">
+						<input type="hidden" name="is_online" 	value="{$info.is_online}">
+						<input type="hidden" name="is_cod" 		value="{$info.is_cod}">
+						<input type="hidden" name="pay_id" 		value="{$info.pay_id}">
+						
+						 ajax-post
+					-->
+						
+						<button type="submit" class="btn submit-btn" target-form="form-horizontal">提交订单</button>
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		//-----------------------------------------------------------------------------------------
+		Think.setValue("pay_fee_type", {$info.pay_fee_type|default = 0});
+        Think.setValue("enabled", {$info.enabled|default = 0});
+        Think.setValue("is_online_d", {$info.is_online|default = 0});
+        Think.setValue("is_cod_d", {$info.is_cod|default = 0});
+   		//-----------------------------------------------------------------------------------------
+	
+		$(function(){
+			showTab();
+			
+			//-------------------------------------------------------------------
+			//支付手续费切换
+			pay_fee_type_change();
+			$("select[name='pay_fee_type']").change(function(){
+				pay_fee_type_change();
+			})
+			function pay_fee_type_change(){
+				var pay_fee_type = $("select[name='pay_fee_type']").val();
+				if( pay_fee_type==0 ){	//无
+					$("input[name='pay_fee_content']").attr("disabled","disabled");
+				}else{
+					$("input[name='pay_fee_content']").attr("disabled",false);
+				}
+			}
+			//-------------------------------------------------------------------
+			
+		});
+   		
+   		
+   		
+		//导航高亮
+		highlight_subnav('{:U('Payment/index')}');
+	</script>
+</block>

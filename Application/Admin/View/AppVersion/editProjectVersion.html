@@ -1,0 +1,181 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">{:isset($info['id'])?'编辑':'添加新'}项目版本</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label class="block">
+																应用<span class="check-tips"></span>
+															</label>
+															<div class="clip-radio radio-primary">
+																<input id="type1" type="radio" name="type" value="1">
+																<label for="type1">
+																	ios
+																</label>
+																<input id="type2" type="radio" name="type" value="2">
+																<label for="type2">
+																	android
+																</label>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="">
+																外部版本号<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="AppVersionUp" value="{$info.AppVersionUp}">
+														</div>
+														<div class="form-group">
+															<label for="">
+																内部版本号<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="serverLevel" value="{$info.serverLevel}">
+														</div>
+														<div class="form-group">
+															<label class="block">
+																安卓更新方式<span class="check-tips"></span>
+															</label>
+															<div class="clip-radio radio-primary">
+																<input id="android_type1" type="radio" name="android_type" value="1">
+																<label for="android_type1">
+																	app内更新
+																</label>
+																<input id="android_type2" type="radio" name="android_type" value="2">
+																<label for="android_type2">
+																	app外更新
+																</label>
+															</div>
+														</div>
+														
+														<div class="controls">
+															<label class="item-label">安卓安装包<span class="check-tips">（安卓app内更新必须上传）</span></label>
+															<input type="file" id="resource_id_key">
+															<input type="hidden" name="resource_id" value="{$info.resource_id}"/>
+															<div class="upload-img-box">
+																<present name="info['resource_id']">
+																	<div class="upload-pre-file"><span class="upload_icon_all"></span>{$info['resource_id']|get_table_field=###,'id','name','File'}</div>
+																</present>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="">
+																安卓app更新地址<span class="check-tips">（安卓app外更新必填）</span>
+															</label>
+															<input type="text" class="form-control" name="resource_url" value="{$info.resource_url}">
+														</div>
+														<div class="form-group">
+															<label for="">
+																更新说明<span class="check-tips"></span>
+															</label>
+															<textarea class="form-control autosize area-animated" maxlength="500" name="resourceDescription">{$info.resourceDescription}</textarea>
+														</div>
+														<div class="form-group">
+															<label class="block">
+																强制更新<span class="check-tips"></span>
+															</label>
+															<div class="checkbox clip-check check-primary checkbox-inline">
+																<input type="checkbox" id="checkbox4" name="is_force" value="1">
+																<label for="checkbox4">
+																	强制更新<span class="check-tips"></span>
+																</label>
+															</div>
+														</div>
+														<input type="hidden" name="id" value="{$info.id|default=''}">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<script src="__STATIC__/jquery.tmpl-min.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+
+		<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+		<script>
+		$(function(){
+			Think.setValue("type", {$info.type|default=1});
+			Think.setValue("android_type", {$info.android_type|default=1});
+			Think.setValue("is_force", {$info.is_force|default=0});
+		})
+		</script>
+		
+		<script type="text/javascript">
+					//上传图片
+				    /* 初始化上传插件 */
+					$("#resource_id_key").uploadify({
+				        "height"          : 30,
+				        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+				        "fileObjName"     : "download",
+				        "buttonText"      : "上传安装包",
+				        "uploader"        : "{:U('File/upload',array('session_id'=>session_id()))}",
+				        "width"           : 120,
+				        'removeTimeout'	  : 1,
+				        "onUploadSuccess" : uploadFileresource_id,
+				        'onFallback' : function() {
+				            alert('未检测到兼容版本的Flash.');
+				        }
+				    });
+					function uploadFileresource_id(file, data){
+						var data = $.parseJSON(data);
+						
+						console.log( data );
+						
+				        if(data.status){
+				        	var name = 'resource_id';
+				        	$("input[name="+name+"]").val(data.id);
+				        	$("input[name="+name+"]").parent().find('.upload-img-box').html(
+				        		"<div class=\"upload-pre-file\"><span class=\"upload_icon_all\"></span>" + data.info + "</div>"
+				        	);
+				        } else {
+				        	updateAlert(data.info,'error');
+				        	setTimeout(function(){
+				                $(that).removeClass('disabled').prop('disabled',false);
+				            },1500);
+				        }
+				    }
+					</script>
+</block>

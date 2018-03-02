@@ -1,0 +1,58 @@
+<extend name="Public/base" />
+
+
+
+<block name="body">
+
+
+
+
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>银行分类</h2>
+	</div>
+	<div>
+		<a href="{:U('edit_bank')}" class="btn">添加新银行</a>
+	</div>
+
+	<!-- 数据列表 -->
+	<div class="data-table table-striped">
+		<table>
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>名称</th>
+					<th>英文缩写</th>
+					<!-- <th>在线支付</th> -->
+					<th>启用</th>
+					<th>描述</th>
+					<th width="94px">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<notempty name="bank_list">
+				<volist name="bank_list" id="vo">
+				<tr>
+					<td>{$vo.bank_id}</td>
+					<td>{$vo.bank_name}</td>
+					<td>{$vo.bank_en_name}</td>
+					<!-- <td>{$vo.is_online}</td> -->
+					<td>{$vo.enabled}</td>
+					<td>{$vo.bank_desc}</td>
+					<td>
+						<a href="{:U('edit_bank',array('id'=>$vo['bank_id']))}">编辑</a>
+						<a class="confirm ajax-get" href="{:U('del_bank',array('id'=>$vo['bank_id'],'status'=>-1))}">删除</a>
+					</td>
+				</tr>
+				</volist>
+				<else/>
+				<td colspan="5" class="text-center"> aOh! 暂时还没有可选用银行! </td>
+				</notempty>
+			</tbody>
+		</table>
+	</div>
+	<!-- 分页 -->
+    <div class="page">
+        {$_page}
+    </div>
+</block>

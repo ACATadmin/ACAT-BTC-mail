@@ -1,0 +1,356 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC EXAMPLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row margin-top-30">
+										<div class="col-lg-6 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">{:isset($info['goods_id'])?'编辑':'添加新'}Api分组</h5>
+												</div>
+												<div class="panel-body">
+													<form role="form" action="{:U()}" method="post" class="form-submitl">
+														<div class="form-group">
+															<label for="">
+																Api接口名称<span class="check-tips"></span>
+															</label>
+															<input type="text" class="form-control" name="api_name" value="{$info.api_name}">
+														</div>
+														<div class="form-group">
+															<label for="form-field-select-1">
+																接口分组<span class="check-tips"></span>
+															</label>
+															<select id="form-field-select-1" class="form-control" name="api_group_id">
+									                    		<volist name="apiGroupList" id="vo">
+									                    			<option value="{$vo.id}">{$vo.api_group_name}</option>
+									                    		</volist>
+															</select>
+														</div>
+														<div class="form-group">
+															<label class="block">
+																请求方法<span class="check-tips"></span>
+															</label>
+															<div class="clip-radio radio-primary">
+																<input id="hidden_true" type="radio" name="request_type" value="POST">
+																<label for="hidden_true">
+																	POST
+																</label>
+																<input id="hidden_false" type="radio" name="request_type" value="GET">
+																<label for="hidden_false">
+																	GET
+																</label>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="">
+																请求地址<span class="check-tips">（控制器/方法名）</span>
+															</label>
+															<input type="text" class="form-control" name="api_url" value="{$info.api_url}">
+														</div>
+														<div class="form-group">
+															<label class="block">
+																其他属性<span class="check-tips"></span>
+															</label>
+															<div class="checkbox clip-check check-primary checkbox-inline">
+																<input type="checkbox" id="checkbox4" name="is_pagination" value="1">
+																<label for="checkbox4">
+																	分页接口
+																</label>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="">
+																主要开发者<span class="check-tips"></span>
+															</label>
+															<div class="clip-radio radio-primary">
+																<volist name=":C('DEVELOPER')" id="vo">
+																<input id="developer{$vo.id}" type="radio" name="developer" value="{$vo.id}">
+																<label for="developer{$vo.id}">
+																	{$vo.name}
+																</label>
+																</volist>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="">
+																开发状态<span class="check-tips"></span>
+															</label>
+															<div class="clip-radio radio-primary">
+																<volist name=":C('DEVELOPMENT_STATUS')" id="vo">
+																<input id="development_status{$vo.id}" type="radio" name="development_status" value="{$vo.id}">
+																<label for="development_status{$vo.id}">
+																	{$vo.name}
+																</label>
+																</volist>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="">
+																接口介绍<span class="check-tips"></span>
+															</label>
+															<textarea class="form-control autosize area-animated" maxlength="500" name="descript">{$info.descript}</textarea>
+														</div>
+														<div class="form-group">
+															<label for="">
+																请求参数<span class="check-tips"></span>
+															</label>
+															<table class="table table-hover request_table" id="">
+																<tr>
+								                    				<th>参数名称</th>
+								                    				<th>是否必须</th>
+								                    				<th>是否数组</th>
+								                    				<th>是否文件</th>
+								                    				<th>说明</th>
+								                    				<th class="center">操作 <a href="javascript:;" class="request_table_append_last"><i class="fa fa-plus"></i></a> </th>
+																</tr>
+															</table>
+														</div>
+														<div class="form-group">
+															<label for="">
+																返回参数说明<span class="check-tips"></span>
+															</label>
+															<table class="table table-hover return_table" id="">
+																<tr>
+																	<th>参数名称</th>
+								                    				<th>说明</th>
+								                    				<th class="center">操作 <a href="javascript:;" class="return_table_append_last"><i class="fa fa-plus"></i></a> </th>
+																</tr>
+															</table>
+														</div>
+														<div class="form-group">
+															<label for="">
+																返回示例<span class="check-tips"></span>
+															</label>
+															<textarea class="form-control autosize area-animated" maxlength="500" name="return_examples">{$info.return_examples}</textarea>
+														</div>
+														<div class="form-group">
+															<label for="">
+																排序<span class="check-tips">（升序）</span>
+															</label>
+															<input type="text" class="form-control" name="sort" value="{$info.sort|default=0}">
+														</div>
+														<input type="hidden" name="id" value="{$info.id|default=''}">
+														<button type="submit" class="btn btn-o btn-primary ajax-post" target-form="form-submitl">
+															确 定
+														</button>
+														<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+															返 回
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<script src="__STATIC__/jquery.tmpl-min.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+		
+<script id="requestFieldTemp" type="text/x-jquery-tmpl"> 
+<tr>
+	<td><input type="text" class="text input-small" name="request_field[request_field_name][${key}]" value="${request_field_name}"></td>
+
+	<td>
+	{{if must_field && must_field=='1'}}
+	<input type="checkbox" checked="checked" class="" name="request_field[must_field][${key}]" value="1">
+	{{else}}
+	<input type="checkbox" class="" name="request_field[must_field][${key}]" value="1">
+	{{/if}}
+	</td>
+
+	<td>
+	{{if is_group && is_group=='1'}}
+	<input type="checkbox" checked="checked" class="" name="request_field[is_group][${key}]" value="1">
+	{{else}}
+	<input type="checkbox" class="" name="request_field[is_group][${key}]" value="1">
+	{{/if}}
+	</td>
+
+	<td>
+	{{if is_file && is_file=='1'}}
+	<input type="checkbox" checked="checked" class="" name="request_field[is_file][${key}]" value="1">
+	{{else}}
+	<input type="checkbox" class="" name="request_field[is_file][${key}]" value="1">
+	{{/if}}
+	</td>
+
+	<td><textarea name="request_field[request_field_desc][${key}]">${request_field_desc}</textarea></td>
+
+	<td class="center">
+		<div class="visible-md visible-lg hidden-sm hidden-xs">
+		<a href="javascript:;" class="table_tr_up">上移</a>
+		<a href="javascript:;" class="table_tr_down">下移</a>
+		<a href="javascript:;" class="table_tr_del">删除</a>
+		<a href="javascript:;" class="request_table_append">追加</a>
+		</div>
+	</td>
+
+</tr>						
+</script>
+
+<script id="returnFieldTemp" type="text/x-jquery-tmpl"> 
+<tr>
+	<td><input type="text" class="text input-small" name="return_field[return_field_name][]" value="${return_field_name}"></td>
+	<td><textarea name="return_field[return_field_desc][]">${return_field_desc}</textarea></td>
+	<td class="center">
+		<div class="visible-md visible-lg hidden-sm hidden-xs">
+		<a href="javascript:;" class="table_tr_del">删除</a>
+		<a href="javascript:;" class="return_table_append">追加</a>
+		</div>
+	</td>
+</tr>							
+</script>
+
+	<script type="text/javascript">
+		$(function(){
+			<present name="info.id">
+			Think.setValue("request_type", "{$info.request_type|default='POST'}");
+			Think.setValue("api_group_id", {$info.api_group_id|default=0});
+			Think.setValue("is_pagination", {$info.is_pagination|default=0});
+			
+			Think.setValue("developer", {$info.developer|default=0});
+			Think.setValue("development_status", {$info.development_status|default=0});
+			</present>
+		})
+		function getNum( selector ){
+			return $(selector).length;			
+		}
+		function getRandom(){
+			return parseInt(Math.random()*1000000000);			
+		}
+	
+		$(function(){
+			//======================================================================
+			//初始化
+			
+			
+			if( '{$info.request_field}' ){
+				var request_field 	= eval("(" + '{$info.request_field}' + ")");
+				request_field = fill_must_field( request_field );
+				request_table_append( $(".request_table tr:last"),request_field );
+			}
+			if( '{$info.return_field}' ){
+				var return_field 	= eval("(" + '{$info.return_field}' + ")");
+				return_field = fill_must_field( return_field );
+				return_table_append( $(".return_table tr:last"),return_field );
+			}
+			function fill_must_field( request_field ){
+				for( var i in request_field ){
+					if( !request_field[i]['must_field'] ){
+						request_field[i]['must_field'] = 0;
+					}
+					if( !request_field[i]['is_group'] ){
+						request_field[i]['is_group'] = 0;
+					}
+				}				
+				return request_field;
+			}
+			//======================================================================
+			//上移
+			$("div").delegate(".table_tr_up","click",function(event){
+				var tr = $(this).parent().parent().parent();
+				console.log(tr.prop("outerHTML") );
+				var index = tr.index();
+				//alert( index );
+				if( index <2 ){
+					alert('已经在顶部了');
+				}else{
+					tr.parent().find("tr").eq(index-2).after( tr.prop("outerHTML") );
+					tr.remove();
+				}
+				event.stopPropagation();
+			})
+			//下移
+			$("div").delegate(".table_tr_down","click",function(){
+				var tr 	= $(this).parent().parent().parent();
+				var trs = tr.parent().find("tr");
+				var index = tr.index();
+				if( index >= trs.length-1 ){
+					alert('已经在底部了');
+				}else{
+					tr.parent().find("tr").eq(index+1).after( tr.prop("outerHTML") );
+					tr.remove();
+				}
+				event.stopPropagation();
+			})
+			//======================================================================
+			//参数变更
+			$("div").delegate(".table_tr_del","click",function(){
+				$(this).parent().parent().parent().remove();
+			})
+			
+			//请求参数追加
+			$("div").delegate(".request_table_append","click",function(event){
+				var obj = $(this).parent().parent().parent();
+				request_table_append(obj);
+				event.stopPropagation();
+			})
+			$(".request_table_append_last").click(function(){
+				request_table_append( $(".request_table tr:last") )
+			})
+			function request_table_append(obj,tmpData){
+				if( !tmpData ){
+					tmpData = [{request_field_name:'',request_field_desc:'',is_file:0,must_field:0,is_group:0}];
+				}
+				for( var i=0;i<tmpData.length;i++ ){
+					tmpData[i].key = getRandom();
+					var is_file = tmpData[i].is_file;
+					if(!is_file){
+						tmpData[i].is_file = 0;
+					}
+				}
+				obj.after( $("#requestFieldTemp").tmpl( tmpData ) );
+				event.stopPropagation();
+			}
+			
+			//返回参数追加
+			$("div").delegate(".return_table_append","click",function(event){
+				var obj = $(this).parent().parent().parent();
+				return_table_append(obj);
+				event.stopPropagation();
+			})
+			$(".return_table_append_last").click(function(){
+				return_table_append( $(".return_table tr:last") )
+			})
+			function return_table_append(obj,tmpData){
+				if( !tmpData ){
+					tmpData = [{return_field_name:'',return_field_desc:'',must_field:0,is_file:0,is_group:0}];
+				}
+				obj.after( $("#returnFieldTemp").tmpl( tmpData ) );
+			}
+			//======================================================================
+		})
+		
+	</script>
+</block>

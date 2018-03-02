@@ -1,0 +1,82 @@
+<div class="content-top">
+	<div class="top clearfix">
+		<h1>{$info.api_name}</h1>
+	</div>
+	<div class="line"></div>
+</div>
+<div class="content-content">
+	<div class="content" style="margin-top: 15px;">
+		<div class="popup-gallery">
+			<p>{$info.descript}</p>
+			<p>请求地址：{$info.api_url}</p>
+			<p>请求方法：{$info.api_name}</p>
+			
+			
+			<p>请求参数：</p>
+			
+			<a href="{:U('Index/demo',array('id'=>$_GET['id'] ) )}" style="float:right;margin-top:-30px;margin-right:10px;" href="">发送demo请求</a>
+			
+			<table class="parameter_table" border="1" bordercolor="#E6E6E6">
+				<tr class="table_header">
+					<td>参数名称</td>
+					<td>必填</td>
+					<td>数组</td>
+					<td class="descript_td">说明</td>
+				</tr>
+				<volist name="info['request_field']" id="v">
+				<tr>
+					<td>{$v.request_field_name}</td>
+					<td><eq name="v['must_field']" value="1">√</eq></td>
+					<td><eq name="v['is_group']" value="1">√</eq></td>
+					<td class="descript_td_contents">{$v.request_field_desc}</td>
+				</tr>
+				</volist>
+			</table>
+			
+			<p>返回示例：</p>
+			<div><pre>{$info.return_examples}</pre></div>
+			
+			
+			<p>返回参数说明：</p>
+			<table class="parameter_table" border="1" bordercolor="#E6E6E6">
+				<tr class="table_header">
+					<td>参数名称</td>
+					<td>说明</td>
+				</tr>
+				<volist name="info['return_field']" id="v">
+				<tr>
+					<td>{$v.return_field_name}</td>
+					<td class="descript_td_contents">{$v.return_field_desc}</td>
+				</tr>
+				</volist>
+			</table>
+			
+		</div>
+	</div>
+</div>
+
+
+
+<!--  
+<div class="content-top">
+	<div class="top clearfix">
+		<h1>概述</h1>
+	</div>
+	<div class="line"></div>
+</div>
+<div class="content-content">
+	<div class="content" style="margin-top: 15px;">
+		<div class="popup-gallery">
+			一号票仓接口文档
+		</div>
+	</div>
+</div>
+-->
+
+
+
+
+
+
+
+

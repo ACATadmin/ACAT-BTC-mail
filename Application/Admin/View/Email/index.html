@@ -1,0 +1,110 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">邮件列表</span></h5>
+                                        <div class="row search-form">
+                                                <div class="col-md-3">
+                                                     <h5 class="text-bold margin-top-25 margin-bottom-15">邮件分组</h5>
+                                                     <div class="form-group">
+                                                             <select class="js-example-basic-single js-states form-control" name="user_status">
+                                                                     <option value="">全部</option>
+                                                                     <volist name=":C('EMAIL_GROUP')" id='vo'>
+                                                                         <option value='{$vo.id}' <eq name="_GET['group']" value='$vo["id"]'>selected</eq>>{$vo}</option>
+                                                                     </volist>
+                                                             </select>
+                                                     </div>
+                                                </div>
+                                                
+                                                <div class="col-md-3">
+                                                     <h5 class="text-bold margin-top-25 margin-bottom-15">关键字</h5>
+                                                     <div class="form-group">
+                                                             <input type="text" name="title" value="{:I('title')}" class="form-control">
+                                                     </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                     <h5 class="text-bold margin-top-25 margin-bottom-15">&nbsp;</h5>
+                                                     <div class="form-group">
+                                                             <a class="btn btn-wide btn-primary" href="javascript:;" id="search" url="{:U('index')}">搜索</a>
+                                                     </div>
+                                                </div>
+                                        </div>
+                                        <a class="btn btn-wide btn-primary" href="{:U('add')}">新增</a>
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+												<th class="center">编号</th>
+												<th>姓名</th>
+                                                <th>邮件地址</th>
+												<th>备注</th>
+												<th>添加时间</th>
+												<th>状态</th>
+												<th class="center">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<volist name="list" id="vo">
+											<tr>
+												<td class="center">{$vo.id}</td>
+                                                <td>{$vo.name}</td>
+												<td>{$vo.email}</td>
+												<td>{$vo.remark}</td>
+												<td>{$vo.create_time|time_format='Y-m-d H:i'}</td>
+												<td>{$vo.status_text}</td>
+												<td class="center">
+													<div class="visible-md visible-lg hidden-sm hidden-xs">
+														<eq name="vo.status" value="1">
+														<a href="{:U('changeStatus?method=forbid&id='.$vo['id'])}" class="ajax-get">禁用</a>
+														<else/>
+														<a href="{:U('changeStatus?method=resume&id='.$vo['id'])}" class="ajax-get">启用</a>
+														</eq>
+														<a href="{:U('changeStatus?method=delete&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+														<a href="{:U('add?id='.$vo['id'])}" class="">编辑</a>
+													</div>
+												</td>
+											</tr>
+											</volist>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+                
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+                
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+                
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

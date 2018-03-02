@@ -1,0 +1,133 @@
+<extend name="Public/base"/>
+
+<block name="body">
+<div class="main-content" >
+	<div class="wrap-content container" id="container">
+	<!-- start: FORM VALIDATION EXAMPLE 2 -->
+		<div class="container-fluid container-fullw">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>{$info['id']?'编辑':'新增'}配置</h2>
+					<p>
+					</p>
+					<hr>
+					<form action="{:U()}" method="post" class="form-horizontal">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="control-label">
+										配置标识 <span class="symbol required">（用于C函数调用，只能使用英文且不能重复）</span>
+									</label>
+									<input type="text"  class="form-control" name="name"  value="{$info.name|default=''}">
+								</div>
+								<div class="form-group">
+									<label class="control-label">
+										配置标题 <span class="symbol required">（用于后台显示的配置标题）</span>
+									</label>
+									<input type="text" placeholder="" class="form-control" name="title" value="{$info.title|default=''}">
+								</div>
+								<div class="form-group">
+									<label class="control-label">
+										排序 <span class="symbol required">（用于分组显示的顺序）</span>
+									</label>
+									<input type="text" placeholder="Text Field" class="form-control" name="sort" value="{$info.sort|default=0}">
+								</div>
+								<div class="form-group">
+									<label class="control-label">
+										配置类型 <span class="symbol required">（系统会根据不同类型解析配置值）</span>
+									</label>
+									<select class="form-control" id="dropdown" name="type">
+										<volist name="Think.config.CONFIG_TYPE_LIST" id="type">
+											<option value="{$key}">{$type}</option>
+										</volist>
+									</select>
+								</div>
+								<div class="form-group">
+									<label class="control-label">
+										配置分组 <span class="symbol required">（配置分组 用于批量设置 不分组则不会显示在系统设置中）</span>
+									</label>
+									<select class="form-control" id="dropdown" name="group">
+										<option value="0">不分组</option>
+										<volist name="Think.config.CONFIG_GROUP_LIST" id="group">
+											<option value="{$key}">{$group}</option>
+										</volist>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label">
+										配置值<span class="symbol required">（配置值）</span>
+									</label>
+									<textarea class="ckeditor form-control" id="editor2"  cols="10" rows="10" name="value">{$info.value|default=''}</textarea>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label">
+										配置项<span class="symbol required">（如果是枚举型 需要配置该项）</span>
+									</label>
+									<textarea class="ckeditor form-control" id="editor2"  cols="10" rows="10" name="extra">{$info.extra|default=''}</textarea>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label">
+										说明<span class="symbol required">（配置详细说明）</span>
+									</label>
+									<textarea class="ckeditor form-control" id="editor2"  cols="10" rows="10" name="remark">{$info.remark|default=''}</textarea>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<input type="hidden" name="id" value="{$info.id|default=''}">
+								<button class="btn btn-primary btn-wide submit-btn ajax-post" type="submit" target-form="form-horizontal">
+									确 定 <i class="fa fa-arrow-circle-right"></i>
+								</button>
+								<button class="btn btn-wide btn-green active" onclick="javascript:history.back(-1);return false;">
+									返 回 <i class="fa fa-arrow-circle-left"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- end: FORM VALIDATION EXAMPLE 2 -->
+	</div>
+</div>
+</block>
+
+<block name="script">
+	<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+	<script type="text/javascript">
+		Think.setValue("type", {$info.type|default=0});
+		Think.setValue("group", {$info.group|default=0});
+		//导航高亮
+		highlight_subnav('{:U('Config/index')}');
+	</script>
+</block>

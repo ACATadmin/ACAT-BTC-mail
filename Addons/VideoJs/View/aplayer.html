@@ -1,0 +1,48 @@
+
+<link href="/Addons/VideoJs/Static/video-js.css" rel="stylesheet" type="text/css">
+<script src="/Addons/VideoJs/Static/video.js"></script>
+<script>
+videojs.options.flash.swf = "/Addons/VideoJs/Static/video-js.swf";
+</script>
+
+<style>
+<!--
+.vjs-default-skin .vjs-big-play-button{
+	left: {$config.left}px;
+	top: {$config.top}px;
+	width:84px;				/*按钮宽度*/
+	height:84px;			/*按钮高度*/	
+	border-radius:50px;
+}
+#my_video{
+	width:auto !important;
+}
+-->
+</style>
+
+<script>
+my_video_rewith();
+jQuery(window).resize(function(){
+	my_video_rewith();
+})
+function my_video_rewith(){
+	var my_video_width = $("#my_video").width();
+	var left = my_video_width/2-42;
+	$(".vjs-default-skin .vjs-big-play-button").css('left',left);
+}
+</script>
+
+
+	<embed src="{$data.video_path}" quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
+	<!-- <source src="{$data.video_path}" type='video/mp4' />	 -->
+	<!--  
+	<source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+	<source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+	<source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+	
+	<track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track>
+	<track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track>
+	-->
+
+
+

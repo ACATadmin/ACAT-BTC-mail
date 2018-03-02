@@ -1,0 +1,156 @@
+<extend name="Public/base" />
+
+<block name="body">
+<style>
+    .cate_one{
+        width:100% !important;
+    }
+    .node_mid{
+        display:inline-block;
+    }
+</style>
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: USER PROFILE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="tabbable">
+										<ul class="nav nav-tabs tab-padding tab-space-3 tab-blue" id="myTab4">
+											<li class="active">
+												<a data-toggle="tab" href="#panel_overview">
+													设置专业用户分类
+												</a>
+											</li>
+											
+										</ul>
+										<div class="tab-content">
+											<div id="panel_overview" class="tab-pane fade in active">
+												<div class="row">
+													<div class="col-sm-12 col-md-12">
+														<form action="{:U('')}" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
+															<volist name="pclist" id="vo" >
+																<div class="panel-body node_out">
+                                                                                                                                        <div class="checkbox clip-check check-primary checkbox-inline cate_one">
+                                                                                                                                                <notempty name="vo['subgclist']">
+                                                                                                                                                    <input type="checkbox" class="auth_cate_ids cate_ids_all" id="checkbox4{$vo.id}" name="cate_ids[]" value="0" disabled='disabled'>
+                                                                                                                                                <else/>
+                                                                                                                                                    <input type="checkbox" class="auth_cate_ids cate_ids_all" id="checkbox4{$vo.id}" name="cate_ids[]" value="{$vo.id}">
+                                                                                                                                                </notempty>
+																		
+																		<label for="checkbox4{$vo.id}">
+																			{$vo.cate_name}
+																		</label>
+																	</div>
+																	<present name="vo['subgclist']">
+                                                                                                                                            <volist name="vo['subgclist']" id="child" >
+                                                                                                                                                <div class="panel-body node_mid">
+                                                                                                                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                                                                                                                <input type="checkbox" class="auth_cate_ids cate_ids_row" id="checkbox4{$child.id}" name="cate_ids[]" value="{$child.id}">
+                                                                                                                                                                <label for="checkbox4{$child.id}">
+                                                                                                                                                                        {$child.cate_name}
+                                                                                                                                                                </label>
+                                                                                                                                                        </div>
+                                                                                                                                                </div>
+                                                                                                                                            </volist>
+																	</present>
+																</div>
+															</volist>
+										
+                                                                                                                        <input type="hidden" name="uid" value="{$_GET['uid']}" />
+                                                                                                                        <button type="submit" class="btn btn-o btn-primary ajax-post" target-form="auth-form">
+																确 定
+															</button>
+															<button type="submit" class="btn btn-o btn-default" onclick="javascript:history.back(-1);return false;">
+																返 回
+															</button>
+													    </form>
+													</div>
+												</div>
+											</div>
+											<div id="panel_edit_account" class="tab-pane fade">
+											</div>
+											<div id="panel_projects" class="tab-pane fade">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end: USER PROFILE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+		<script type="text/javascript" src="__STATIC__/qtip/jquery.qtip.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/qtip/jquery.qtip.min.css" media="all">
+		<script>
+		    +function($){
+		        var cate_ids = [{$mycate_ids}];
+		        $('.auth_cate_ids').each(function(){
+		            if( $.inArray( parseInt(this.value,10),cate_ids )>-1 ){
+		                $(this).prop('checked',true);
+		            }
+		            if(this.value==''){
+		                $(this).closest('div').remove();
+		            }
+		        });
+	
+		        //全选节点
+//		        $('.cate_ids_all').on('change',function(){
+//		            $(this).closest('.node_out').find('.node_mid').find('input').prop('checked',this.checked);
+//		        });
+//		        $('.cate_ids_row').on('change',function(){
+//		            $(this).closest('.node_mid').find('.node_in').find('input').prop('checked',this.checked);
+//		        });
+	
+		        $('.checkbox').each(function(){
+		            $(this).qtip({
+		                content: {
+		                    text: $(this).attr('title'),
+		                    title: $(this).text()
+		                },
+		                position: {
+		                    my: 'bottom center',
+		                    at: 'top center',
+		                    target: $(this)
+		                },
+		                style: {
+		                    classes: 'qtip-dark',
+		                    tip: {
+		                        corner: true,
+		                        mimic: false,
+		                        width: 10,
+		                        height: 10
+		                    }
+		                }
+		            });
+		        });
+	
+		        $('select[name=group]').change(function(){
+					location.href = this.value;
+		        });
+		        //导航高亮
+		    }(jQuery);
+		</script>
+</block>

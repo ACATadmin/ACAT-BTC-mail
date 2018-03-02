@@ -1,0 +1,43 @@
+
+<a name="head_photo{$picKey}" id="head_photo{$picKey}"  onclick =show{$picKey}() >新增文章</a>
+
+<script>
+
+function show_head(head_file){
+    console.log(head_file)
+
+    var html='<div class="relevance_musician_one">'+
+                      '<input type="hidden" name="content_ids[]" value="'+head_file.id+'">'+
+                      '<div class="div001">'+head_file.info+'</div>'+
+                      '<div class="div003">'+
+                             ' &nbsp;&nbsp;'+
+                              '<a class="show" href="http://'+window.location.host+'/Admin/Content/edit_content/id/'+head_file.id+'.html" target="_blank">查看</a>'+
+                              '&nbsp;'+
+                              '<a class="del_relevance_musician_one" href="javascript:;">x删除</a>'+
+                      '</div>'+
+              '</div>';
+              
+              $('#contents').append(html);
+}
+function   show{$picKey}()   
+{   
+
+  var picKeys="1";
+  var wds=2; 
+  var wd=3;  
+  var hds=4; 
+  var hd=5;  
+  var head_photo_src="{$picKey}";
+  console.log(picKeys) 
+  var urls= "http://"+window.location.host+"/Admin/Content/add_contents/img/"+3+"/imgname/"+head_photo_src+"/wd/"+wd+"/hd/"+hd;
+  console.log(urls)
+  art.dialog.open(urls,{
+    title: '添加文章',
+    width:'1400px',
+    height:'600px'
+  }); 
+}  
+
+
+
+</script>

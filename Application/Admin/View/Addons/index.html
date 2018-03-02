@@ -1,0 +1,144 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-content" >
+	<div class="wrap-content container" id="container">
+<!-- start: STRIPED ROWS -->
+		<div class="container-fluid container-fullw">
+			<div class="row">
+				<div class="col-md-12">
+					<h5>插件列表</h5>
+					<p>
+						<a class="btn btn-wide btn-primary" href="{:U('create')}">快速创建</a>
+					</p>
+					<table class="table table-striped table-hover" id="sample-table-2">
+						<thead>
+							<tr>
+								<th class="center">名称</th>
+								<th class="hidden-xs">标识</th>
+								<th class="hidden-xs">描述</th>
+								<th class="hidden-xs">状态</th>
+								<th class="hidden-xs">作者</th>
+								<th class="hidden-xs">版本</th>
+								<th class="center">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<notempty name="_list">
+							<volist name="_list" id="vo">
+							<tr>
+								<td class="center">{$vo.title}</td>
+								<td  class="hidden-xs">{$vo.name}</td>
+								<td  class="hidden-xs">{$vo.description}</td>
+								<td  class="hidden-xs">{$vo.status_text|default="未安装"}</td>
+								<td class="hidden-xs"><a target="_blank" href="{$vo.url|default='http://www.onethink.cn'}">{$vo.author}</a></td>
+								<td class="hidden-xs">
+								{$vo.version}</td>
+								<td class="center">
+								<div class="visible-md visible-lg hidden-sm hidden-xs">
+									<empty name="vo.uninstall">
+										<?php
+											$class	= get_addon_class($vo['name']);
+											if(!class_exists($class)){
+												$has_config = 0;
+												}else{
+												$addon = new $class();
+												$has_config = count($addon->getConfig());
+												}
+										?>
+										<?php if ($has_config): ?>
+											<a href="{:U('config',array('id'=>$vo['id']))}">设置</a>
+										<?php endif ?>
+									<?php if ($vo['status'] >=0): ?>
+										<eq name="vo.status" value="0">
+											<a class="ajax-get" href="{:U('enable',array('id'=>$vo['id']))}">启用</a>
+										<else />
+											<a class="ajax-get" href="{:U('disable',array('id'=>$vo['id']))}">禁用</a>
+										</eq>
+									<?php endif ?>
+										{// <eq name="vo.author" value="thinkphp">}
+											<a class="ajax-get" href="{:U('uninstall?id='.$vo['id'])}">卸载</a>
+										{// </eq>}
+									<else />
+										<a class="ajax-get" href="{:U('install?addon_name='.$vo['name'])}">安装</a>
+									</empty>
+									</div>
+								</td>
+							</tr>
+							</volist>
+							<else/>
+							<td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+							</notempty>
+						</tbody>
+					</table>
+					<!-- 分页 -->
+				    <div class="page">
+				        {$_page}
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+<script type="text/javascript">
+$(function(){
+	//搜索功能
+	$("#search").click(function(){
+		var url = $(this).attr('url');
+        var query  = $('.search-form').find('input').serialize();
+        query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+        query = query.replace(/^&/g,'');
+        if( url.indexOf('?')>0 ){
+            url += '&' + query;
+        }else{
+            url += '?' + query;
+        }
+		window.location.href = url;
+	});
+	//回车搜索
+	$(".search-input").keyup(function(e){
+		if(e.keyCode === 13){
+			$("#search").click();
+			return false;
+		}
+	});
+	//点击排序
+	$('.list_sort').click(function(){
+		var url = $(this).attr('url');
+		var ids = $('.ids:checked');
+		var param = '';
+		if(ids.length > 0){
+			var str = new Array();
+			ids.each(function(){
+				str.push($(this).val());
+			});
+			param = str.join(',');
+		}
+
+		if(url != undefined && url != ''){
+			window.location.href = url + '/ids/' + param;
+		}
+	});
+});
+</script>
+</block>

@@ -1,0 +1,157 @@
+.contentW{
+    width: 1200px;
+    margin: 0 auto;
+}
+i{
+    font-style: normal;
+}
+.Title{
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+}
+.TitleH2{
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    color: #000;
+    font-weight:normal;
+    text-align: center;
+}
+.TitleH2 span{
+    display: inline-block;
+    width: 200px;
+    text-align: left;
+}
+.TitleH3{
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    height: 50px;
+    line-height: 50px;
+}
+.table_box{
+    width: 100%;
+}
+.table_box table{
+    width: 100%;
+}
+.table_box table tr td{
+    height: 50px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ddd;
+    vertical-align: middle
+}
+.InputBox{
+    display: block;
+    font-size: 0;
+    border: none;
+    text-align: center;
+    background: transparent;
+}
+.InputBox input{
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    border:0;
+    padding: 0 10px;
+    
+}
+.tdSpan{
+    display: inline-block;
+    margin: 5px 0;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.tdSpan label{
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+    margin-top: -3px;
+    background: url(../images/check.png) no-repeat center;
+    background-size: 100% 100%;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.tdSpan.active label{
+    background: url(../images/check01.png) no-repeat center;
+    background-size: 100% 100%;
+}
+.table_box01{
+    width: 800px;
+    margin: 0 auto;
+}
+.table_box01 table tr td {
+    font-size: 14px;
+    text-align: center;
+    height: 130px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+.table_box01 table tr td.check_Td{
+    padding: 0 20px;
+    text-align: left;
+}
+.table_box01 table tr.TrHeight td{
+    height: 50px;
+}
+.notesP{
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #f00;
+}
+.contentW1{
+    width: 1400px;
+    margin: 0 auto;
+}
+.font_b{
+    font-weight: bold;
+}
+.selectBox {
+    display: block;
+    font-size: 0;
+    border: none;
+    text-align: center;
+    background: transparent;
+}
+.selectBox{
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+.selectBox select {
+    display: inline-block;
+    width:80%;
+    height: 100%;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    padding: 0 10px;
+}
+.AddSub{
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+    border-radius: 3px;
+    line-height: 30px;
+    background: #eee;
+    margin: 20px 0;
+}
+.AddSub_box{
+    text-align: right;
+}

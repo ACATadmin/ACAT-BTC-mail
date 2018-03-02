@@ -1,0 +1,38 @@
+<extend name="Base/common"/>
+
+<block name="side">
+	<include file="Index/common" />
+</block>
+
+<block name="body">
+    <div class="span8">
+
+		<div id="book-content">
+			<empty name="cont">
+				<div class="content-top">
+					<div class="top clearfix">
+						<h1>概述</h1>
+					</div>
+					<div class="line"></div>
+				</div>
+				<div class="content-content">
+					<div class="content" style="margin-top: 15px;">
+						<div class="popup-gallery">
+
+							保理接口文档
+
+						</div>
+					</div>
+				</div>
+			<else />
+				{$cont}
+			</empty> 
+		</div>
+	
+	</div>
+</block>
+
+
+<block name="script">
+	<include file="Index/commonScript" />
+</block>

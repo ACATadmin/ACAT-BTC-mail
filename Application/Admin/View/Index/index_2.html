@@ -1,0 +1,495 @@
+<extend name="Public/base" />
+<block name='style'>
+    <!--<link rel="stylesheet" href="__SJ__/assets/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="__SJ__/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__SJ__/assets/css/fonts.googleapis.com.css" />
+<!--    <link rel="stylesheet" href="__SJ__/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="__SJ__/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="__SJ__/assets/css/ace-rtl.min.css" />-->
+    <link rel="stylesheet" type="text/css" href="__SJ__/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="__SJ__/css/Layout02.css" />
+    <link rel="stylesheet" type="text/css" href="__SJ__/fonts/iconfont.css" />
+    <style>
+        .pull-left{
+            width:400px;
+        }
+        .doctor_list h1 {
+            color: #ffffff;
+            font-family:none;
+        }
+        .doctor_list h2 {
+            color: #ffffff;
+        }
+        .navbar-brand img {
+            margin-top: 9px !important;
+        }
+        .doctor_left_tit h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .doctor_right_ul li h1 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .doctor_right_ul li .left{
+            margin-right:4px;
+        }
+        .doctor_table_play{
+            margin-bottom:40px;
+        }
+        .doctor_list_ul li:nth-child(2) .doctor_list{
+            background-size:46px;
+        }
+    </style>
+</block>
+<block name="body">
+
+				
+	<div class="main-content">
+            <div class="main-content-inner">
+
+                <div class="page-content index_platform">
+
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS -->
+                            <div class="  IndexBox1 clearfix">
+                            	<div class="DataList">
+                                    <ul class="clearfix doctor_list_ul">
+                                        <li>
+                                            <div class="doctor_list">
+                                                <h1>{$user_num}</h1>
+                                                <h2>用户</h2>
+                                            </div>
+                                        </li>
+                                         <li>
+                                            <a href='{:U("Ask/index")}'> 
+                                            <div class="doctor_list">
+                                                <h1>{$ask_num}</h1>
+                                                <h2>问询</h2>
+                                            </div>
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href='{:U("UserLives/index")}'> 
+                                            <div class="doctor_list">
+                                                <h1>{$live_num}</h1>
+                                                <h2>直播</h2>
+                                            </div>
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href='{:U("Lesson/lessonPayList")}'> 
+                                            <div class="doctor_list">
+                                                <h1>{$lesson_sale_amount}</h1>
+                                                <h2>课程销售额</h2>
+                                            </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                            	</div>
+                            	<div class="echartsBox01 clearfix">
+                            		<div class="echarts_left">
+                            			 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                                         <div id="main" style="width:100%;height:400px;"></div>
+                            		</div>
+                                    <div class="echarts_right">
+                                     <div id="main8" style="width:100%;height:400px;"></div>
+                                    </div>
+                            	</div><!-- echartsBox01 -->
+                                <div class="clearfix doctor_info_box01">
+                                    <div class="doctor_left">
+                                        <div class="doctor_left_tit">
+                                            <h1>热门课程</h1>
+                                            <!--<h2>最新课程每周更新另有收费和免费的课程观看</h2>-->
+                                            <a href="{:U('Lesson/index')}">查看更多</a>
+                                        </div>
+                                        <table class="doctor_table01">
+                                            <tr>
+                                                <th>课程标题</th>
+                                                <th>课程类别</th>
+                                                <th>课程封面</th>
+                                                <th>课程金额</th>
+                                                <th>发布时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            <notempty name="hot_lesson_list">
+                                                <volist name="hot_lesson_list" id="vo">
+                                                    <tr>
+                                                        <td>{$vo.admin_index_title}</td>
+                                                        <td>{$vo.lesson_type_exp}</td>
+                                                        <td>
+                                                            <div class="pic">
+                                                               <img src="{$vo.cover_url}" alt="">
+                                                            </div>
+                                                        </td>
+                                                        <td>{$vo.pay_price_exp}</td>
+                                                        <td>{$vo.create_time_exp}</td>
+                                                        <td>
+                                                            <eq name="vo.is_series" value="1">
+                                                                <a href="{:U('Lesson/seriesList?lesson_id='.$vo['id'])}">系列课程</a>
+                                                            <else/>
+                                                                <a href="{:U('Lesson/editLesson?id='.$vo['id'])}">查看详情</a>
+                                                            </eq>
+                                                        </td>
+                                                    </tr>
+                                                </volist>
+                                            <else/>
+                                                <tr>
+                                                    <td colspan="6">暂无热门课程</td>
+                                                </tr>
+                                            </notempty>
+                                        </table>
+                                    </div>
+                                    <div class="doctor_right">
+                                        <div class="doctor_left_tit">
+                                            <h1>人气专家</h1>
+                                            <!--<h2>最近一周咨询提问信息</h2>-->
+                                            <a href="{:U('User/profession_user')}">查看更多</a>
+                                        </div>
+                                        <ul class="clearfix doctor_right_ul">
+                                            <notempty name="famous_professional_list">
+                                                <volist name="famous_professional_list" id="vo">
+                                                <li>
+                                                   <a href='{:U("User/edit_profession_user",array("uid"=>$vo["uid"]))}'> 
+                                                        <div class="pic"><img src="{$vo.head_pic_url}" alt=""></div>
+                                                        <h1>{$vo.realname}</h1>
+                                                        <p>{$vo.self_description_exp}</p>
+                                                        <div class="doctor_right_sign">
+                                                          <notempty name="vo.cate_list">
+                                                             <volist name="vo.cate_list" id="vo2">
+                                                                 <span class="left">{$vo2.cate_name}</span>
+                                                             </volist>
+                                                          </notempty>
+                                                          <span class="right">{$vo.reg_time_exp}</span>
+                                                        </div>
+                                                   </a>
+                                                </li>
+                                                </volist>
+                                            <else/>
+                                                <li>暂无人气专家</li>
+                                            </notempty>
+                                        </ul>
+                                    </div>
+                                </div><!-- doctor_info_box01 -->
+
+                                <div class="doctor_table_play">
+                                    <div class="doctor_left_tit">
+                                        <h1>正在直播列表</h1>
+                                        <!--<h2>最新课程每周更新另有收费和免费的课程观看</h2>-->
+                                    </div>
+                                    <table class="doctor_table01">
+                                        <tr>
+                                            <th>直播标题</th>
+                                            <th>发布者姓名</th>
+                                            <th>发布者专业</th>
+                                            <th>发布时间</th>
+                                            <th>开始时间</th>
+                                            <th>结束时间</th>
+                                            <th>直播状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        <notempty name="living_list">
+                                            <volist name="living_list" id="vo">
+                                            <tr>
+                                                <td>{$vo.title}</td>
+                                                <td>{$vo.realname}</td>
+                                                <td>{$vo.profession_type_exp}</td>
+                                                <td>{$vo.update_time|time_format='Y-m-d'}</td>
+                                                <td>{$vo.start_time_exp}</td>
+                                                <td>{$vo.end_time_exp}</td>
+                                                <td>{$vo.live_status_exp}</td>
+                                                <td>
+                                                    <eq name="vo.live_status" value="1">
+                                                        <a href="{:U('UserLives/watchLive',array('id'=>$vo['id']))}">观看直播</a>
+                                                    </eq>
+                                                    <a href="{:U('UserLives/detail',array('id'=>$vo['id']))}">查看详情</a>
+                                                </td>
+                                            </tr>
+                                            </volist>
+                                        <else/>
+                                            <tr>
+                                                <td colspan="8">暂无正在进行中的直播</td>
+                                            </tr>
+                                        </notempty>
+                                        
+                                    </table>
+                                </div><!-- doctor_table_play -->
+
+                            </div>
+                           
+                            <!-- PAGE CONTENT ENDS -->
+                            
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+        </div>
+		
+</block>
+<block name="script">
+                <!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<script src="__MODULE__/vendor/Chart.js/Chart.min.js"></script>
+		<script src="__MODULE__/vendor/jquery.sparkline/jquery.sparkline.min.js"></script>
+		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<!--<script src="__MODULE__/assets/js/index.js"></script>-->
+                <!--<include file="Index/index_js"/>-->
+		<script>
+                        
+                        
+			jQuery(document).ready(function() {
+				Main.init();
+				//Index.init();
+                                chart1Handler();
+                        });
+                        
+		</script>
+                
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+                
+                
+                <script src="__SJ__/js/echarts.min.js"></script>
+                <script type="text/javascript">
+                    var name_json=<?php echo json_encode($video_type_count['name_arr'])?>;
+                    var value_json=<?php echo json_encode($video_type_count['value_arr'])?>;
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart = echarts.init(document.getElementById('main'));
+
+                    option = {
+                        title : {
+                            text: '最受欢迎视频类型',
+                            x:'left'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        color: ['#ffdf25', '#4287f5', '#ff5454', '#22c390' , '#ffbc34'],
+                        legend: {
+                            orient: 'vertical',
+                            bottom: 'bottom',
+                            data: name_json,
+                            orient: 'horizontal',
+                            itemWidth: 10,
+                            itemHeight: 10,
+                            x: 'center',
+                            y: '80%',
+                            textStyle: {
+                                color: "#333333",
+                                padding: [0, 0, 6, 6],
+                            },
+                            icon: 'circle',
+                        },
+                        series : [
+                            {
+                                name: '访问量',
+                                type: 'pie',
+                                radius : '45%',
+                                center: ['50%', '50%'],
+                                data:value_json,
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+                </script>
+                <script>
+                    //
+                    var live_year_view=<?php echo json_encode($liveYearView)?>;
+                    var video_year_view=<?php echo json_encode($videoYearView)?>;
+                    var article_year_view=<?php echo json_encode($articleYearView)?>;
+                    //
+                    var myChart8 = echarts.init(document.getElementById('main8'));
+                    option8 = {
+                        title : {
+                            text: '观看统计',
+                            subtext: '单位/人',
+                        },
+                        legend: {
+                            data:['直播','视频','资讯'],
+                            itemWidth: 15,
+                            itemHeight: 2,
+                            orient: 'horizontal',
+                            top: '10',
+                            x: 'right',
+                            textStyle: {
+                                color: "#333333",
+                                padding: [0, 0, 6, 6],
+                            },
+                        },
+                        tooltip: {
+                            trigger:'axis',
+                            axisPointer: {
+                                lineStyle: {
+                                    color: '#ddd'
+                                }
+                            },
+                            backgroundColor: 'rgba(255,255,255,1)',
+                            padding: [5, 10],
+                            textStyle: {
+                                color: '#7588E4',
+                            },
+                            extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
+                        },
+                        grid: {
+                            left: '3%',
+                            right: 0,
+                            bottom: '0%',
+                            containLabel: true
+                        },
+
+                        toolbox: {
+                            show: true,
+                        },
+                        calculable: true,
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            splitLine: {
+                              show:false
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            axisLine: {
+                                    lineStyle: {
+                                        color: '#cfd8dc'
+                                    }
+                                },
+                                axisLabel:{
+                                    textStyle:{
+                                        color: "#666666"
+                                    }
+                                },
+                            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月','8月','9月','10月','11月','12月']
+                        },
+                        yAxis: [{
+                            type: 'value',
+                            nameGap: 20,
+                            nameLocation: 'end',
+                            min: 0,
+                            max: {$max_count},
+                            minInterval: 200,
+                            interval:{$every},
+                            axisTick: false,
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#cbcbcb'
+                                }
+                            },
+                            axisLabel:{
+                                    textStyle:{
+                                        color: "#666666"
+                                    }
+                               },
+                            splitLine: { //网格线
+                                show: true,
+                                lineStyle: {
+                                    color: ['#cbcbcb', '#cbcbcb'],
+                                    type: 'dashed'
+                                }
+                            }
+                        },{
+                            axisLine: {
+                                    lineStyle: {
+                                        color: '#cfd8dc'
+                                    }
+                                }
+                        }],
+                        series: [{
+                            name: '直播',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: live_year_view,
+                            areaStyle: {
+                                normal: {
+                                    color: 'rgba(205, 236, 255,0.5)'
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#0ca6e4'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 2
+                                }
+                            }
+                        }, {
+                            name: '视频',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: video_year_view,
+                            areaStyle: {
+                                normal: {
+                                    color: 'rgba(221, 246, 224,0.4)'
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#78da83'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 2
+                                }
+                            }
+                        }, {
+                            name: '资讯',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: article_year_view,
+                            areaStyle: {
+                                normal: {
+                                    color: 'rgba(221, 246, 224,0.4)'
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#ffbc34'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 2
+                                }
+                            }
+                        }]
+                    };
+                    myChart8.setOption(option8);
+                </script>
+</block>

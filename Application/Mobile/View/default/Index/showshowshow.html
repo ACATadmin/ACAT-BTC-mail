@@ -1,0 +1,76 @@
+                    <volist name="list" id="vo">
+                      <div  class="list_box"  class="index_video_margin" data-am-widget="gallery" class="am-gallery am-avg-sm-2
+               am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: true }">
+                      <if condition="$vo['show_type'] eq 3">
+                       <div class="index_video">
+		      	<ul>
+            <volist name='vo.contents' id='show3'>
+              <if condition='$i eq 2'>
+                <li >
+                <else/>
+                <li data-am-widget="gallery" class="am-gallery am-avg-sm-2
+               am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: true }">
+              </if>
+              <if condition='$show3.type eq 1'><a href='{:U("Content/contentDetail",array("content_id"=>$show3["id"]))}'><else/><a href='{:U("Video/videoDetail",array("content_id"=>$show3["id"]))}'></if>
+              <div class="index_video_box">
+              <if condition="$show3['type'] eq 1"><img src="{$show3['pic_middle_path']}" /><else/><img src="{$show3['video_cover_path']}" /><img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/></if>
+
+              </div>
+              <div class="index_video_text">
+              <p class="index_p_text">{$show3.title}</p>
+              </div>
+              </a>
+              </li>
+            </volist>
+		      	</ul>
+		      </div><!--index_video-->
+                      <elseif condition='$vo["show_type"] eq 1'/>
+                          <if condition="$vo['single_type'] eq 1">
+                            <div class="index_new">
+                              <if condition="$vo['contents'][0]['type'] eq 1"><a href='{:U("Content/contentDetail",array("content_id"=>$vo["contents"][0]["id"]))}'><else/><a href='{:U("Video/videoDetail",array("content_id"=>$vo["contents"][0]["id"]))}'></if>
+                              <div class="index_new_img">
+                                      <if condition="$vo['contents'][0]['type'] eq 1">
+                                      <img src="{$vo['contents'][0]['pic_middle_path']}"  width="100%"/>
+                                      <else/>
+                                      <img src="{$vo['contents'][0]['video_cover_path']}"  width="100%"/>
+                                      <img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/>
+                                      </if>
+                                      <div class="index_newCen">
+                                              <p class="index_new_h1">{$vo['contents'][0]['title']}</p>
+                                          <p class="index_new_p">{$vo['contents'][0]['simp_describe']}</p>
+                                      </div>
+                              </div>
+                              </a>
+                            </div><!--index_video-->
+                          <elseif condition='$vo["single_type"] eq 2'/>
+                            <if condition="$vo['contents'][0]['type'] eq 1"><a href='{:U("Content/contentDetail",array("content_id"=>$vo["contents"][0]["id"]))}'><else/><a href='{:U("Video/videoDetail",array("content_id"=>$vo["contents"][0]["id"]))}'></if>
+                              <div class="index_img mt10">
+                                <if condition="$vo['contents'][0]['type'] eq 1"><img src="{$vo['contents'][0]['pic_middle_path']}" /><else/><img src="{$vo['contents'][0]['video_cover_path']}" /><img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/></if>
+                                <div class="index_img_text">
+                                        <h1>{$vo['contents'][0]['title']}</h1>
+                                        <div class="index_img_pbox mt5">
+                                                <p class="index_img_p">{$vo['contents'][0]['simp_describe']}</p>
+                                        </div>
+                                </div>
+                              </div><!--index_img-->
+                            </a>
+                          <elseif condition="$vo['single_type'] eq 3"/>
+                                <div class="index_list">
+                                    <ul>
+                                        <if condition="$vo['contents'][0]['type'] eq 1"><a href='{:U("Content/contentDetail",array("content_id"=>$vo["contents"][0]["id"]))}'><else/><a href='{:U("Video/videoDetail",array("content_id"=>$vo["contents"][0]["id"]))}'></if>
+                                        <li class="mt10">
+                                                <div class="indec_list_img"><if condition="$vo['contents'][0]['type'] eq 1"><img src="{$vo['contents'][0]['pic_middle_path']}" /><else/><img src="{$vo['contents'][0]['video_cover_path']}" /><img src="__IMG__/video_but.png" width="30" height="30" class="video_but"/></if></div>
+                                                <div class="index_list_right">
+                                                        <div class="index_list_text">
+                                                           <p  class="index_list_text_p">{$vo['contents'][0]['title']}</p>
+                                                    </div>
+                                                    <div class="index_text_look">查看详情<img src="__IMG__/index_list4.png" width="14" height="14" /></div>
+                                                </div>
+                                        </li>
+                                        </a>
+                                    </ul>
+                                  </div><!--index_list-->
+                          </if> 
+		      </if>
+                    </div>
+                  </volist>

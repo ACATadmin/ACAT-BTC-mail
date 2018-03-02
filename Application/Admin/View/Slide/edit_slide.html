@@ -1,0 +1,201 @@
+<extend name="Public/base"/>
+<block name="body">
+<script type="text/javascript" src="__STATIC__/Imgd/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="__STATIC__/Imgd/js/artDialog4.1.6/jquery.artDialog.js?skin=default"></script>
+<script type="text/javascript" src="__STATIC__/Imgd/js/artDialog4.1.6/plugins/iframeTools.js"></script>
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>{:isset($info['goods_id'])?'编辑':'添加新'}图片</h2>
+	</div>
+	<div class="tab-wrap">
+		<div class="tab-content">
+			<form action="{:U('saveSlide')}" method="post" class="form-horizontal">
+				<!-- 基础 -->
+				<div id="tab1" class="tab-pane in tab1">
+					
+					<div class="form-item">
+	                    <label class="item-label">标题<span class="check-tips"></span></label>
+	                    <div class="controls">
+	                    	<input type="text" class="text input-large" name="slide_title" value="{$info.slide_title}">
+	                    </div>
+					</div>
+
+					<div class="form-item">
+	                    <label class="item-label">链接<span class="check-tips"></span></label>
+	                    <div class="controls">
+	                    	<input type="text" class="text input-large" name="slide_url" value="{$info.slide_url}">
+	                    </div>
+					</div>
+					<div class="form-item">
+			            <label class="item-label">展示页面<span class="check-tips"></span></label>
+			            <div class="controls">
+			            	<select name="plate_type" style="width:120px;">
+			                <volist name=":C('PLATETYPE')" id="vo">
+			                	<option value="{$key}" <if condition=" $info['plate_type'] eq $key">selected</if>>{$vo}</option>
+			            	</volist>
+			            	</select>
+			            </div>
+			        </div>
+					<div class="form-item">
+			            <label class="item-label">上传图片<span class="check-tips">建议尺寸（750*300）</span></label>
+			            <div class="controls">
+							<input type="file" id="upload_picture">
+							<input type="hidden" name="picture_id" id="cover_id" value="{$info['picture_id']}"/>
+							<div class="upload-img-box">
+								<notempty name="info['picture_id']">
+									<div class="upload-pre-item"><img src="__ROOT__{$info['picture_id']|get_cover='path'}"/></div>
+								</notempty>
+							</div>
+						</div>
+						<script type="text/javascript">
+							//上传图片
+						    /* 初始化上传插件 */
+							$("#upload_picture").uploadify({
+						        "height"          : 30,
+						        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+						        "fileObjName"     : "download",
+						        "buttonText"      : "上传图片",
+						        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+						        "width"           : 120,
+						        'removeTimeout'	  : 1,
+						        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+						        "onUploadSuccess" : uploadPicture,
+						        'onFallback' : function() {
+						            alert('未检测到兼容版本的Flash.');
+						        }
+						    });
+							function uploadPicture(file, data){
+						    	var data = $.parseJSON(data);
+						    	var src = '';
+						        if(data.status){
+						        	$("#cover_id").val(data.id);
+						        	src = data.url || '__ROOT__' + data.path
+						        	$("#cover_id").parent().find('.upload-img-box').html(
+						        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+						        	);
+						        } else {
+						        	updateAlert(data.info);
+						        	setTimeout(function(){
+						                $('#top-alert').find('button').click();
+						                $(that).removeClass('disabled').prop('disabled',false);
+						            },1500);
+						        }
+						    }
+						</script>
+			        </div>
+					<div class="form-item">
+						<label class="item-label">
+							排序<span class="check-tips">（降序）</span>
+						</label>
+						<div class="controls">
+							<input type="text" name="order_sort" class="text input-small" value="{$info.order_sort|default=0}">
+						</div>
+					</div>
+
+					
+		
+					
+					
+					
+					<!-- <div class="form-item">
+	                    <label class="item-label">描述<span class="check-tips"></span></label>
+	                    <div class="controls">
+	                    	<input type="text" class="text input-large" name="description" value="{$info.description}">
+	                    </div>
+					</div> -->
+					
+					
+					
+					
+				</div>
+
+				
+				<div class="form-item">
+					<input type="hidden" name="slide_id" value="{$info.slide_id|default=''}">
+					<button type="submit" id="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+					<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		//导航高亮
+		highlight_subnav('{:U('Slide/index')}');
+		$(function(){
+			var type=$('[name="platform"]').val();
+			if(type==1){
+
+			    $('[name="target_type"]').parent().parent().css('display','none');
+			    $('[name="target_id"]').parent().parent().css('display','none');
+			    $('[name="picture_id"]').parent().parent().css('display','none');
+			 
+			    $('[name="picture_pc_id"]').parent().parent().css('display','block');
+				$(".wdpicture_pc_id").html('1289');
+				$(".hdpicture_pc_id").html('555');
+				$(".cgd").html('（建议图片尺寸：1289*555）');
+		
+			
+			}else if(type==2){
+				$('[name="target_type"]').parent().parent().css('display','block');
+				 $('[name="target_id"]').parent().parent().css('display','block');
+				 $('[name="picture_id"]').parent().parent().css('display','block');
+			
+				 $('[name="picture_pc_id"]').parent().parent().css('display','none');
+				$(".wdpicture_pc_id").html('750');
+				$(".hdpicture_pc_id").html('305');
+				$(".cgd").html('（建议图片尺寸：750*305）');	
+			
+
+			}
+			$('[name="platform"]').change(function(){
+			    var type=$('[name="platform"]').val();
+			     if(type==1){
+			     	$('[name="target_type"]').parent().parent().css('display','none');
+			     	$('[name="target_id"]').parent().parent().css('display','none');
+			     	$('[name="picture_id"]').parent().parent().css('display','none');
+			     	$('[name="slide_url"]').parent().parent().css('display','block');
+			     	$('[name="picture_pc_id"]').parent().parent().css('display','block');
+			     
+			     	$('[name="order_sort"]').parent().parent().css('display','block');
+					$(".wdpicture_pc_id").html('1289');
+					$(".hdpicture_pc_id").html('555');
+					$(".cgd").html('（建议图片尺寸：1289*555）');
+			     }else if(type==2){
+					$('[name="target_type"]').parent().parent().css('display','block');
+					$('[name="target_id"]').parent().parent().css('display','block');
+					$('[name="picture_id"]').parent().parent().css('display','block');
+					$('[name="picture_pc_id"]').parent().parent().css('display','none');
+					$('[name="slide_url"]').parent().parent().css('display','none');
+				
+					$('[name="order_sort"]').parent().parent().css('display','block');
+					$(".wdpicture_pc_id").html('750');
+					$(".hdpicture_pc_id").html('305');
+					$(".cgd").html('（建议图片尺寸：750*305）');
+				}
+			});
+
+
+			var types=$('[name="type"]').val();
+			if(types==2){
+				$(".wdpicture_pc_id").html('300');
+				$(".hdpicture_pc_id").html('340');
+				$(".cgd").html('（建议图片尺寸：300*340）');
+			}
+			$('[name="type"]').change(function(){
+			    var types=$('[name="type"]').val();
+			     if(types==2){
+			   		$(".wdpicture_pc_id").html('300');
+			   		$(".hdpicture_pc_id").html('340');
+			   		$(".cgd").html('（建议图片尺寸：300*340）');
+			     }else{
+			     	$(".wdpicture_pc_id").html('1289');
+			   		$(".hdpicture_pc_id").html('555');
+			   		$(".cgd").html('（建议图片尺寸：1289*555）');
+			     }
+			});
+		})
+	</script>
+</block>

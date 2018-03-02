@@ -1,0 +1,112 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">模型列表</span></h5>
+									<a class="btn btn-wide btn-primary" href="{:U('Model/add')}">新 增</a>
+									<a class="btn btn-wide btn-primary ajax-post" target-form="ids" url="{:U('Model/setStatus',array('status'=>1))}">启 用</a>
+									<a class="btn btn-wide btn-primary ajax-post" target-form="ids" url="{:U('Model/setStatus',array('status'=>0))}">禁 用</a>
+									<a class="btn btn-wide btn-primary" href="{:U('Model/generate')}">生 成</a>
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+						                        <th><div class="checkbox clip-check check-primary">
+														<input type="checkbox" id="check-all" class="check-all" />
+														<label for="check-all">
+															编号
+														</label>
+													</div></th>
+						                        <th>标识</th>
+						                        <th>名称</th>
+						                        <th>创建时间</th>
+						                        <th>状态</th>
+						                        <th class="center">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+										<notempty name="_list">
+											<volist name="_list" id="vo">
+											<tr>
+						                        <td><div class="checkbox clip-check check-primary">
+														<input type="checkbox" class="ids" id="checkbox{$vo.id}" name="ids[]" value="{$vo.id}" />
+														<label for="checkbox{$vo.id}">
+															{$vo.id}
+														</label>
+													</div></td>
+						                        <td>
+						                            {$vo.name}
+						                        </td>
+						                        <td><a data-id="{$vo.id}" href="{:U('model/edit?id='.$vo['id'])}">{$vo.title}</a></td>
+						                        <td><span>{$vo.create_time|time_format}</span></td>
+						                        <td>{$vo.status_text}</td>
+												<td class="center">
+													<div class="visible-md visible-lg hidden-sm hidden-xs">
+							                           <a href="{:U('think/lists?model='.$vo['name'])}">数据</a>
+														<a href="{:U('model/setstatus?ids='.$vo['id'].'&status='.abs(1-$vo['status']))}" class="ajax-get">{$vo.status|show_status_op}</a>
+														<a href="{:U('model/edit?id='.$vo['id'])}">编辑</a>
+														<a href="{:U('model/del?ids='.$vo['id'])}" class="confirm ajax-get">删除</a>
+													</div>
+												</td>
+											</tr>
+											</volist>
+											<else/>
+											<td colspan="7" class="text-center"> aOh! 暂时还没有内容! </td>
+											</notempty>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+    <script type="text/javascript">
+    $(function(){
+    	$("#search").click(function(){
+    		var url = $(this).attr('url');
+    		var status = $('select[name=status]').val();
+    		var search = $('input[name=search]').val();
+    		if(status != ''){
+    			url += '/status/' + status;
+    		}
+    		if(search != ''){
+    			url += '/search/' + search;
+    		}
+    		window.location.href = url;
+    	});
+})
+</script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

@@ -1,0 +1,60 @@
+<extend name="Public/base" />
+
+
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>{$meta_title}列表</h2>
+	</div>
+	<div>
+		<a href="{:U('edit')}" class="btn">添加新{$meta_title}</a>
+		<!-- <eq name="_GET['show']"  value='1'>
+			<else />
+			<a href="{:U('Slide/index',array('platform'=>1))}" class="btn">pc端轮播</a>
+			<a href="{:U('Slide/index',array('platform'=>2))}" class="btn">移动端轮播</a>
+		
+		</eq> -->
+	</div>
+
+	<!-- 数据列表 -->
+	<div class="data-table table-striped">
+		<table>
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>标题</th>
+					<th>图片</th>
+					 <th>展示页</th>
+					 <th>链接</th>
+					<th>推荐排序</th>
+					<th width="94px">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<notempty name="slide_list">
+				<volist name="slide_list" id="vo">
+				<tr>
+					<td>{$vo.slide_id}</td>
+					<td>{$vo.slide_title}</td>
+					<td><img src="__ROOT__{$vo.picture_id|get_cover='path'}" height="75px"/></td>
+					 <td>{$vo.plate_type|getTypename="PCPLATETYPE"}</td> 
+					 <td>{$vo.slide_url}</td> 
+					<td>{$vo.order_sort}</td>
+					<td>
+						<a href="{:U('edit',array('slide_id'=>$vo['slide_id']))}">编辑</a>
+						<a href="{:U('delSlide',array('slide_id'=>$vo['slide_id']))}" class="confirm ajax-get">删除</a>
+					</td>
+				</tr>
+				</volist>
+				<else/>
+				<td colspan="7" class="text-center"> aOh! 暂时还没有{$meta_title}! </td>
+				</notempty>
+			</tbody>
+		</table>
+	</div>
+	<!-- 分页 -->
+    <div class="page">
+        {$_page}
+    </div>
+</block>

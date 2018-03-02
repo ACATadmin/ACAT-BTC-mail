@@ -1,0 +1,138 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">管理员列表</span></h5>
+                                                                        <div class="row search-form">
+<!--                                                                                <div class="col-md-3">
+                                                                                        <h5 class="text-bold margin-top-25 margin-bottom-15">用户类型</h5>
+                                                                                        <div class="form-group">
+                                                                                                <select class="js-example-basic-single js-states form-control" name="user_type">
+                                                                                                        <option value="all">全部</option>
+                                                                                                        <option value='0' <eq name="_GET['user_type']" value='0'>selected</eq>>平台</option>
+                                                                                                        <option value='1' <eq name="_GET['user_type']" value='1'>selected</eq>>买手</option>
+                                                                                                        <option value='2' <eq name="_GET['user_type']" value='2'>selected</eq>>设计师</option>
+                                                                                                </select>
+                                                                                        </div>
+                                                                                </div>-->
+                                                                            
+                                                                                <div class="col-md-3">
+                                                                                        <h5 class="text-bold margin-top-25 margin-bottom-15">管理员状态</h5>
+                                                                                        <div class="form-group">
+                                                                                                <select class="js-example-basic-single js-states form-control" name="user_status">
+                                                                                                        <option value="">全部</option>
+                                                                                                        <volist name=":C('USER_STATUS')" id='vo'>
+                                                                                                            <option value='{$vo.id}' <eq name="_GET['user_status']" value='$vo["id"]'>selected</eq>>{$vo.name}</option>
+                                                                                                        </volist>
+                                                                                                </select>
+                                                                                        </div>
+                                                                                </div>
+                                                                                
+                                                                                <div class="col-md-3">
+                                                                                        <h5 class="text-bold margin-top-25 margin-bottom-15">用户账号/UID</h5>
+                                                                                        <div class="form-group">
+                                                                                                <input type="text" name="nickname" value="{:I('nickname')}" class="form-control">
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div class="col-md-2">
+                                                                                        <h5 class="text-bold margin-top-25 margin-bottom-15">&nbsp;</h5>
+                                                                                        <div class="form-group">
+                                                                                                <a class="btn btn-wide btn-primary" href="javascript:;" id="search" url="{:U('index')}">搜索</a>
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
+                                                                        <a class="btn btn-wide btn-primary" href="{:U('add')}">新增管理员</a>
+									<!--<a class="btn btn-wide btn-primary" href="{:U('add')}">新增</a>-->
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+												<th class="center">UID</th>
+                                                                                                <th>用户名</th>
+												<th>昵称</th>
+												<!--<th>手机号</th>-->
+												<!--<th class="hidden-xs">邮件</th>-->
+												<!--<th>登录次数</th>-->
+												<th class="hidden-xs">最后登录时间</th>
+												<th>最后登录IP</th>
+												<th>状态</th>
+												<th class="center">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<volist name="_list" id="vo">
+											<tr>
+												<td class="center">{$vo.uid}</td>
+                                                <td>{$vo.username}</td>
+												<td class="hidden-xs">{$vo.nickname}</td>
+												<!--<td>{$vo.mobile}</td>-->
+												<!--<td>{$vo.email}</td>-->
+												<!--<td>{$vo.login}</td>-->
+												<td class="hidden-xs">
+                                                    <notempty name="vo.last_login_time">
+                                                        {$vo.last_login_time|time_format}
+                                                    </notempty>
+                                                </td>
+												<td>
+                                                    <notempty name="vo.last_login_ip">
+                                                        {:long2ip($vo['last_login_ip'])}
+                                                    </notempty>
+                                                </td>
+												<td>{$vo.status_text}</td>
+												<td class="center">
+													<div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                        <a href="{:U('User/updatePasswordNew?uid='.$vo['uid'])}" class="authorize">修改密码</a>
+														<eq name="vo.status" value="1">
+														<a href="{:U('User/changeStatus?method=forbidUser&id='.$vo['uid'])}" class="confirm ajax-get">禁用</a>
+														<else/>
+														<a href="{:U('User/changeStatus?method=resumeUser&id='.$vo['uid'])}" class="confirm ajax-get">启用</a>
+														</eq>
+														<!--<a href="{:U('AuthManager/group?uid='.$vo['uid'])}" class="authorize">授权</a>-->
+                                                                                                                <a href="{:U('User/changeStatus?method=deleteUser&id='.$vo['uid'])}" class="confirm ajax-get">删除</a>
+													</div>
+												</td>
+											</tr>
+											</volist>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+                
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+                
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+                
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

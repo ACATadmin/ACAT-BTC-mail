@@ -1,0 +1,320 @@
+<a  class="btn model_b" data-am-modal='{target:"#department_alert"}' >{$picName}</a><span class="check-tips">（{$suggestSize}）</span>
+<empty name="picId" value="0">
+  <input type="hidden" id="{$picKey}" class="input_img" name="{$picKey}" value=""/>
+  <div class="controls cc" id="{$picKey}_box">
+
+ 
+  </div>
+<else/>
+  <input type="hidden" id="{$picKey}" class="input_img" name="{$picKey}" value="{$picId|default=''}"/>
+  <div class="controls" id="{$picKey}_box">
+
+      <div class="upload-img-box">
+
+          <div class="upload-pre-item"><div class="pic_del"  >删除</div><img src="__ROOT__{$picId|get_cover='path'}"/>  </div>
+
+      </div>
+  </div>
+</empty>
+<style type="text/css">
+    
+      #preview-pane {
+         display: block;
+         position: absolute;
+         z-index: 2000;
+         top: 0;
+         left: 0px;
+         padding: 6px;
+         border: 1px rgba(0,0,0,.4) solid;
+         border-radius: 6px;
+         background-color: white;
+         box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+     }
+    #preview-pane .preview-container {
+        width: 139px;
+        height: 128px;
+        overflow: hidden;
+
+    }
+    #preview-pane .preview-container img{
+       
+        max-width: none;
+    }
+    .convent_choice {
+        float: left;
+        height: 161px;
+        width: 15%;
+    }
+    .status_bar {
+        width: 27%;
+     
+    }
+    .upload_main .laber_a{
+      z-index: 20000;
+         background: red;
+         position: absolute;
+         top: 168px;
+         left: -2px;
+    }
+    .upload_main .laber_b{
+      z-index: 20000;
+         background: red;
+         position: absolute;
+         top: 208px;
+         left: -2px;
+    }
+</style>
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="department_alert">
+  <div class="am-modal-dialog">
+  
+    <div class="am-modal-bd" style="min-height: 500px;">
+        
+        <div class="option_list"  style="min-height: 500px;">
+
+        <!--  <div class="col-xs-12 loading" style="text-align:center;display:none">
+                  <img style="text-align:center;width:30px;display: inline-block;" src="__IMG__/loading.jpg" />
+         </div> -->
+         <div id="zyupload" class="zyupload" >
+            
+                <div class="upload_box">       
+                    <div class="upload_main">           
+                        <div class="upload_choose">            
+                        <div class="convent_choice">                    
+                        <div class="andArea" style="height: 100%;"> 
+                                            
+                        <div class="filePicker" id='preview-pane'> 
+                        
+                                    <div class="preview-container">
+                                      <img src="__IMG__/add_pic.png"  >
+                                    </div>
+                               
+                                    
+                        </div> 
+
+
+                       <label class="laber_a"  >宽 <input type="text" class="input" size="6" id="w" name="w"></label>
+
+                       <label class="laber_b">高 <input type="text" class="input" size="6" id="h" name="h"></label>
+
+                        <!-- <input id="fileImage" type="file" size="30" name="fileselect[]" multiple="">                    -->
+                        </div>              
+                        </div>              
+                        <div id="fileDragArea" class="upload_drag_area">
+                        <div id="uploaded_image_div" style="display: none;">
+                            <div class="thumbnail">
+                                <img id="uploaded_image" style="width: 100%;" class="thumbnails"/>
+                            </div>
+
+                            
+                            
+                            <!-- <input type="hidden" id="head_pic_id" value=""> -->
+                        </div>  
+                        </div>    
+
+                        </div>          
+                        <div class="status_bar">                
+                            <!-- <div id="status_info" class="info">选中0张文件，共0B。</div>                -->
+                                      <div class="btnss">                 
+                                          <div class="webuploader_pick">
+                                              <button type="button" class="btn btn-red btn_disabled" id="select_file_button" style="    background: #e32540;">选择文件</button>
+                                          </div>  
+                                          <div class="upload_btn">
+                                              <button type="button" class="btn btn-red" id="save_avatar_button" data-url="{:U('File/updateHeader')}" style="    background: #528A09;">保存剪裁头像</button>
+                                              <button id="aa"></button>
+                                          </div>  
+
+                                      </div>
+                                       <p class="text-danger" id="save_avatar_tip" style="    color: red;font-size: 15px;font-weight: 900;"></p> 
+                        </div>          
+                        <div id="preview" class="upload_preview"></div>     
+                    </div>      
+                    <div class="upload_submit">         
+                    <button type="button" id="fileSubmit" class="upload_submit_btn">确认上传文件</button>    
+                    <p id="upload_tip" class="text-danger"></p>
+                    </div>      
+                    <div id="uploadInf" class="upload_inf">
+
+                    </div>  
+                </div>
+
+           
+         </div>
+            
+        </div>
+    </div>
+  </div>
+</div>
+
+
+        
+
+        
+        
+  
+<script type="text/javascript">
+    
+ 
+        $(function () {
+            var crop;
+            var jcrop_api;
+            var boundx;
+            var boundy;
+            //选择图片文件之后立即上传表单
+            $('[name=image]').change(function () {
+          
+                $('#avatar_form').submit();
+            });
+
+            $('#avatar_form').submit(function (e) {
+          
+                e.preventDefault();
+                $(this).ajaxSubmit({
+
+                    beforeSend: function() {
+                        
+                        $('.loading').show(); 
+                        // $('.btn_disabled').attr('disabled','true');
+                   },
+
+
+                    success:function(json){
+                                        console.log(4)
+                    $('#avatar_form').trigger('onJson', [json]);
+                    $('.loading').hide(); 
+                    
+                    }
+                })
+            });
+                    
+            //头像上传后显示图片内容
+            $('#avatar_form').bind('onJson', function (e, json) {
+                
+                //如果发生错误，则显示错误信息
+                if (!json.success) {
+                    $('#upload_tip').text(json.message);
+                }
+                
+                console.log(json);
+                $pcnt = $('#preview-pane .preview-container'),
+                 $pimg = $('#preview-pane .preview-container img'),
+                xsize = $pcnt.width(),
+                  ysize = $pcnt.height();
+                //隐藏图片上传表单
+                // $('#avatar_form').hide();
+
+                //显示图片内容
+                $('#uploaded_image').attr('src', json.path);
+                $('#preview-pane img').attr('src', json.path);
+
+                $('#uploaded_image_div').show();
+                var imgs="#"+"{$picKey}";
+                $(imgs).val(json.id);
+                // $('#head_pic_id').val(json.id);         //图片资源ID
+                
+                
+                //图片加载完之后 开启图片切割
+                $('#uploaded_image').load(function () {
+                    $('.jcrop-holder img').attr('src', json.path);
+                    $('#uploaded_image').Jcrop({
+                        onChange: updateCoordinate,
+                        onSelect: updateCoordinate,
+                        // aspectRatio: 1,
+                        aspectRatio: 1,
+                           // onSelect: updateCoords,
+                        minSize: [200,200],
+                        setSelect: [0,0,200,200],
+                        touchSupport:true
+                    },function(){
+                        jcrop_api=this;
+                        var bounds = this.getBounds();
+                            boundx = bounds[0];
+                            boundy = bounds[1];
+                        crop=jcrop_api.tellScaled();
+                    });
+                })
+            });
+            function updateCoordinate(c) {
+                if (parseInt(c.w) > 0) {
+                    
+                     $('#w').val(c.w);
+                     $('#h').val(c.h);
+                    console.log(c.w)
+                    console.log(c.h)
+                      var rx = xsize / c.w;
+                      var ry = ysize / c.h;
+                      
+                      $pimg.css({
+                        width: Math.round(rx * boundx) + 'px',
+                        height: Math.round(ry * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry * c.y) + 'px'
+                      });
+                    }
+                crop = c;
+
+            }
+
+            //点击选择文件按钮之后显示选择文件对话框
+            $('#select_file_button').click(function () {
+                console.log(2)
+                $('[name=image]').trigger('click');
+            });
+
+            //点击保存头像后
+            function showAvatarTip(text) {
+                $('#save_avatar_tip').text(text);
+            }
+
+            $('#save_avatar_button').click(function () {
+                //检查是否已经裁剪过
+                console.log(crop)
+                if (crop == undefined) {
+                    console.log(3)
+                    showAvatarTip('请先选出图片中需要的部分');
+                    return;
+                }
+
+                //显示正在保存
+                // $(this).text('正在保存');
+                // $(this).addClass('disabled');
+
+                //隐藏错误消息
+                showAvatarTip('');
+                var imgid="{$picKey}";
+
+                //提交到服务器
+                var url             = $(this).attr('data-url');
+                var imgid     = $(imgid).val();
+                var uploaded_image  = $('#uploaded_image').attr('src');
+                
+                var imageWidth  = $('.jcrop-holder img').width();
+                var imageHeight = $('.jcrop-holder img').height();
+                var crop2 = crop.x / imageWidth + ',' + crop.y / imageHeight + ',' + crop.w / imageWidth + ',' + crop.h / imageHeight;
+                
+                //alert( imageWidth +'---'+ imageHeight +'---'+ crop2 );
+                
+                $.post(url, {crop: crop2, imgid:imgid, uploaded_image:uploaded_image}, function (a) {
+                
+                    
+                    if (a.statues*1==1) {
+                        var imgs="#"+"{$picKey}"+"_box";
+                        $(imgs).find('img').remove();
+                         var htmls="<img src="+a.paths+" />";
+                         $(imgs).append(htmls);
+                         // $(imgs).find('img').attr('src', a.paths);
+
+                         $("#department_alert").modal('close');
+
+                    } else {
+                        showAvatarTip(a.info);
+                        //恢复按钮
+                        $('#save_avatar_button').text('保存头像');
+                        $('#save_avatar_button').removeClass('disabled');
+                    }
+                });
+            })
+        })
+
+    </script>
+

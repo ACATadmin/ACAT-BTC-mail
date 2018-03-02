@@ -1,0 +1,109 @@
+<div class="form-item" id="{$select_musician_modal_id_form}">	
+	<label class="item-label">关联艺人<span class="check-tips"></span></label>
+	<div class="controls div_box">
+		<!--  
+    	<div class="one_box">博纳影视 <i class="iconfont icon-shanchu02 del_brokerage_firm_one"></i>
+   			<input type="hidden" name="brokerage_firm_ids[]" value="1357">
+   		</div>				    	
+		-->
+		<volist name="musicianArr" id="vo">
+		<div class="one_box">{$vo.musician_name} <i class="iconfont icon-shanchu02 del_relevance_musician_one"></i>
+   			<input class="add_musician_id" type="hidden" value="{$vo.id}">
+   		</div>
+		</volist>
+		
+   		<div class="one_box add_new" data-am-modal="{$target}">新增 <i class="iconfont icon-jia02"></i></div>
+    </div>
+    
+    <input class="submit_input_val" type="hidden" name="{$submit_input_name}" value="{$submit_input_val}">
+    
+</div>
+
+
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="{$select_musician_modal_id}">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">选择艺人
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd" style="min-height: 300px;">
+    	<div>
+			<input type="text" class="text input-middle" name="seacher_musician_name" placeholder="请输入艺人名称"><button type="button" class="btn search_musician">搜索</button>
+		</div>
+    	<div class="option_list">
+    		<!--  
+    		<div class="option_list_one">
+    			艺人A<span>+加入</span>
+    		</div>
+    		-->
+    	</div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+$(function(){
+	//===================================================================	
+	var select_musician_modal_name = "{$select_musician_modal_id}";
+	var select_musician_modal_id_form = "{$select_musician_modal_id_form}";
+	
+	
+	//展示选择艺人模态框
+	//查询艺人列表
+	$("#"+select_musician_modal_name).find(".search_musician").click(function(){
+		do_search_musician();			
+	});
+	$("#"+select_musician_modal_name).find("input[name='seacher_musician_name']").keydown(function(e){
+		if(e.keyCode==13){
+			do_search_musician();
+			if ( e && e.stopPropagation )
+				e.stopPropagation(); 
+			else
+				window.event.cancelBubble = true;
+			return false;
+		}
+	});
+	function do_search_musician(){
+		var seacher_musician_name = $("#"+select_musician_modal_name).find("input[name='seacher_musician_name']").val();
+		var url = "/index.php?s=/Admin/Musician/getSeacherMusicianList";
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: {musician_name:seacher_musician_name,showType:1},
+			success: function(data){				
+				$("#"+select_musician_modal_name).find(".option_list").html( data );
+			}
+		});	
+	}
+	//加入艺人
+	$("div").delegate("#"+select_musician_modal_name+" .join_on","click",function(event){
+		var musician_id = $(this).attr('musician_id');
+		var musician_name = $(this).parent().find(".musician_name").text();
+		
+		var one = '<div class="one_box">'+musician_name+' <i class="iconfont icon-shanchu02 del_relevance_musician_one"></i>'+
+   			'<input class="add_musician_id" type="hidden" value="'+musician_id+'">'+
+   			'</div>';
+		$("#"+select_musician_modal_id_form).find(".add_new").before(one);		
+		setMusicianIds();
+		event.stopPropagation();
+	});
+	//
+	function setMusicianIds(){
+		var inputArr = [];
+		$("#"+select_musician_modal_id_form).find("input.add_musician_id").each(function(){
+			inputArr.push( $(this).val() );
+		})
+		var inputStr = inputArr.join(',');
+		$("#"+select_musician_modal_id_form).find(".submit_input_val").val(inputStr);
+	}
+	
+	//删除艺人
+	$("div").delegate(".del_relevance_musician_one","click",function(event){
+		$(this).parent().remove();
+		setMusicianIds();
+		event.stopPropagation();
+	});
+})
+
+</script>

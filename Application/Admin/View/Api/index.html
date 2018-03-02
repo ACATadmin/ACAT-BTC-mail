@@ -1,0 +1,94 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+				
+				<div class="main-content" >
+					<div class="wrap-content container" id="container">
+						<!-- start: BASIC TABLE -->
+						<div class="container-fluid container-fullw bg-white">
+							<div class="row">
+								<div class="col-md-12">
+									<h5 class="over-title margin-bottom-15"><span class="text-bold">接口列表</span></h5>
+                                                                        <p>
+                                                                            <div class="row search-form">
+                                                                                <!-- 高级搜索 -->
+                                                                                <div class="col-md-3">
+                                                                                        <h5 class="text-bold margin-top-25 margin-bottom-15">接口名称</h5>
+                                                                                        <div class="form-group">
+                                                                                                <input type="text" name="api_name" value="{:I('api_name')}" class="form-control">
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div class="col-md-2" style="width:34%;">
+                                                                                        <h5 class="text-bold margin-top-25 margin-bottom-15">&nbsp;</h5>
+                                                                                        <div class="form-group">
+                                                                                                <a class="btn btn-wide btn-primary" href="javascript:;" id="search" url="{:U('index')}" style="min-width:100px;">搜索</a>
+                                                                                        </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </p>
+									<a class="btn btn-wide btn-primary" href="{:U('apiAdd')}">新增</a>
+                                                                        
+									<table class="table table-hover" id="sample-table-1">
+										<thead>
+											<tr>
+												<th>编号</th>
+												<th>Api接口名称</th>
+												<th>Api接口分组</th>
+												<th>Api接口地址</th>
+												<th>主要开发者</th>
+												<th>接口状态</th>
+												<th class="center">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<volist name="list" id="vo">
+											<tr>
+												<td>{$vo.id}</td>
+												<td>{$vo.api_name}</td>
+												<td>{$vo.api_group_name}</td>
+												<td>{$vo.api_url}</td>
+												<td>{$vo.developer|get_c_title='DEVELOPER'}</td>
+												<td>{$vo.development_status|get_c_title='DEVELOPMENT_STATUS'}</td>
+												<td class="center">
+													<div class="visible-md visible-lg hidden-sm hidden-xs">
+														<a href="{:U('apiEdit',array('id'=>$vo['id']))}">编辑</a>
+														<a href="{:U('apiDel',array('id'=>$vo['id']))}" class="confirm ajax-get">删除</a>
+													</div>
+												</td>
+											</tr>
+											</volist>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-12" style="text-align:center;">
+									{$_page}
+								</div>
+								
+							</div>
+						</div>
+						<!-- end: BASIC TABLE -->
+					</div>
+				</div>
+		
+</block>
+<block name="script">
+		<!-- start: MAIN JAVASCRIPTS -->
+		<script src="__MODULE__/vendor/jquery/jquery.min.js"></script>
+		<script src="__MODULE__/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="__MODULE__/vendor/modernizr/modernizr.js"></script>
+		<script src="__MODULE__/vendor/jquery-cookie/jquery.cookie.js"></script>
+		<script src="__MODULE__/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<script src="__MODULE__/vendor/switchery/switchery.min.js"></script>
+		<!-- end: MAIN JAVASCRIPTS -->
+		<!-- start: CLIP-TWO JAVASCRIPTS -->
+		<script src="__MODULE__/assets/js/main.js"></script>
+		<!-- start: JavaScript Event Handlers for this page -->
+		<script>
+		jQuery(document).ready(function() {
+			Main.init();
+		});
+		</script>
+		<!-- end: JavaScript Event Handlers for this page -->
+		<!-- end: CLIP-TWO JAVASCRIPTS -->
+</block>

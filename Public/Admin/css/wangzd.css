@@ -1,0 +1,64 @@
+.index_box01_table .radio_i{
+    background: none;
+    padding:0;
+    font-style: normal;
+}
+
+.index_box01_table tr.active .radio_i{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    background: url(../images/radio01.png) no-repeat left center;
+    background-size: 16px 16px;
+    padding-left: 16px;
+    width: 32px;
+    font-style: normal;
+}
+.index_box01_table tr .radio_i.on{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    background: url(../images/radio02.png) no-repeat left center;
+    background-size: 16px 16px;
+    padding-left: 16px;
+    width: 32px;
+    font-style: normal;
+}
+.radio_i input{
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+}
+.index_box01_table tr.light td {
+    background: #f4f5f5;
+    /* cursor: pointer; */
+}
+td{white-space: nowrap;max-width:100%}
+.btn01{
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    font-size: 14px;
+    color: #000;
+    border-radius: 3px;
+    line-height: 30px;
+    background: #eee;
+    margin: 20px 0;
+    text-align: center;
+}
+.pageNumber {
+    padding: 20px;
+    overflow: hidden;
+}
